@@ -1,0 +1,31 @@
+annet_containers:
+  - name: "annet"
+    container_name: "annet-default"
+    default: true
+    description: "Default annet container"
+  - name: "annet-telnet"
+    container_name: "annet-telnet"
+    description: "Telnet devices container"
+  - name: "annet-orion"
+    container_name: "annet-orion"
+    description: "Orion devices container"
+
+ssh_keys:
+  - name: "default"
+    path: "/keys/id_rsa"
+    user: "admin"
+  - name: "telnet"
+    path: "/keys/telnet_key"
+    user: "telnet_user"
+
+server:
+  ssh:
+    port: 22
+    bind: "0.0.0.0"
+  api:
+    port: 8080
+    bind: "0.0.0.0"
+    auth_token: "change-me-in-production"
+
+storage:
+  routing_file: "./storage/routing.json"

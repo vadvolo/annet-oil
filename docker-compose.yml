@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  annet-oil:
+    build: .
+    container_name: annet-oil
+    ports:
+      - "2222:22"    # SSH port
+      - "8080:8080"  # API port
+    volumes:
+      - ./configs:/app/configs:ro
+      - ./storage:/app/storage
+      - ./keys:/app/keys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - ANNET_OIL_CONFIG=/app/configs/config.yaml
+    restart: unless-stopped
+    depends_on:
+      - annet-default
+      - annet-telnet
+      - annet-orion
+    networks:
+      - annet-network
+
+  annet-default:
+    image: annet:latest
+    container_name: annet-default
+    command: tail -f /dev/null
+    volumes:
+      - ./annet-configs/default:/app/configs
+      - ./annet-data/default:/app/data
+    restart: unless-stopped
+    networks:
+      - annet-network
+
+  annet-telnet:
+    image: annet-telnet:latest
+    container_name: annet-telnet
+    command: tail -f /dev/null
+    volumes:
+      - ./annet-configs/telnet:/app/configs
+      - ./annet-data/telnet:/app/data
+    restart: unless-stopped
+    networks:
+      - annet-network
+
+  annet-orion:
+    image: annet-orion:latest
+    container_name: annet-orion
+    command: tail -f /dev/null
+    volumes:
+      - ./annet-configs/orion:/app/configs
+      - ./annet-data/orion:/app/data
+    restart: unless-stopped
+    networks:
+      - annet-network
+
+networks:
+  annet-network:
+    driver: bridge
+
+volumes:
+  annet-oil-data:
+  annet-default-data:
+  annet-telnet-data:
+  annet-orion-data:
