@@ -21,6 +21,7 @@ var (
 	diffParallel  bool
 	diffTimeout   int
 	diffFormat    string
+	diffQuiet     bool
 )
 
 func init() {
@@ -30,20 +31,25 @@ func init() {
 	diffCmd.Flags().BoolVar(&diffParallel, "parallel", false, "Execute in parallel")
 	diffCmd.Flags().IntVar(&diffTimeout, "timeout", 0, "Timeout in seconds")
 	diffCmd.Flags().StringVar(&diffFormat, "format", "text", "Output format (text|json)")
+	diffCmd.Flags().BoolVarP(&diffQuiet, "quiet", "q", false, "Suppress stderr warnings")
 }
 
 func runDiffCommand(cmd *cobra.Command, args []string) error {
-	filters := append(diffFilters, args...)
-	if len(filters) == 0 {
-		return fmt.Errorf("at least one filter must be specified")
+	// args - это hostnames (позиционные аргументы)
+	// diffFilters - это generator фильтры (-g)
+
+	if len(args) == 0 && diffContainer == "" {
+		return fmt.Errorf("at least one hostname must be specified")
 	}
 
 	req := &annet.CommandRequest{
-		Command:   "diff",
-		Filters:   filters,
-		Container: diffContainer,
-		Parallel:  diffParallel,
-		Timeout:   diffTimeout,
+		Command:    "diff",
+		Filters:    args,         // hostnames для маршрутизации
+		Generators: diffFilters,  // generator фильтры (-g)
+		Container:  diffContainer,
+		Parallel:   diffParallel,
+		Timeout:    diffTimeout,
+		Quiet:      diffQuiet,
 	}
 
 	resp, err := annetService.ExecuteCommand(cmd.Context(), req)

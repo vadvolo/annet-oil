@@ -25,7 +25,27 @@ type ExecResult struct {
 }
 
 func New(cfg *config.Config) (*Manager, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	var clientOpts []client.Opt
+
+	// Добавляем базовые опции
+	clientOpts = append(clientOpts, client.FromEnv, client.WithAPIVersionNegotiation())
+
+	// Если указан кастомный host в конфигурации
+	if cfg.Docker.Host != "" {
+		clientOpts = append(clientOpts, client.WithHost(cfg.Docker.Host))
+	}
+
+	// Если указана API версия
+	if cfg.Docker.APIVersion != "" {
+		clientOpts = append(clientOpts, client.WithVersion(cfg.Docker.APIVersion))
+	}
+
+	// TLS настройки
+	if cfg.Docker.TLSVerify {
+		clientOpts = append(clientOpts, client.WithTLSClientConfig(cfg.Docker.CertPath, cfg.Docker.CertPath, cfg.Docker.CertPath))
+	}
+
+	cli, err := client.NewClientWithOpts(clientOpts...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create Docker client: %w", err)
 	}
@@ -121,13 +141,20 @@ func (m *Manager) ExecuteAnnetCommand(ctx context.Context, containerName string,
 }
 
 func (m *Manager) ValidateContainerAccess(ctx context.Context, containerName string) error {
-	result, err := m.ExecuteAnnetCommand(ctx, containerName, []string{"--version"})
+	// Используем --help вместо --version, так как annet не поддерживает --version
+	result, err := m.ExecuteAnnetCommand(ctx, containerName, []string{"--help"})
 	if err != nil {
 		return fmt.Errorf("failed to validate container %s: %w", containerName, err)
 	}
 
+	// --help возвращает exit code 0 и показывает справку
 	if result.ExitCode != 0 {
 		return fmt.Errorf("annet command failed in container %s: %s", containerName, result.Stderr)
+	}
+
+	// Проверяем что в выводе есть ключевые слова annet
+	if !strings.Contains(result.Stdout, "annet") && !strings.Contains(result.Stderr, "annet") {
+		return fmt.Errorf("annet command output doesn't contain expected content in container %s", containerName)
 	}
 
 	return nil

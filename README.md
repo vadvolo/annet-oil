@@ -149,6 +149,13 @@ server:
 
 storage:
   routing_file: "./storage/routing.json"
+
+docker:
+  # Для Docker Desktop: оставьте пустым (автоопределение)
+  host: ""
+  # Для Colima: unix:///Users/<user>/.colima/default/docker.sock
+  # Для удаленного Docker: tcp://hostname:2376
+  # api_version: "1.41"  # опционально
 ```
 
 ### storage/routing.json
@@ -196,10 +203,47 @@ make clean          # Очистить артефакты
 4. **Выполнение** - проксирование команды в соответствующий annet контейнер
 5. **Возврат результата** - форматированный вывод пользователю
 
+## Конфигурация Docker
+
+### Docker Desktop
+```yaml
+docker:
+  host: ""  # Автоопределение
+```
+
+### Colima
+```yaml
+docker:
+  host: "unix:///Users/<username>/.colima/default/docker.sock"
+  api_version: "1.41"
+  tls_verify: false
+```
+
+### Удаленный Docker
+```yaml
+docker:
+  host: "tcp://docker-host:2376"
+  api_version: "1.41"
+  tls_verify: true
+  cert_path: "/path/to/certs"
+```
+
+### Быстрое переключение
+```bash
+# Для Colima
+cp configs/config.colima.yaml configs/config.yaml
+
+# Для Docker Desktop
+cp configs/config.docker.yaml configs/config.yaml
+```
+
 ## Переменные окружения
 
 - `ANNET_OIL_CONFIG` - путь к конфигурационному файлу
-- `DOCKER_HOST` - Docker daemon endpoint
+- `DOCKER_HOST` - Docker daemon endpoint (переопределяет настройки конфига)
+- `DOCKER_API_VERSION` - версия Docker API
+- `DOCKER_CERT_PATH` - путь к TLS сертификатам
+- `DOCKER_TLS_VERIFY` - включить TLS проверку
 
 ## Лицензия
 

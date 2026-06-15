@@ -13,6 +13,7 @@ type Config struct {
 	SSHKeys         []SSHKey         `yaml:"ssh_keys"`
 	Server          ServerConfig     `yaml:"server"`
 	Storage         StorageConfig    `yaml:"storage"`
+	Docker          DockerConfig     `yaml:"docker"`
 }
 
 type AnnetContainer struct {
@@ -46,6 +47,13 @@ type APIConfig struct {
 
 type StorageConfig struct {
 	RoutingFile string `yaml:"routing_file"`
+}
+
+type DockerConfig struct {
+	Host    string `yaml:"host,omitempty"`
+	APIVersion string `yaml:"api_version,omitempty"`
+	CertPath   string `yaml:"cert_path,omitempty"`
+	TLSVerify  bool   `yaml:"tls_verify,omitempty"`
 }
 
 func Load() (*Config, error) {
@@ -176,6 +184,9 @@ func createDefaultConfig(configPath string) (*Config, error) {
 		},
 		Storage: StorageConfig{
 			RoutingFile: "./storage/routing.json",
+		},
+		Docker: DockerConfig{
+			Host: "", // Пустое значение = автоопределение
 		},
 	}
 

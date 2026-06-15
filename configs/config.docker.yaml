@@ -1,14 +1,14 @@
 annet_containers:
   - name: "annet"
-    container_name: "annet-orion"
+    container_name: "annet-default"
     default: true
     description: "Default annet container"
   - name: "annet-telnet"
     container_name: "annet-telnet"
     description: "Telnet devices container"
-  - name: "annet-ssh-10022"
-    container_name: "annet-ssh-10022"
-    description: "Orion SSH 10022 devices container"
+  - name: "annet-orion"
+    container_name: "annet-orion"
+    description: "Orion devices container"
 
 ssh_keys:
   - name: "default"
@@ -31,8 +31,8 @@ storage:
   routing_file: "./storage/routing.json"
 
 docker:
-  # Конфигурация для Colima
-  # Замените vadvolo на ваш username
-  host: "unix:///Users/vadvolo/.colima/default/docker.sock"
-  api_version: "1.41"
-  tls_verify: false
+  # Конфигурация для Docker Desktop
+  # Автоопределение через переменные окружения
+  host: ""  # Пустое значение использует DOCKER_HOST или /var/run/docker.sock
+  # api_version: "1.41"  # опционально
+  # tls_verify: false    # опционально

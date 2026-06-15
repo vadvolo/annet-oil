@@ -78,5 +78,9 @@ func (h *DiffHandler) parseRequest(r *http.Request) (*annet.CommandRequest, erro
 		}
 	}
 
+	if quiet := query.Get("quiet"); quiet == "true" {
+		req.Quiet = true
+	}
+
 	return req, nil
 }

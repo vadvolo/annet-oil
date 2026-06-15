@@ -3,7 +3,6 @@ package annet
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"annet-oil/internal/config"
 	"annet-oil/internal/container"
@@ -17,14 +16,16 @@ type Service struct {
 }
 
 type CommandRequest struct {
-	Command     string            `json:"command"`
-	Filters     []string          `json:"filters,omitempty"`
-	Container   string            `json:"container,omitempty"`
-	DryRun      bool              `json:"dry_run,omitempty"`
-	Parallel    bool              `json:"parallel,omitempty"`
-	Timeout     int               `json:"timeout,omitempty"`
-	ExtraArgs   []string          `json:"extra_args,omitempty"`
-	Environment map[string]string `json:"environment,omitempty"`
+	Command      string            `json:"command"`
+	Filters      []string          `json:"filters,omitempty"`     // Hostnames for routing
+	Generators   []string          `json:"generators,omitempty"`  // Generator filters (-g)
+	Container    string            `json:"container,omitempty"`
+	DryRun       bool              `json:"dry_run,omitempty"`
+	Parallel     bool              `json:"parallel,omitempty"`
+	Timeout      int               `json:"timeout,omitempty"`
+	Quiet        bool              `json:"quiet,omitempty"`       // Suppress stderr warnings
+	ExtraArgs    []string          `json:"extra_args,omitempty"`
+	Environment  map[string]string `json:"environment,omitempty"`
 }
 
 type CommandResponse struct {
@@ -100,6 +101,11 @@ func (s *Service) ExecuteCommand(ctx context.Context, req *CommandRequest) (*Com
 				Stderr:    execResult.Stderr,
 			}
 
+			// Suppress stderr if quiet flag is set
+			if req.Quiet {
+				result.Stderr = ""
+			}
+
 			if execResult.ExitCode == 0 {
 				successHosts++
 			} else {
@@ -147,15 +153,13 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 	containerRoutes := make(map[string][]string)
 
 	if req.Container != "" {
-		if len(req.Filters) > 0 {
-			containerRoutes[req.Container] = req.Filters
-		} else {
-			containerRoutes[req.Container] = []string{"all"}
-		}
+		// Если контейнер указан явно, используем его
+		containerRoutes[req.Container] = []string{"all"}
 		return containerRoutes
 	}
 
 	if len(req.Filters) == 0 {
+		// Если фильтры не указаны, используем default контейнер
 		defaultContainer := s.config.GetDefaultContainer()
 		if defaultContainer != nil {
 			containerRoutes[defaultContainer.Name] = []string{"all"}
@@ -163,6 +167,7 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 		return containerRoutes
 	}
 
+	// Фильтры - это имена устройств для маршрутизации
 	hostContainerMap := s.router.GetContainerForHosts(req.Filters)
 
 	for hostname, containerName := range hostContainerMap {
@@ -172,16 +177,10 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 		containerRoutes[containerName] = append(containerRoutes[containerName], hostname)
 	}
 
+	// Для hostname без маршрутов используем default контейнер
 	for _, filter := range req.Filters {
-		found := false
-		for _, containerName := range hostContainerMap {
-			if containerName != "" {
-				found = true
-				break
-			}
-		}
-
-		if !found {
+		// Проверяем, есть ли маршрут для этого hostname
+		if _, found := hostContainerMap[filter]; !found {
 			defaultContainer := s.config.GetDefaultContainer()
 			if defaultContainer != nil {
 				if containerRoutes[defaultContainer.Name] == nil {
@@ -198,12 +197,20 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string {
 	args := []string{req.Command}
 
-	if len(hosts) > 0 && hosts[0] != "all" {
-		args = append(args, "-g", strings.Join(hosts, ","))
+	// Добавляем generator фильтры если указаны
+	if len(req.Generators) > 0 {
+		for _, generator := range req.Generators {
+			args = append(args, "-g", generator)
+		}
 	}
 
 	if req.DryRun && (req.Command == "patch" || req.Command == "deploy") {
 		args = append(args, "--dry-run")
+	}
+
+	// Для команды deploy всегда добавляем --no-ask-deploy
+	if req.Command == "deploy" {
+		args = append(args, "--no-ask-deploy")
 	}
 
 	if req.Parallel {
@@ -215,6 +222,15 @@ func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string
 	}
 
 	args = append(args, req.ExtraArgs...)
+
+	// Добавляем query (hostnames) в конец - annet требует его
+	if len(hosts) > 0 && hosts[0] != "all" {
+		// Используем имена устройств как query
+		args = append(args, hosts...)
+	} else {
+		// Если не указаны конкретные устройства, используем "*" (все)
+		args = append(args, "*")
+	}
 
 	return args
 }

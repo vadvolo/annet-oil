@@ -23,6 +23,7 @@ var (
 	genParallel  bool
 	genTimeout   int
 	genFormat    string
+	genQuiet     bool
 )
 
 func init() {
@@ -32,20 +33,25 @@ func init() {
 	genCmd.Flags().BoolVar(&genParallel, "parallel", false, "Execute in parallel")
 	genCmd.Flags().IntVar(&genTimeout, "timeout", 0, "Timeout in seconds")
 	genCmd.Flags().StringVar(&genFormat, "format", "text", "Output format (text|json)")
+	genCmd.Flags().BoolVarP(&genQuiet, "quiet", "q", false, "Suppress stderr warnings")
 }
 
 func runGenCommand(cmd *cobra.Command, args []string) error {
-	filters := append(genFilters, args...)
-	if len(filters) == 0 {
-		return fmt.Errorf("at least one filter must be specified")
+	// args - это hostnames (позиционные аргументы)
+	// genFilters - это generator фильтры (-g)
+
+	if len(args) == 0 && genContainer == "" {
+		return fmt.Errorf("at least one hostname must be specified")
 	}
 
 	req := &annet.CommandRequest{
-		Command:   "gen",
-		Filters:   filters,
-		Container: genContainer,
-		Parallel:  genParallel,
-		Timeout:   genTimeout,
+		Command:    "gen",
+		Filters:    args,        // hostnames для маршрутизации
+		Generators: genFilters,  // generator фильтры (-g)
+		Container:  genContainer,
+		Parallel:   genParallel,
+		Timeout:    genTimeout,
+		Quiet:      genQuiet,
 	}
 
 	resp, err := annetService.ExecuteCommand(cmd.Context(), req)
@@ -65,6 +71,7 @@ func printCommandResponse(resp *annet.CommandResponse, format string) error {
 		}
 		fmt.Print(string(data))
 	case "text":
+		fallthrough
 	default:
 		printTextResponse(resp)
 	}

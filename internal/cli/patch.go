@@ -22,6 +22,7 @@ var (
 	patchParallel  bool
 	patchTimeout   int
 	patchFormat    string
+	patchQuiet     bool
 )
 
 func init() {
@@ -32,21 +33,26 @@ func init() {
 	patchCmd.Flags().BoolVar(&patchParallel, "parallel", false, "Execute in parallel")
 	patchCmd.Flags().IntVar(&patchTimeout, "timeout", 0, "Timeout in seconds")
 	patchCmd.Flags().StringVar(&patchFormat, "format", "text", "Output format (text|json)")
+	patchCmd.Flags().BoolVarP(&patchQuiet, "quiet", "q", false, "Suppress stderr warnings")
 }
 
 func runPatchCommand(cmd *cobra.Command, args []string) error {
-	filters := append(patchFilters, args...)
-	if len(filters) == 0 {
-		return fmt.Errorf("at least one filter must be specified")
+	// args - это hostnames (позиционные аргументы)
+	// patchFilters - это generator фильтры (-g)
+
+	if len(args) == 0 && patchContainer == "" {
+		return fmt.Errorf("at least one hostname must be specified")
 	}
 
 	req := &annet.CommandRequest{
-		Command:   "patch",
-		Filters:   filters,
-		Container: patchContainer,
-		DryRun:    patchDryRun,
-		Parallel:  patchParallel,
-		Timeout:   patchTimeout,
+		Command:    "patch",
+		Filters:    args,          // hostnames для маршрутизации
+		Generators: patchFilters,  // generator фильтры (-g)
+		Container:  patchContainer,
+		DryRun:     patchDryRun,
+		Parallel:   patchParallel,
+		Timeout:    patchTimeout,
+		Quiet:      patchQuiet,
 	}
 
 	resp, err := annetService.ExecuteCommand(cmd.Context(), req)

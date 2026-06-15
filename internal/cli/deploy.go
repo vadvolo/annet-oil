@@ -22,6 +22,7 @@ var (
 	deployParallel  bool
 	deployTimeout   int
 	deployFormat    string
+	deployQuiet     bool
 )
 
 func init() {
@@ -32,21 +33,26 @@ func init() {
 	deployCmd.Flags().BoolVar(&deployParallel, "parallel", false, "Execute in parallel")
 	deployCmd.Flags().IntVar(&deployTimeout, "timeout", 0, "Timeout in seconds")
 	deployCmd.Flags().StringVar(&deployFormat, "format", "text", "Output format (text|json)")
+	deployCmd.Flags().BoolVarP(&deployQuiet, "quiet", "q", false, "Suppress stderr warnings")
 }
 
 func runDeployCommand(cmd *cobra.Command, args []string) error {
-	filters := append(deployFilters, args...)
-	if len(filters) == 0 {
-		return fmt.Errorf("at least one filter must be specified")
+	// args - это hostnames (позиционные аргументы)
+	// deployFilters - это generator фильтры (-g)
+
+	if len(args) == 0 && deployContainer == "" {
+		return fmt.Errorf("at least one hostname must be specified")
 	}
 
 	req := &annet.CommandRequest{
-		Command:   "deploy",
-		Filters:   filters,
-		Container: deployContainer,
-		DryRun:    deployDryRun,
-		Parallel:  deployParallel,
-		Timeout:   deployTimeout,
+		Command:    "deploy",
+		Filters:    args,           // hostnames для маршрутизации
+		Generators: deployFilters,  // generator фильтры (-g)
+		Container:  deployContainer,
+		DryRun:     deployDryRun,
+		Parallel:   deployParallel,
+		Timeout:    deployTimeout,
+		Quiet:      deployQuiet,
 	}
 
 	resp, err := annetService.ExecuteCommand(cmd.Context(), req)

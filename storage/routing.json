@@ -4,6 +4,7 @@
     "switch1.example.com": "annet",
     "old-router.example.com": "annet-telnet",
     "legacy-switch.example.com": "annet-telnet",
-    "orion-device1.example.com": "annet-orion"
+    "orion-device1.example.com": "annet-orion",
+    "kragujevac-4948-10g.otk.rs": "annet-orion"
   }
 }

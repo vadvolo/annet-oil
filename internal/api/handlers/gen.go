@@ -78,5 +78,9 @@ func (h *GenHandler) parseRequest(r *http.Request) (*annet.CommandRequest, error
 		}
 	}
 
+	if quiet := query.Get("quiet"); quiet == "true" {
+		req.Quiet = true
+	}
+
 	return req, nil
 }

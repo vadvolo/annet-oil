@@ -81,5 +81,9 @@ func (h *DeployHandler) parseRequest(r *http.Request) (*annet.CommandRequest, er
 		}
 	}
 
+	if quiet := query.Get("quiet"); quiet == "true" {
+		req.Quiet = true
+	}
+
 	return req, nil
 }

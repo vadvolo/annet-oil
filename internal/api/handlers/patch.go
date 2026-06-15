@@ -81,5 +81,9 @@ func (h *PatchHandler) parseRequest(r *http.Request) (*annet.CommandRequest, err
 		}
 	}
 
+	if quiet := query.Get("quiet"); quiet == "true" {
+		req.Quiet = true
+	}
+
 	return req, nil
 }

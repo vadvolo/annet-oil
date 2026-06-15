@@ -48,6 +48,7 @@ func runContainersListCommand(cmd *cobra.Command, args []string) error {
 		}
 		fmt.Print(string(data))
 	case "table":
+		fallthrough
 	default:
 		printContainersTable(status)
 	}
@@ -56,22 +57,32 @@ func runContainersListCommand(cmd *cobra.Command, args []string) error {
 }
 
 func printContainersTable(status map[string]*container.ContainerStatus) {
+	if len(status) == 0 {
+		fmt.Println("No containers configured.")
+		return
+	}
+
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(w, "NAME\tCONTAINER\tSTATUS\tDEFAULT\tDESCRIPTION\tERROR")
 
-	for _, container := range status {
+	for _, cont := range status {
 		defaultMark := ""
-		if container.Default {
+		if cont.Default {
 			defaultMark = "✓"
 		}
 
+		errorText := cont.Error
+		if len(errorText) > 50 {
+			errorText = errorText[:47] + "..."
+		}
+
 		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n",
-			container.Name,
-			container.ContainerName,
-			container.Status,
+			cont.Name,
+			cont.ContainerName,
+			cont.Status,
 			defaultMark,
-			container.Description,
-			container.Error)
+			cont.Description,
+			errorText)
 	}
 
 	w.Flush()
