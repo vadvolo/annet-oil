@@ -1,10 +1,23 @@
 {
   "routes": {
-    "router1.example.com": "annet",
-    "switch1.example.com": "annet",
+    "router1.example.com": "annet-orion",
+    "switch1.example.com": "annet-orion",
     "old-router.example.com": "annet-telnet",
     "legacy-switch.example.com": "annet-telnet",
     "orion-device1.example.com": "annet-orion",
-    "kragujevac-4948-10g.otk.rs": "annet-orion"
+    "kragujevac-4948-10g.otk.rs": "annet-orion",
+    "bg_w088-batajnicasilos-c4948-backup.otk.rs": "annet-telnet",
+    "bg_w088-batajnicasilos-c4948-primar.otk.rs": "annet-telnet",
+    "bg_w060-banjica.otk.rs": "annet-telnet",
+    "st_f001-dpimzgolubinci.otk.rs": "annet-telnet",
+    "rr-stav.otk.rs": "annet-telnet",
+    "zr_f002-centadvd.otk.rs": "annet-telnet",
+    "sw-c2960-mtel_tivat.otk.rs": "annet-telnet",
+    "sw-ugrinovci-2960g.otk.rs": "annet-telnet",
+    "sw-tv_prva_b92.otk.rs": "annet-telnet",
+    "switch_prodaja2.otk.rs": "annet-telnet",
+    "dpi-negotin.otk.rs": "annet-telnet",
+    "voip-sw-gandijeva.otk.rs": "annet-telnet",
+    "bg_w184-mladenovaccentarrobnakuca.otk.rs": "annet-telnet"
   }
 }
