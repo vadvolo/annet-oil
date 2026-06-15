@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -47,7 +48,16 @@ func New(cfg *config.Config) (*Manager, error) {
 
 	cli, err := client.NewClientWithOpts(clientOpts...)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create Docker client: %w", err)
+		return nil, fmt.Errorf("failed to create Docker client: %w\n\nTroubleshooting:\n- Check if Docker daemon is running: systemctl status docker\n- Check if Docker socket exists: ls -la /var/run/docker.sock\n- Check if user has permissions: sudo usermod -aG docker $USER\n- Try setting DOCKER_HOST environment variable", err)
+	}
+
+	// Тестируем подключение к Docker daemon
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	_, err = cli.Ping(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to Docker daemon: %w\n\nTroubleshooting:\n- Check if Docker daemon is running: systemctl status docker\n- Check if Docker socket is accessible: ls -la /var/run/docker.sock\n- Check if current user is in docker group: groups $USER\n- Try running with sudo or check Docker permissions", err)
 	}
 
 	return &Manager{
