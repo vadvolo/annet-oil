@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "annet-oil": {
+      "command": "node",
+      "args": [
+        "/path/to/mcp-annet-oil/dist/index.js"
+      ],
+      "env": {
+        "ANNET_OIL_API_URL": "http://localhost:8080",
+        "ANNET_OIL_AUTH_TOKEN": "change-me-in-production"
+      }
+    }
+  }
+}

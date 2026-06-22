@@ -1,0 +1,37 @@
+annet_containers:
+  - name: "annet"
+    container_name: "annet-orion"
+    default: true
+    description: "Default annet container"
+  - name: "annet-telnet"
+    container_name: "annet-telnet"
+    description: "Telnet devices container"
+  - name: "annet-ssh-10022"
+    container_name: "annet-ssh-10022"
+    description: "Orion SSH 10022 devices container"
+
+ssh_keys:
+  - name: "default"
+    path: "/keys/id_rsa"
+    user: "admin"
+  - name: "telnet"
+    path: "/keys/telnet_key"
+    user: "telnet_user"
+
+server:
+  ssh:
+    port: 22
+    bind: "0.0.0.0"
+  api:
+    port: 8080
+    bind: "0.0.0.0"
+    auth_token: "change-me-in-production"
+
+storage:
+  routing_file: "./storage/routing.json"
+
+docker:
+  # Конфигурация для стандартного Docker на Linux
+  host: "unix:///var/run/docker.sock"
+  api_version: "1.41"
+  tls_verify: false

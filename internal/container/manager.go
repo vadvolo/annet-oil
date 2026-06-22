@@ -31,10 +31,13 @@ func New(cfg *config.Config) (*Manager, error) {
 	// Добавляем базовые опции
 	clientOpts = append(clientOpts, client.FromEnv, client.WithAPIVersionNegotiation())
 
-	// Если указан кастомный host в конфигурации
-	if cfg.Docker.Host != "" {
-		clientOpts = append(clientOpts, client.WithHost(cfg.Docker.Host))
+	// Для snap Docker может потребоваться явный хост
+	dockerHost := cfg.Docker.Host
+	if dockerHost == "" {
+		// По умолчанию используем стандартный Unix socket
+		dockerHost = "unix:///var/run/docker.sock"
 	}
+	clientOpts = append(clientOpts, client.WithHost(dockerHost))
 
 	// Если указана API версия
 	if cfg.Docker.APIVersion != "" {
@@ -48,7 +51,7 @@ func New(cfg *config.Config) (*Manager, error) {
 
 	cli, err := client.NewClientWithOpts(clientOpts...)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create Docker client: %w\n\nTroubleshooting:\n- Check if Docker daemon is running: systemctl status docker\n- Check if Docker socket exists: ls -la /var/run/docker.sock\n- Check if user has permissions: sudo usermod -aG docker $USER\n- Try setting DOCKER_HOST environment variable", err)
+		return nil, fmt.Errorf("failed to create Docker client (host: %s): %w\n\nTroubleshooting:\n- For snap Docker: snap services docker\n- For systemd Docker: systemctl status docker\n- Check Docker socket: ls -la /var/run/docker.sock\n- Try with explicit host: DOCKER_HOST=unix:///var/run/docker.sock", dockerHost, err)
 	}
 
 	// Тестируем подключение к Docker daemon
@@ -57,7 +60,7 @@ func New(cfg *config.Config) (*Manager, error) {
 
 	_, err = cli.Ping(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to Docker daemon: %w\n\nTroubleshooting:\n- Check if Docker daemon is running: systemctl status docker\n- Check if Docker socket is accessible: ls -la /var/run/docker.sock\n- Check if current user is in docker group: groups $USER\n- Try running with sudo or check Docker permissions", err)
+		return nil, fmt.Errorf("failed to connect to Docker daemon (host: %s): %w\n\nTroubleshooting:\n- For snap Docker: snap services docker\n- For systemd Docker: systemctl status docker\n- Check socket permissions: ls -la /var/run/docker.sock\n- Try: DOCKER_HOST=unix:///var/run/docker.sock ./bin/annet-oil containers list", dockerHost, err)
 	}
 
 	return &Manager{
