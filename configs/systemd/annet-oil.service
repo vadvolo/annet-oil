@@ -1,9 +1,8 @@
 [Unit]
 Description=Annet Oil Server - Network Configuration Management API
 Documentation=https://github.com/yourusername/annet-oil
-After=network-online.target docker.service
-Wants=network-online.target
-Requires=docker.service
+After=network-online.target
+Wants=network-online.target docker.service
 
 [Service]
 Type=simple

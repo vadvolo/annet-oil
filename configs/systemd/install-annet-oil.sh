@@ -113,9 +113,8 @@ cat > $SYSTEMD_DIR/annet-oil.service << 'EOF'
 [Unit]
 Description=Annet Oil Server - Network Configuration Management API
 Documentation=https://github.com/yourusername/annet-oil
-After=network-online.target docker.service
-Wants=network-online.target
-Requires=docker.service
+After=network-online.target
+Wants=network-online.target docker.service
 
 [Service]
 Type=simple
@@ -166,8 +165,7 @@ cat > $SYSTEMD_DIR/mcp-annet-oil.service << 'EOF'
 Description=MCP Annet Oil - Model Context Protocol Server for Annet Oil
 Documentation=https://github.com/yourusername/annet-oil
 After=network-online.target annet-oil.service
-Wants=network-online.target
-Requires=annet-oil.service
+Wants=network-online.target annet-oil.service
 
 [Service]
 Type=simple

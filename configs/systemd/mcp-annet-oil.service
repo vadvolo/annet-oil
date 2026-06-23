@@ -2,8 +2,7 @@
 Description=MCP Annet Oil - Model Context Protocol Server for Annet Oil
 Documentation=https://github.com/yourusername/annet-oil
 After=network-online.target annet-oil.service
-Wants=network-online.target
-Requires=annet-oil.service
+Wants=network-online.target annet-oil.service
 
 [Service]
 Type=simple
