@@ -10,31 +10,32 @@ import (
 )
 
 type Service struct {
-	config          *config.Config
+	config           *config.Config
 	containerManager *container.Manager
-	router          *router.Router
+	router           *router.Router
 }
 
 type CommandRequest struct {
-	Command      string            `json:"command"`
-	Filters      []string          `json:"filters,omitempty"`     // Hostnames for routing
-	Generators   []string          `json:"generators,omitempty"`  // Generator filters (-g)
-	Container    string            `json:"container,omitempty"`
-	DryRun       bool              `json:"dry_run,omitempty"`
-	Parallel     bool              `json:"parallel,omitempty"`
-	Timeout      int               `json:"timeout,omitempty"`
-	Quiet        bool              `json:"quiet,omitempty"`       // Suppress stderr warnings
-	ExtraArgs    []string          `json:"extra_args,omitempty"`
-	Environment  map[string]string `json:"environment,omitempty"`
+	Command           string            `json:"command"`
+	Filters           []string          `json:"filters,omitempty"`            // Hostnames for routing
+	Generators        []string          `json:"generators,omitempty"`         // Generator filters (-g)
+	ExcludeGenerators []string          `json:"exclude_generators,omitempty"` // Exclude generators (-G)
+	Container         string            `json:"container,omitempty"`
+	DryRun            bool              `json:"dry_run,omitempty"`
+	Parallel          bool              `json:"parallel,omitempty"`
+	Timeout           int               `json:"timeout,omitempty"`
+	Quiet             bool              `json:"quiet,omitempty"` // Suppress stderr warnings
+	ExtraArgs         []string          `json:"extra_args,omitempty"`
+	Environment       map[string]string `json:"environment,omitempty"`
 }
 
 type CommandResponse struct {
-	Success     bool                      `json:"success"`
-	Results     map[string]*CommandResult `json:"results,omitempty"`
-	Error       string                    `json:"error,omitempty"`
-	TotalHosts  int                       `json:"total_hosts"`
-	SuccessHosts int                      `json:"success_hosts"`
-	FailedHosts int                       `json:"failed_hosts"`
+	Success      bool                      `json:"success"`
+	Results      map[string]*CommandResult `json:"results,omitempty"`
+	Error        string                    `json:"error,omitempty"`
+	TotalHosts   int                       `json:"total_hosts"`
+	SuccessHosts int                       `json:"success_hosts"`
+	FailedHosts  int                       `json:"failed_hosts"`
 }
 
 type CommandResult struct {
@@ -48,9 +49,9 @@ type CommandResult struct {
 
 func New(cfg *config.Config, containerMgr *container.Manager, router *router.Router) *Service {
 	return &Service{
-		config:          cfg,
+		config:           cfg,
 		containerManager: containerMgr,
-		router:          router,
+		router:           router,
 	}
 }
 
@@ -120,11 +121,11 @@ func (s *Service) ExecuteCommand(ctx context.Context, req *CommandRequest) (*Com
 	}
 
 	return &CommandResponse{
-		Success:     failedHosts == 0,
-		Results:     results,
-		TotalHosts:  totalHosts,
+		Success:      failedHosts == 0,
+		Results:      results,
+		TotalHosts:   totalHosts,
 		SuccessHosts: successHosts,
-		FailedHosts: failedHosts,
+		FailedHosts:  failedHosts,
 	}, nil
 }
 
@@ -201,6 +202,13 @@ func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string
 	if len(req.Generators) > 0 {
 		for _, generator := range req.Generators {
 			args = append(args, "-g", generator)
+		}
+	}
+
+	// Добавляем exclude generator фильтры если указаны
+	if len(req.ExcludeGenerators) > 0 {
+		for _, excludeGen := range req.ExcludeGenerators {
+			args = append(args, "-G", excludeGen)
 		}
 	}
 

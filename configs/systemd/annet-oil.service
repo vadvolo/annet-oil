@@ -1,0 +1,48 @@
+[Unit]
+Description=Annet Oil Server - Network Configuration Management API
+Documentation=https://github.com/yourusername/annet-oil
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=annet
+Group=annet
+WorkingDirectory=/opt/annet-oil
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="ANNET_OIL_CONFIG=/opt/annet-oil/configs/config.yaml"
+
+# Start command for both API and SSH servers
+ExecStart=/opt/annet-oil/bin/annet-oil server start
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Process management
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/annet-oil/storage
+ReadOnlyPaths=/opt/annet-oil/configs
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=annet-oil
+
+[Install]
+WantedBy=multi-user.target
