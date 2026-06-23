@@ -24,6 +24,7 @@ const annetClient = new AnnetOilClient({
 const CommandRequestSchema = z.object({
   filters: z.array(z.string()).optional().describe('Device hostnames or patterns to target'),
   generators: z.array(z.string()).optional().describe('Generator filters to apply (e.g., interfaces, routing)'),
+  exclude_generators: z.array(z.string()).optional().describe('Exclude specific generators from execution'),
   container: z.string().optional().describe('Specific container to use'),
   dry_run: z.boolean().optional().describe('Perform dry run without making changes'),
   parallel: z.boolean().optional().describe('Execute in parallel mode'),
@@ -43,6 +44,11 @@ const commandInputSchema = {
       type: 'array',
       items: { type: 'string' },
       description: 'Generator filters to apply (e.g., interfaces, routing)',
+    },
+    exclude_generators: {
+      type: 'array',
+      items: { type: 'string' },
+      description: 'Exclude specific generators from execution',
     },
     container: {
       type: 'string',

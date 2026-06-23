@@ -10,6 +10,7 @@ export interface CommandRequest {
   command?: string;
   filters?: string[];
   generators?: string[];
+  exclude_generators?: string[];
   container?: string;
   dry_run?: boolean;
   parallel?: boolean;
