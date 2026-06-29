@@ -37,8 +37,8 @@ func init() {
 }
 
 func runPatchCommand(cmd *cobra.Command, args []string) error {
-	// args - это hostnames (позиционные аргументы)
-	// patchFilters - это generator фильтры (-g)
+	// args are hostnames (positional arguments)
+	// patchFilters are generator filters (-g)
 
 	if len(args) == 0 && patchContainer == "" {
 		return fmt.Errorf("at least one hostname must be specified")
@@ -46,8 +46,8 @@ func runPatchCommand(cmd *cobra.Command, args []string) error {
 
 	req := &annet.CommandRequest{
 		Command:    "patch",
-		Filters:    args,          // hostnames для маршрутизации
-		Generators: patchFilters,  // generator фильтры (-g)
+		Filters:    args,          // hostnames for routing
+		Generators: patchFilters,  // generator filters (-g)
 		Container:  patchContainer,
 		DryRun:     patchDryRun,
 		Parallel:   patchParallel,

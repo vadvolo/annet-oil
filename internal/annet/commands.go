@@ -154,13 +154,13 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 	containerRoutes := make(map[string][]string)
 
 	if req.Container != "" {
-		// Если контейнер указан явно, используем его
+		// If container is specified explicitly, use it
 		containerRoutes[req.Container] = []string{"all"}
 		return containerRoutes
 	}
 
 	if len(req.Filters) == 0 {
-		// Если фильтры не указаны, используем default контейнер
+		// If no filters are specified, use the default container
 		defaultContainer := s.config.GetDefaultContainer()
 		if defaultContainer != nil {
 			containerRoutes[defaultContainer.Name] = []string{"all"}
@@ -168,7 +168,7 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 		return containerRoutes
 	}
 
-	// Фильтры - это имена устройств для маршрутизации
+	// Filters are device names for routing
 	hostContainerMap := s.router.GetContainerForHosts(req.Filters)
 
 	for hostname, containerName := range hostContainerMap {
@@ -178,9 +178,9 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 		containerRoutes[containerName] = append(containerRoutes[containerName], hostname)
 	}
 
-	// Для hostname без маршрутов используем default контейнер
+	// For hostnames without routes, use the default container
 	for _, filter := range req.Filters {
-		// Проверяем, есть ли маршрут для этого hostname
+		// Check if there is a route for this hostname
 		if _, found := hostContainerMap[filter]; !found {
 			defaultContainer := s.config.GetDefaultContainer()
 			if defaultContainer != nil {
@@ -198,14 +198,14 @@ func (s *Service) determineContainerRoutes(req *CommandRequest) map[string][]str
 func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string {
 	args := []string{req.Command}
 
-	// Добавляем generator фильтры если указаны
+	// Add generator filters if specified
 	if len(req.Generators) > 0 {
 		for _, generator := range req.Generators {
 			args = append(args, "-g", generator)
 		}
 	}
 
-	// Добавляем exclude generator фильтры если указаны
+	// Add exclude generator filters if specified
 	if len(req.ExcludeGenerators) > 0 {
 		for _, excludeGen := range req.ExcludeGenerators {
 			args = append(args, "-G", excludeGen)
@@ -216,7 +216,7 @@ func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string
 		args = append(args, "--dry-run")
 	}
 
-	// Для команды deploy всегда добавляем --no-ask-deploy
+	// For deploy command always add --no-ask-deploy
 	if req.Command == "deploy" {
 		args = append(args, "--no-ask-deploy")
 	}
@@ -231,12 +231,12 @@ func (s *Service) buildCommandArgs(req *CommandRequest, hosts []string) []string
 
 	args = append(args, req.ExtraArgs...)
 
-	// Добавляем query (hostnames) в конец - annet требует его
+	// Add query (hostnames) at the end - annet requires it
 	if len(hosts) > 0 && hosts[0] != "all" {
-		// Используем имена устройств как query
+		// Use device names as query
 		args = append(args, hosts...)
 	} else {
-		// Если не указаны конкретные устройства, используем "*" (все)
+		// If no specific devices are specified, use "*" (all)
 		args = append(args, "*")
 	}
 

@@ -37,8 +37,8 @@ func init() {
 }
 
 func runDeployCommand(cmd *cobra.Command, args []string) error {
-	// args - это hostnames (позиционные аргументы)
-	// deployFilters - это generator фильтры (-g)
+	// args are hostnames (positional arguments)
+	// deployFilters are generator filters (-g)
 
 	if len(args) == 0 && deployContainer == "" {
 		return fmt.Errorf("at least one hostname must be specified")
@@ -46,8 +46,8 @@ func runDeployCommand(cmd *cobra.Command, args []string) error {
 
 	req := &annet.CommandRequest{
 		Command:    "deploy",
-		Filters:    args,           // hostnames для маршрутизации
-		Generators: deployFilters,  // generator фильтры (-g)
+		Filters:    args,           // hostnames for routing
+		Generators: deployFilters,  // generator filters (-g)
 		Container:  deployContainer,
 		DryRun:     deployDryRun,
 		Parallel:   deployParallel,

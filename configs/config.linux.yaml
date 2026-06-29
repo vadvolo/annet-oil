@@ -31,7 +31,7 @@ storage:
   routing_file: "./storage/routing.json"
 
 docker:
-  # Конфигурация для стандартного Docker на Linux
+  # Configuration for standard Docker on Linux
   host: "unix:///var/run/docker.sock"
   api_version: "1.41"
   tls_verify: false

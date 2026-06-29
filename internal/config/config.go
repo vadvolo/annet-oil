@@ -186,7 +186,7 @@ func createDefaultConfig(configPath string) (*Config, error) {
 			RoutingFile: "./storage/routing.json",
 		},
 		Docker: DockerConfig{
-			Host: "", // Пустое значение = автоопределение
+			Host: "", // Empty value = auto-detect
 		},
 	}
 

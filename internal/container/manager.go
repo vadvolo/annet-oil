@@ -28,23 +28,23 @@ type ExecResult struct {
 func New(cfg *config.Config) (*Manager, error) {
 	var clientOpts []client.Opt
 
-	// Добавляем базовые опции
+	// Add base options
 	clientOpts = append(clientOpts, client.FromEnv, client.WithAPIVersionNegotiation())
 
-	// Для snap Docker может потребоваться явный хост
+	// For snap Docker an explicit host may be required
 	dockerHost := cfg.Docker.Host
 	if dockerHost == "" {
-		// По умолчанию используем стандартный Unix socket
+		// Default to standard Unix socket
 		dockerHost = "unix:///var/run/docker.sock"
 	}
 	clientOpts = append(clientOpts, client.WithHost(dockerHost))
 
-	// Если указана API версия
+	// If API version is specified
 	if cfg.Docker.APIVersion != "" {
 		clientOpts = append(clientOpts, client.WithVersion(cfg.Docker.APIVersion))
 	}
 
-	// TLS настройки
+	// TLS settings
 	if cfg.Docker.TLSVerify {
 		clientOpts = append(clientOpts, client.WithTLSClientConfig(cfg.Docker.CertPath, cfg.Docker.CertPath, cfg.Docker.CertPath))
 	}
@@ -54,7 +54,7 @@ func New(cfg *config.Config) (*Manager, error) {
 		return nil, fmt.Errorf("failed to create Docker client (host: %s): %w\n\nTroubleshooting:\n- For snap Docker: snap services docker\n- For systemd Docker: systemctl status docker\n- Check Docker socket: ls -la /var/run/docker.sock\n- Try with explicit host: DOCKER_HOST=unix:///var/run/docker.sock", dockerHost, err)
 	}
 
-	// Тестируем подключение к Docker daemon
+	// Test connection to Docker daemon
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -154,18 +154,18 @@ func (m *Manager) ExecuteAnnetCommand(ctx context.Context, containerName string,
 }
 
 func (m *Manager) ValidateContainerAccess(ctx context.Context, containerName string) error {
-	// Используем --help вместо --version, так как annet не поддерживает --version
+	// Use --help instead of --version since annet does not support --version
 	result, err := m.ExecuteAnnetCommand(ctx, containerName, []string{"--help"})
 	if err != nil {
 		return fmt.Errorf("failed to validate container %s: %w", containerName, err)
 	}
 
-	// --help возвращает exit code 0 и показывает справку
+	// --help returns exit code 0 and shows help
 	if result.ExitCode != 0 {
 		return fmt.Errorf("annet command failed in container %s: %s", containerName, result.Stderr)
 	}
 
-	// Проверяем что в выводе есть ключевые слова annet
+	// Check that the output contains expected annet keywords
 	if !strings.Contains(result.Stdout, "annet") && !strings.Contains(result.Stderr, "annet") {
 		return fmt.Errorf("annet command output doesn't contain expected content in container %s", containerName)
 	}

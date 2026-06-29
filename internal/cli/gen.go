@@ -37,8 +37,8 @@ func init() {
 }
 
 func runGenCommand(cmd *cobra.Command, args []string) error {
-	// args - это hostnames (позиционные аргументы)
-	// genFilters - это generator фильтры (-g)
+	// args are hostnames (positional arguments)
+	// genFilters are generator filters (-g)
 
 	if len(args) == 0 && genContainer == "" {
 		return fmt.Errorf("at least one hostname must be specified")
@@ -46,8 +46,8 @@ func runGenCommand(cmd *cobra.Command, args []string) error {
 
 	req := &annet.CommandRequest{
 		Command:    "gen",
-		Filters:    args,        // hostnames для маршрутизации
-		Generators: genFilters,  // generator фильтры (-g)
+		Filters:    args,        // hostnames for routing
+		Generators: genFilters,  // generator filters (-g)
 		Container:  genContainer,
 		Parallel:   genParallel,
 		Timeout:    genTimeout,

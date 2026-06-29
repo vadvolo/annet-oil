@@ -31,8 +31,8 @@ storage:
   routing_file: "./storage/routing.json"
 
 docker:
-  # Конфигурация для Colima
-  # Замените vadvolo на ваш username
+  # Configuration for Colima
+  # Replace vadvolo with your username
   host: "unix:///Users/vadvolo/.colima/default/docker.sock"
   api_version: "1.41"
   tls_verify: false

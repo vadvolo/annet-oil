@@ -35,8 +35,8 @@ func init() {
 }
 
 func runDiffCommand(cmd *cobra.Command, args []string) error {
-	// args - это hostnames (позиционные аргументы)
-	// diffFilters - это generator фильтры (-g)
+	// args are hostnames (positional arguments)
+	// diffFilters are generator filters (-g)
 
 	if len(args) == 0 && diffContainer == "" {
 		return fmt.Errorf("at least one hostname must be specified")
@@ -44,8 +44,8 @@ func runDiffCommand(cmd *cobra.Command, args []string) error {
 
 	req := &annet.CommandRequest{
 		Command:    "diff",
-		Filters:    args,         // hostnames для маршрутизации
-		Generators: diffFilters,  // generator фильтры (-g)
+		Filters:    args,         // hostnames for routing
+		Generators: diffFilters,  // generator filters (-g)
 		Container:  diffContainer,
 		Parallel:   diffParallel,
 		Timeout:    diffTimeout,
