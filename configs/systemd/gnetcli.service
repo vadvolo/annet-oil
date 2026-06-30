@@ -1,0 +1,29 @@
+[Unit]
+Description=Gnetcli gRPC Server
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root
+
+# Load environment variables from .env file
+EnvironmentFile=/etc/gnetcli/gnetcli.env
+
+ExecStart=/root/go/bin/gnetcli_server \
+    -port 0.0.0.0:${GNETCLI_GRPC_PORT} \
+    -http_port 0.0.0.0:${GNETCLI_HTTP_PORT} \
+    -basic-auth ${GNETCLI_LOGIN}:${GNETCLI_PASSWORD} \
+    -debug
+
+Restart=on-failure
+RestartSec=5s
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gnetcli
+
+[Install]
+WantedBy=multi-user.target

@@ -136,6 +136,15 @@ export class AnnetOilClient {
     }
   }
 
+  async executeCommand(request: CommandRequest): Promise<CommandResponse> {
+    try {
+      const response = await this.client.post('/execute', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
   private handleError(error: unknown): Error {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;

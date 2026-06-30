@@ -9,6 +9,7 @@ import {
 import { z } from 'zod';
 import dotenv from 'dotenv';
 import { AnnetOilClient, CommandRequest, CommandResponse } from './client.js';
+import { CommandValidator } from './command-whitelist.js';
 
 dotenv.config();
 
@@ -73,6 +74,8 @@ const commandInputSchema = {
   },
 };
 
+const commandValidator = new CommandValidator();
+
 const tools: Tool[] = [
   {
     name: 'annet_gen',
@@ -118,6 +121,41 @@ const tools: Tool[] = [
   {
     name: 'annet_health',
     description: 'Check health status of Annet Oil API',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {},
+    },
+  },
+  {
+    name: 'annet_execute',
+    description: 'Execute whitelisted show/diagnostic commands on network devices',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        command: {
+          type: 'string',
+          description: 'Command to execute (must be whitelisted - show commands only)',
+        },
+        filters: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Device hostnames or patterns to target',
+        },
+        container: {
+          type: 'string',
+          description: 'Specific container to use',
+        },
+        timeout: {
+          type: 'number',
+          description: 'Command timeout in seconds',
+        },
+      },
+      required: ['command'],
+    },
+  },
+  {
+    name: 'annet_list_allowed_commands',
+    description: 'List categories of allowed commands that can be executed',
     inputSchema: {
       type: 'object' as const,
       properties: {},
@@ -304,6 +342,72 @@ async function main() {
               {
                 type: 'text',
                 text: `Annet Oil API Health: ${health.status}`,
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_execute': {
+          const { command, filters, container, timeout } = args as {
+            command: string;
+            filters?: string[];
+            container?: string;
+            timeout?: number;
+          };
+
+          // Validate the command against whitelist
+          if (!commandValidator.isAllowed(command)) {
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: `Command not allowed: "${command}"\n\nOnly whitelisted show and diagnostic commands are permitted.\nUse 'annet_list_allowed_commands' to see allowed command categories.`,
+                } as TextContent,
+              ],
+              isError: true,
+            };
+          }
+
+          const request: CommandRequest = {
+            command,
+            filters,
+            container,
+            timeout,
+          };
+
+          const response = await annetClient.executeCommand(request);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: formatCommandResponse(response),
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_list_allowed_commands': {
+          const categories = commandValidator.getCategories();
+          let output = 'Allowed Command Categories:\n\n';
+          categories.forEach((category, index) => {
+            output += `${index + 1}. ${category}\n`;
+          });
+          output += '\nExamples of allowed commands:\n';
+          output += '  - show version\n';
+          output += '  - show interfaces\n';
+          output += '  - show ip route\n';
+          output += '  - show running-config\n';
+          output += '  - show vlan\n';
+          output += '  - show ip bgp summary\n';
+          output += '  - show logging\n';
+          output += '  - ping 192.168.1.1\n';
+          output += '  - traceroute 10.0.0.1\n';
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: output,
               } as TextContent,
             ],
           };

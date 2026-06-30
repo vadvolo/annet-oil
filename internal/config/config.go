@@ -14,6 +14,7 @@ type Config struct {
 	Server          ServerConfig     `yaml:"server"`
 	Storage         StorageConfig    `yaml:"storage"`
 	Docker          DockerConfig     `yaml:"docker"`
+	Gnetcli         GnetcliConfig    `yaml:"gnetcli"`
 }
 
 type AnnetContainer struct {
@@ -50,14 +51,29 @@ type StorageConfig struct {
 }
 
 type DockerConfig struct {
-	Host    string `yaml:"host,omitempty"`
+	Host       string `yaml:"host,omitempty"`
 	APIVersion string `yaml:"api_version,omitempty"`
 	CertPath   string `yaml:"cert_path,omitempty"`
 	TLSVerify  bool   `yaml:"tls_verify,omitempty"`
 }
 
+type GnetcliConfig struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	Login    string `yaml:"login"`
+	Password string `yaml:"password"`
+	TLS      bool   `yaml:"tls,omitempty"`
+}
+
 func Load() (*Config, error) {
-	configPath := getConfigPath()
+	return LoadFrom("")
+}
+
+func LoadFrom(path string) (*Config, error) {
+	if path == "" {
+		path = getConfigPath()
+	}
+	configPath := path
 
 	data, err := os.ReadFile(configPath)
 	if err != nil {

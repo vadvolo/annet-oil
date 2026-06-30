@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"annet-oil/internal/api"
+	"annet-oil/internal/gnetcli"
 	"annet-oil/internal/ssh"
 )
 
@@ -103,7 +104,13 @@ func runSSHServerCommand(cmd *cobra.Command, args []string) error {
 }
 
 func startAPIServer(ctx context.Context) error {
-	server, err := api.NewServer(cfg, annetService, routerInstance)
+	gnetcliClient, err := gnetcli.New(&cfg.Gnetcli)
+	if err != nil {
+		return fmt.Errorf("failed to create gnetcli client: %w", err)
+	}
+	defer gnetcliClient.Close()
+
+	server, err := api.NewServer(cfg, annetService, routerInstance, gnetcliClient)
 	if err != nil {
 		return fmt.Errorf("failed to create API server: %w", err)
 	}

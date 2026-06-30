@@ -1,0 +1,42 @@
+annet_containers:
+  - name: "default"
+    container_name: "annet-test"
+    default: true
+    description: "Default test container for local development"
+  - name: "test"
+    container_name: "annet-test-2"
+    description: "Secondary test container"
+
+ssh_keys:
+  - name: "default"
+    path: "/tmp/test_key"
+    user: "admin"
+
+server:
+  ssh:
+    port: 2222
+    bind: "127.0.0.1"
+  api:
+    port: 8080
+    bind: "0.0.0.0"
+    auth_token: "test-token-12345"
+
+storage:
+  routing_file: "./storage/routing.json"
+
+gnetcli:
+  host: "localhost"
+  port: 50051
+  login: "admin"
+  password: "password"
+  tls: false
+
+docker:
+  # For local testing without Docker
+  # If using Docker Desktop on Mac:
+  # host: "unix:///var/run/docker.sock"
+  # If using Colima:
+  # host: "unix:///Users/$USER/.colima/default/docker.sock"
+  host: "unix:///Users/vadvolo/.colima/default/docker.sock"
+  api_version: "1.41"
+  tls_verify: false

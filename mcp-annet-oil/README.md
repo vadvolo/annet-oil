@@ -13,6 +13,8 @@ The MCP server exposes the following tools to AI agents:
 - **annet_containers** - Get status of Annet containers
 - **annet_routing** - Get device routing information
 - **annet_health** - Check API health status
+- **annet_execute** - Execute whitelisted commands on network devices
+- **annet_list_allowed_commands** - List categories of allowed commands
 
 ## Installation
 
@@ -83,6 +85,18 @@ Use annet_patch with dry_run=true for device Kragujevac-4948-10G.otk.rs
 
 ```
 Use annet_containers to show the status of all Annet containers
+```
+
+### Execute Show Commands
+
+```
+Use annet_execute with command="show interfaces" for device hostname1
+```
+
+### List Allowed Commands
+
+```
+Use annet_list_allowed_commands to see what commands can be executed
 ```
 
 ## Tool Parameters
