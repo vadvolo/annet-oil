@@ -101,7 +101,7 @@ func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error
 
 // ExecWithDevice executes command with device-specific parameters
 func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string) (*ExecResult, error) {
-	log.Printf("[gnetcli] Executing command with device params: host=%s, cmd=%s, vendor=%s", host, cmd, vendor)
+	log.Printf("[gnetcli] Executing command with device params: host=%s, cmd=%s, vendor=%s, login=%s, password=%s", host, cmd, vendor, login, password)
 
 	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
 
