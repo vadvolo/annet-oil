@@ -63,7 +63,7 @@ export class AnnetOilClient {
 
   constructor(private config: AnnetConfig) {
     this.client = axios.create({
-      baseURL: `${config.apiUrl}/api/v1`,
+      baseURL: `${config.apiUrl}/api/v0`,
       timeout: config.timeout || 30000,
       headers: {
         'Authorization': `Bearer ${config.authToken}`,
