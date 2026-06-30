@@ -14,10 +14,11 @@ import (
 )
 
 type Client struct {
-	conn   *grpc.ClientConn
-	client proto.GnetcliClient
-	login  string
-	pass   string
+	conn      *grpc.ClientConn
+	client    proto.GnetcliClient
+	authToken string
+	login     string
+	pass      string
 }
 
 type ExecResult struct {
@@ -41,10 +42,11 @@ func New(cfg *config.GnetcliConfig) (*Client, error) {
 	}
 
 	return &Client{
-		conn:   conn,
-		client: proto.NewGnetcliClient(conn),
-		login:  cfg.Login,
-		pass:   cfg.Password,
+		conn:      conn,
+		client:    proto.NewGnetcliClient(conn),
+		authToken: cfg.AuthToken,
+		login:     cfg.Login,
+		pass:      cfg.Password,
 	}, nil
 }
 
@@ -52,12 +54,17 @@ func (c *Client) Close() error {
 	return c.conn.Close()
 }
 
-func (c *Client) basicAuth() string {
+func (c *Client) getAuthHeader() string {
+	// If auth token is provided, use it directly (it's already base64 encoded)
+	if c.authToken != "" {
+		return "Basic " + c.authToken
+	}
+	// Otherwise use login/password
 	return "Basic " + base64.StdEncoding.EncodeToString([]byte(c.login+":"+c.pass))
 }
 
 func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error) {
-	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.basicAuth())
+	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
 
 	res, err := c.client.Exec(ctx, &proto.CMD{
 		Host: host,

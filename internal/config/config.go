@@ -58,11 +58,12 @@ type DockerConfig struct {
 }
 
 type GnetcliConfig struct {
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	Login    string `yaml:"login"`
-	Password string `yaml:"password"`
-	TLS      bool   `yaml:"tls,omitempty"`
+	Host      string `yaml:"host"`
+	Port      int    `yaml:"port"`
+	AuthToken string `yaml:"auth_token,omitempty"`
+	Login     string `yaml:"login"`
+	Password  string `yaml:"password"`
+	TLS       bool   `yaml:"tls,omitempty"`
 }
 
 func Load() (*Config, error) {
