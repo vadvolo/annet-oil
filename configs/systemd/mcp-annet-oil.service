@@ -13,7 +13,7 @@ Environment="PATH=/usr/local/bin:/usr/bin:/bin"
 Environment="NODE_ENV=production"
 
 # Environment variables for MCP server
-Environment="ANNET_OIL_API_URL=http://localhost:8080"
+Environment="ANNET_OIL_API_URL=http://localhost:8181"
 Environment="ANNET_OIL_API_TOKEN=your-secret-token"
 Environment="MCP_SERVER_NAME=annet-oil"
 
@@ -21,8 +21,8 @@ Environment="MCP_SERVER_NAME=annet-oil"
 Environment="NODE_OPTIONS=--max-old-space-size=2048"
 
 # Start command
-ExecStartPre=/usr/bin/npm ci --production
-ExecStart=/usr/bin/node dist/index.js
+# Dependencies should be installed manually before starting service
+ExecStart=/usr/local/bin/node dist/index.js
 
 # Restart policy
 Restart=always
