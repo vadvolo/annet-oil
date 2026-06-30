@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"log"
 
 	proto "github.com/annetutil/gnetcli/pkg/server/proto"
 	"google.golang.org/grpc"
@@ -29,6 +30,9 @@ type ExecResult struct {
 
 func New(cfg *config.GnetcliConfig) (*Client, error) {
 	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
+
+	log.Printf("[gnetcli] Connecting to %s", addr)
+	log.Printf("[gnetcli] Config: AuthToken=%v, Login=%s", cfg.AuthToken != "", cfg.Login)
 
 	var opts []grpc.DialOption
 	if cfg.TLS {
@@ -64,6 +68,8 @@ func (c *Client) getAuthHeader() string {
 }
 
 func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error) {
+	log.Printf("[gnetcli] Executing command on host=%s, cmd=%s", host, cmd)
+
 	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
 
 	res, err := c.client.Exec(ctx, &proto.CMD{
@@ -71,8 +77,55 @@ func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error
 		Cmd:  cmd,
 	})
 	if err != nil {
+		log.Printf("[gnetcli] Exec failed: %v", err)
 		return nil, fmt.Errorf("gnetcli exec failed: %w", err)
 	}
+
+	log.Printf("[gnetcli] Exec success, status=%d", res.Status)
+
+	out := res.OutStr
+	if out == "" {
+		out = string(res.Out)
+	}
+	errStr := res.ErrorStr
+	if errStr == "" {
+		errStr = string(res.Error)
+	}
+
+	return &ExecResult{
+		Output: out,
+		Error:  errStr,
+		Status: res.Status,
+	}, nil
+}
+
+// ExecWithDevice executes command with device-specific parameters
+func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string) (*ExecResult, error) {
+	log.Printf("[gnetcli] Executing command with device params: host=%s, cmd=%s, vendor=%s", host, cmd, vendor)
+
+	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
+
+	// Build host_params
+	hostParams := &proto.HostParams{
+		Device: vendor,
+		Credentials: &proto.Credentials{
+			Login:    login,
+			Password: password,
+		},
+	}
+
+	res, err := c.client.Exec(ctx, &proto.CMD{
+		Host:         host,
+		Cmd:          cmd,
+		HostParams:   hostParams,
+		StringResult: true,
+	})
+	if err != nil {
+		log.Printf("[gnetcli] ExecWithDevice failed: %v", err)
+		return nil, fmt.Errorf("gnetcli exec failed: %w", err)
+	}
+
+	log.Printf("[gnetcli] ExecWithDevice success, status=%d", res.Status)
 
 	out := res.OutStr
 	if out == "" {

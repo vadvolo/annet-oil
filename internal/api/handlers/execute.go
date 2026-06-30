@@ -3,13 +3,16 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
 
 	"annet-oil/internal/gnetcli"
+	"annet-oil/internal/inventory"
 )
 
 type ExecuteHandler struct {
@@ -20,6 +23,7 @@ type ExecuteHandler struct {
 type ExecuteRequest struct {
 	Host    string `json:"host"`
 	Command string `json:"command"`
+	Device  string `json:"device,omitempty"` // Optional device/vendor type (cisco, juniper, etc)
 }
 
 type ExecuteResponse struct {
@@ -160,7 +164,51 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := h.client.Exec(r.Context(), req.Host, req.Command)
+	// Default vendor/device type
+	vendor := "cisco"
+	if req.Device != "" {
+		vendor = strings.ToLower(req.Device)
+	}
+
+	// Try to get device from inventory
+	device, err := inventory.GetDevice(req.Host)
+	if err != nil {
+		log.Printf("[execute] Device %s not found in inventory, using defaults: %v", req.Host, err)
+		// Use default values if device not in inventory
+		device = &inventory.Device{
+			Hostname: req.Host,
+			IP:       req.Host,
+			Vendor:   vendor, // Use vendor from request or default
+			Credentials: inventory.DeviceCredentials{
+				Login:    os.Getenv("DEVICE_USERNAME"),
+				Password: os.Getenv("DEVICE_PASSWORD"),
+			},
+		}
+	} else {
+		// If device from request is provided, override inventory vendor
+		if req.Device != "" {
+			device.Vendor = vendor
+		}
+	}
+
+	// Use IP if available, otherwise use hostname
+	targetHost := device.IP
+	if targetHost == "" {
+		targetHost = device.Hostname
+	}
+
+	log.Printf("[execute] Executing command on device: host=%s, ip=%s, vendor=%s",
+		device.Hostname, targetHost, device.Vendor)
+
+	// Execute command with device parameters
+	result, err := h.client.ExecWithDevice(
+		r.Context(),
+		targetHost,
+		req.Command,
+		device.Vendor,
+		device.Credentials.Login,
+		device.Credentials.Password,
+	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

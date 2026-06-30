@@ -47,7 +47,8 @@ type APIConfig struct {
 }
 
 type StorageConfig struct {
-	RoutingFile string `yaml:"routing_file"`
+	RoutingFile   string `yaml:"routing_file"`
+	InventoryFile string `yaml:"inventory_file,omitempty"`
 }
 
 type DockerConfig struct {

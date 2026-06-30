@@ -3,6 +3,7 @@ package cli
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -10,6 +11,7 @@ import (
 	"annet-oil/internal/annet"
 	"annet-oil/internal/config"
 	"annet-oil/internal/container"
+	"annet-oil/internal/inventory"
 	"annet-oil/internal/router"
 )
 
@@ -59,6 +61,16 @@ func initializeServices() error {
 	routerInstance = router.New(cfg)
 	if err := routerInstance.LoadRoutes(); err != nil {
 		return fmt.Errorf("failed to load routes: %w", err)
+	}
+
+	// Load inventory if configured
+	if cfg.Storage.InventoryFile != "" {
+		if _, err := inventory.Load(cfg.Storage.InventoryFile); err != nil {
+			log.Printf("Warning: Failed to load inventory from %s: %v", cfg.Storage.InventoryFile, err)
+			// Not fatal - we can work without inventory
+		} else {
+			log.Printf("Loaded inventory from %s", cfg.Storage.InventoryFile)
+		}
 	}
 
 	annetService = annet.New(cfg, containerMgr, routerInstance)
