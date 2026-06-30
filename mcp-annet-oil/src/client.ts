@@ -63,7 +63,7 @@ export class AnnetOilClient {
 
   constructor(private config: AnnetConfig) {
     this.client = axios.create({
-      baseURL: `${config.apiUrl}/api/v0`,
+      baseURL: `${config.apiUrl}/api/v1`,
       timeout: config.timeout || 30000,
       headers: {
         'Authorization': `Bearer ${config.authToken}`,
@@ -138,8 +138,33 @@ export class AnnetOilClient {
 
   async executeCommand(request: CommandRequest): Promise<CommandResponse> {
     try {
-      const response = await this.client.post('/execute', request);
-      return response.data;
+      // The execute endpoint expects a single host and command
+      // If filters is provided, use the first filter as the host
+      const host = request.filters && request.filters.length > 0 ? request.filters[0] : '';
+
+      const executeRequest = {
+        host: host,
+        command: request.command || '',
+      };
+
+      const response = await this.client.post('/execute', executeRequest);
+
+      // Transform the response to match CommandResponse format
+      return {
+        success: response.data.status === 0,
+        results: {
+          [host]: {
+            container: request.container || 'default',
+            exit_code: response.data.status || 0,
+            stdout: response.data.output || '',
+            stderr: response.data.error || '',
+            error: response.data.error,
+          }
+        },
+        total_hosts: 1,
+        success_hosts: response.data.status === 0 ? 1 : 0,
+        failed_hosts: response.data.status === 0 ? 0 : 1,
+      };
     } catch (error) {
       throw this.handleError(error);
     }
