@@ -197,8 +197,8 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		targetHost = device.Hostname
 	}
 
-	log.Printf("[execute] Executing command on device: host=%s, ip=%s, vendor=%s",
-		device.Hostname, targetHost, device.Vendor)
+	log.Printf("[execute] Executing command on device: host=%s, ip=%s, vendor=%s, login=%s, password=%",
+		device.Hostname, targetHost, device.Vendor, device.Credentials.Login, device.Credentials.Password)
 
 	// Execute command with device parameters
 	result, err := h.client.ExecWithDevice(

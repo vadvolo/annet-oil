@@ -136,10 +136,14 @@ const tools: Tool[] = [
           type: 'string',
           description: 'Command to execute (must be whitelisted - show commands only)',
         },
+        host: {
+          type: 'string',
+          description: 'Device hostname or IP address to execute command on',
+        },
         filters: {
           type: 'array',
           items: { type: 'string' },
-          description: 'Device hostnames or patterns to target',
+          description: 'Device hostnames or patterns to target (alternative to host parameter)',
         },
         container: {
           type: 'string',
@@ -348,8 +352,9 @@ async function main() {
         }
 
         case 'annet_execute': {
-          const { command, filters, container, timeout } = args as {
+          const { command, host, filters, container, timeout } = args as {
             command: string;
+            host?: string;
             filters?: string[];
             container?: string;
             timeout?: number;
@@ -368,9 +373,12 @@ async function main() {
             };
           }
 
+          // If host is provided directly, use it as filters
+          const effectiveFilters = host ? [host] : filters;
+
           const request: CommandRequest = {
             command,
-            filters,
+            filters: effectiveFilters,
             container,
             timeout,
           };
