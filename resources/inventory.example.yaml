@@ -1,0 +1,14 @@
+devices:
+  - hostname: test.device.com
+    ip: 192.168.1.1
+    vendor: cisco
+    platform: ios
+    credentials:
+      login: "${DEVICE_USERNAME}"
+      password: "${DEVICE_PASSWORD}"
+    description: "Cisco Test Router"
+
+# Default credentials (can be overridden per device)
+default_credentials:
+  login: "${DEVICE_USERNAME}"
+  password: "${DEVICE_PASSWORD}"
