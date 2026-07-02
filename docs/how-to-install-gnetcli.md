@@ -89,7 +89,7 @@ sudo cat > /etc/gnetcli/gnetcli.env << 'EOF'
 # /etc/gnetcli/gnetcli.env
 # gnetcli_server settings
 
-GNETCLI_GRPC_PORT=443
+GNETCLI_GRPC_PORT=50051
 GNETCLI_HTTP_PORT=50052
 
 # Basic auth for gnetcli server clients
@@ -175,7 +175,7 @@ Create client configuration `~/.gnetcli/config.yaml`:
 ```yaml
 # ~/.gnetcli/config.yaml
 server:
-  address: localhost:443  # Match GNETCLI_GRPC_PORT from .env
+  address: localhost:50051  # Match GNETCLI_GRPC_PORT from .env
   auth:
     username: your_gnetcli_user  # Match GNETCLI_LOGIN from .env
     password: your_secure_password  # Match GNETCLI_PASSWORD from .env
@@ -206,23 +206,23 @@ Once the gRPC server is running, use the gnetcli client to connect through it:
 
 ```bash
 # Basic command execution through gRPC server
-gnetcli -s localhost:443 -u your_gnetcli_user -p your_secure_password \
+gnetcli -s localhost:50051 -u your_gnetcli_user -p your_secure_password \
     -H device.example.com -d device_admin -P device_password \
     "show version"
 
 # Using environment variables for authentication
-export GNETCLI_SERVER=localhost:443
+export GNETCLI_SERVER=localhost:50051
 export GNETCLI_USER=your_gnetcli_user
 export GNETCLI_PASSWORD=your_secure_password
 gnetcli -H device.example.com "show interfaces"
 
 # Execute multiple commands
-gnetcli -s localhost:443 -u your_gnetcli_user -p your_secure_password \
+gnetcli -s localhost:50051 -u your_gnetcli_user -p your_secure_password \
     -H router1 -d admin -P router_password \
     "show version" "show interfaces" "show ip route"
 
 # Use with SSH config for device authentication
-gnetcli -s localhost:443 -u your_gnetcli_user -p your_secure_password \
+gnetcli -s localhost:50051 -u your_gnetcli_user -p your_secure_password \
     -H router1 "show running-config"
 ```
 
@@ -238,10 +238,10 @@ curl http://localhost:50052/health
 curl http://localhost:50052/metrics
 
 # Check gRPC service status
-grpcurl -plaintext localhost:443 list
+grpcurl -plaintext localhost:50051 list
 
 # Test gRPC connectivity with reflection
-grpcurl -plaintext localhost:443 describe
+grpcurl -plaintext localhost:50051 describe
 ```
 
 ### Docker Installation for gRPC Mode
