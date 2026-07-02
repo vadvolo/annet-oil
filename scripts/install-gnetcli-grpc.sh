@@ -101,7 +101,7 @@ install_gnetcli_server() {
     export PATH=$PATH:$GOPATH/bin
 
     # Install the server
-    go install github.com/annetutil/gnetcli_server@latest
+    go install github.com/annetutil/gnetcli/cmd/gnetcli_server@latest
 
     if [[ -f "$GO_BIN_PATH/gnetcli_server" ]]; then
         print_msg "gnetcli_server installed successfully at $GO_BIN_PATH/gnetcli_server"
