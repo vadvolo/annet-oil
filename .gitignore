@@ -56,3 +56,7 @@ annet-oil-host-key*
 
 # Resource
 resources/inventory.yaml
+
+# Configs
+!configs/config.example.yaml
+configs/config.*

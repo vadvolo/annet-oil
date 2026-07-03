@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # MCP Annet Oil Server (connects to host API)
+  mcp-annet-oil:
+    build:
+      context: ./mcp-annet-oil
+      dockerfile: Dockerfile
+    container_name: mcp-annet-oil
+    environment:
+      # Connect to annet-oil API running on host
+      - ANNET_OIL_API_URL=${ANNET_OIL_API_URL:-http://host.docker.internal:8080}
+      - ANNET_OIL_AUTH_TOKEN=${ANNET_OIL_AUTH_TOKEN:-change-me-in-production}
+      - NODE_ENV=production
+    extra_hosts:
+      # Ensure host.docker.internal works on Linux
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    # For MCP stdio transport
+    command: ["node", "dist/index.js"]
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

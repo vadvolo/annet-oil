@@ -1,0 +1,15 @@
+node_modules/
+npm-debug.log
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.git/
+.gitignore
+README.md
+test*.js
+claude_desktop_config.json
+.vscode/
+.idea/

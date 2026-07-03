@@ -291,20 +291,69 @@ test_installation() {
 
 # Install Python client
 install_python_client() {
-    read -p "Do you want to install the Python gnetcli client? (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        print_msg "Installing Python gnetcli client..."
+    print_msg "Checking for gnetcli Python client..."
 
+    # Check if gnetcli is already installed
+    if command -v gnetcli &> /dev/null; then
+        print_msg "gnetcli client is already installed: $(gnetcli --version 2>/dev/null || echo 'version unknown')"
+        read -p "Do you want to upgrade it? (y/N): " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            if command -v pip3 &> /dev/null; then
+                pip3 install --upgrade gnetcli
+                print_msg "gnetcli client upgraded successfully"
+            elif command -v pip &> /dev/null; then
+                pip install --upgrade gnetcli
+                print_msg "gnetcli client upgraded successfully"
+            fi
+        fi
+    else
+        print_msg "gnetcli client not found. Installing..."
+
+        # Try to install automatically
         if command -v pip3 &> /dev/null; then
             pip3 install gnetcli
-            print_msg "Python client installed successfully"
+            if command -v gnetcli &> /dev/null; then
+                print_msg "Python gnetcli client installed successfully"
+            else
+                # Try installing with --break-system-packages for newer systems
+                print_msg "Retrying installation with system packages flag..."
+                pip3 install --break-system-packages gnetcli 2>/dev/null || pip3 install --user gnetcli
+                print_msg "Python gnetcli client installed (user mode)"
+            fi
         elif command -v pip &> /dev/null; then
             pip install gnetcli
-            print_msg "Python client installed successfully"
+            if command -v gnetcli &> /dev/null; then
+                print_msg "Python gnetcli client installed successfully"
+            else
+                pip install --user gnetcli
+                print_msg "Python gnetcli client installed (user mode)"
+            fi
         else
-            print_warning "pip not found. Please install Python client manually with: pip install gnetcli"
+            print_warning "pip not found. Installing python3-pip..."
+            if command -v apt &> /dev/null; then
+                apt update && apt install -y python3-pip
+                pip3 install gnetcli
+                print_msg "Python gnetcli client installed successfully"
+            elif command -v yum &> /dev/null; then
+                yum install -y python3-pip
+                pip3 install gnetcli
+                print_msg "Python gnetcli client installed successfully"
+            else
+                print_error "Cannot install pip automatically. Please install manually:"
+                print_error "  sudo apt install python3-pip  # For Debian/Ubuntu"
+                print_error "  sudo yum install python3-pip  # For RHEL/CentOS"
+                print_error "Then run: pip3 install gnetcli"
+            fi
         fi
+    fi
+
+    # Check if gnetcli is in PATH
+    if ! command -v gnetcli &> /dev/null; then
+        print_warning "gnetcli installed but not in PATH. You may need to:"
+        print_warning "  - Add ~/.local/bin to your PATH"
+        print_warning "  - Or logout and login again"
+        print_warning "  - Or run: export PATH=\$PATH:~/.local/bin"
     fi
 }
 
