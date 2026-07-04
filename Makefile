@@ -100,6 +100,11 @@ run-api: build-api check-env ## Run Annet Oil API on host
 	@echo "Starting Annet Oil API..."
 	./$(BINARY_NAME) server start
 
+run-api-bg: build-api check-env ## Run Annet Oil API in background
+	@echo "Starting Annet Oil API in background..."
+	nohup ./$(BINARY_NAME) server start > annet-oil.log 2>&1 &
+	@echo "API started in background. Check annet-oil.log for output"
+
 run-mcp: check-env ## Run MCP container
 	@echo "Starting MCP container..."
 	docker-compose -f $(MCP_COMPOSE) up -d
