@@ -1,14 +1,11 @@
 annet_containers:
-  - name: "annet"
+  - name: "annet-default"
     container_name: "annet-default"
     default: true
     description: "Default annet container"
   - name: "annet-telnet"
     container_name: "annet-telnet"
     description: "Telnet devices container"
-  - name: "annet-orion"
-    container_name: "annet-orion"
-    description: "Orion devices container"
 
 ssh_keys:
   - name: "default"
