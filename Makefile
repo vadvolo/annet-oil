@@ -313,6 +313,51 @@ uninstall: ## Uninstall binary from system
 	sudo rm -f /usr/local/bin/$(BINARY_NAME)
 	@echo "Uninstallation complete!"
 
+# Systemd service management
+service-install: ## Install systemd service
+	@echo "Installing systemd service..."
+	@sudo cp annet-oil.service /etc/systemd/system/
+	@sudo systemctl daemon-reload
+	@echo "Service installed. Use 'make service-enable' to enable auto-start"
+
+service-enable: ## Enable systemd service
+	@echo "Enabling systemd service..."
+	@sudo systemctl enable annet-oil.service
+	@echo "Service enabled for auto-start"
+
+service-start: ## Start systemd service
+	@echo "Starting systemd service..."
+	@sudo systemctl start annet-oil.service
+	@sleep 2
+	@sudo systemctl status annet-oil.service --no-pager
+
+service-stop: ## Stop systemd service
+	@echo "Stopping systemd service..."
+	@sudo systemctl stop annet-oil.service
+
+service-restart: ## Restart systemd service
+	@echo "Restarting systemd service..."
+	@sudo systemctl restart annet-oil.service
+	@sleep 2
+	@sudo systemctl status annet-oil.service --no-pager
+
+service-status: ## Check systemd service status
+	@sudo systemctl status annet-oil.service --no-pager
+
+service-logs: ## Show systemd service logs
+	@sudo journalctl -u annet-oil.service -f
+
+service-disable: ## Disable systemd service
+	@echo "Disabling systemd service..."
+	@sudo systemctl disable annet-oil.service
+	@echo "Service disabled"
+
+service-uninstall: service-stop service-disable ## Uninstall systemd service
+	@echo "Uninstalling systemd service..."
+	@sudo rm -f /etc/systemd/system/annet-oil.service
+	@sudo systemctl daemon-reload
+	@echo "Service uninstalled"
+
 # Release
 release: clean test lint build-all ## Prepare release
 	@echo "Release preparation complete!"
