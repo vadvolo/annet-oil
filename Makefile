@@ -96,14 +96,22 @@ build-all: deps ## Build for multiple platforms
 run: run-api run-mcp ## Run API on host + MCP in container
 	@echo "All services started!"
 
+run-bg: run-api-bg run-mcp ## Run API (background) + MCP in container
+	@echo "All services started in background!"
+	@sleep 2
+	@$(MAKE) health
+
 run-api: build-api check-env ## Run Annet Oil API on host
 	@echo "Starting Annet Oil API..."
 	./$(BINARY_NAME) server start
 
 run-api-bg: build-api check-env ## Run Annet Oil API in background
 	@echo "Starting Annet Oil API in background..."
-	nohup ./$(BINARY_NAME) server start > annet-oil.log 2>&1 &
-	@echo "API started in background. Check annet-oil.log for output"
+	@nohup ./$(BINARY_NAME) server start > annet-oil.log 2>&1 & echo $$! > annet-oil.pid
+	@echo "API started in background (PID: $$(cat annet-oil.pid))"
+	@echo "Check annet-oil.log for output"
+	@sleep 2
+	@curl -s http://localhost:8080/health > /dev/null 2>&1 && echo "✓ API is running" || echo "⚠ API may still be starting..."
 
 run-mcp: check-env ## Run MCP container
 	@echo "Starting MCP container..."
@@ -168,7 +176,12 @@ stop-all: stop-annet stop-mcp stop-api ## Stop complete stack
 
 stop-api: ## Stop Annet Oil API
 	@echo "Stopping API..."
-	@pkill -f $(BINARY_NAME) || true
+	@if [ -f annet-oil.pid ]; then \
+		kill $$(cat annet-oil.pid) 2>/dev/null && echo "API stopped (PID: $$(cat annet-oil.pid))" || echo "Process not found"; \
+		rm -f annet-oil.pid; \
+	else \
+		pkill -f $(BINARY_NAME) 2>/dev/null && echo "API stopped" || echo "API not running"; \
+	fi
 
 stop-mcp: ## Stop MCP container
 	@echo "Stopping MCP container..."
@@ -224,6 +237,13 @@ logs-mcp: ## Show MCP logs
 
 logs-annet: ## Show Annet logs
 	docker-compose -f $(ANNET_COMPOSE) logs -f annet-default annet-telnet annet-orion
+
+logs-api: ## Show API logs (if running in background)
+	@if [ -f annet-oil.log ]; then \
+		tail -f annet-oil.log; \
+	else \
+		echo "No log file found. API might be running in foreground."; \
+	fi
 
 # Development shortcuts
 exec-mcp: ## Connect to MCP via stdio
