@@ -98,7 +98,7 @@ run: run-api run-mcp ## Run API on host + MCP in container
 
 run-api: build-api check-env ## Run Annet Oil API on host
 	@echo "Starting Annet Oil API..."
-	./$(BINARY_NAME)
+	./$(BINARY_NAME) server start
 
 run-mcp: check-env ## Run MCP container
 	@echo "Starting MCP container..."
@@ -318,8 +318,8 @@ docker-prune: ## Remove unused Docker resources
 	docker system prune -af --volumes
 
 # Debugging commands
-debug: ## Run API with debug output
-	ANNET_OIL_DEBUG=true ./$(BINARY_NAME)
+debug: build-api ## Run API with debug output
+	ANNET_OIL_DEBUG=true ./$(BINARY_NAME) server start
 
 debug-mcp: ## Show MCP container details
 	@docker inspect mcp-annet-oil | jq '.[0] | {State, Config: {Env: .Config.Env, Cmd: .Config.Cmd}}'
