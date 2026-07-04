@@ -1,4 +1,5 @@
-version: '3.8'
+
+version: '3.3'
 
 services:
   annet-oil:
@@ -14,6 +15,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - ANNET_OIL_CONFIG=/app/configs/config.yaml
+      - ANNET_OIL_AUTH_TOKEN=${ANNET_OIL_AUTH_TOKEN:-change-me-in-production}
     restart: unless-stopped
     depends_on:
       - annet-default
@@ -21,6 +23,33 @@ services:
       - annet-orion
     networks:
       - annet-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # MCP Annet Oil Server
+  mcp-annet-oil:
+    build:
+      context: ./mcp-annet-oil
+      dockerfile: Dockerfile
+    container_name: mcp-annet-oil
+    environment:
+      - ANNET_OIL_API_URL=http://annet-oil:8080
+      - ANNET_OIL_AUTH_TOKEN=${ANNET_OIL_AUTH_TOKEN:-change-me-in-production}
+      - NODE_ENV=production
+    depends_on:
+      annet-oil:
+        condition: service_healthy
+    networks:
+      - annet-network
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    # For MCP stdio transport - can be accessed via docker exec
+    command: ["node", "dist/index.js"]
 
   annet-default:
     image: annet:latest
