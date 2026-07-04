@@ -316,7 +316,7 @@ uninstall: ## Uninstall binary from system
 # Systemd service management
 service-install: ## Install systemd service
 	@echo "Installing systemd service..."
-	@sudo cp annet-oil.service /etc/systemd/system/
+	@sudo cp configs/systemd/annet-oil.service /etc/systemd/system/
 	@sudo systemctl daemon-reload
 	@echo "Service installed. Use 'make service-enable' to enable auto-start"
 
