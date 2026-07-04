@@ -19,7 +19,7 @@ help: ## Show this help message
 # Build configuration
 BINARY_NAME=annet-oil-server
 BUILD_DIR=.
-MAIN_PATH=.
+MAIN_PATH=./cmd/annet-oil
 VERSION?=$(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 BUILD_TIME=$(shell date +%FT%T%z)
 LDFLAGS=-ldflags "-X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME)"
