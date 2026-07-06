@@ -523,6 +523,116 @@ cp configs/config.docker.yaml configs/config.yaml
 - `DOCKER_API_VERSION` - Docker API version
 - `DOCKER_CERT_PATH` - path to TLS certificates
 - `DOCKER_TLS_VERIFY` - enable TLS verification
+- `DEVICE_USERNAME` - default username for network devices
+- `DEVICE_PASSWORD` - default password for network devices
+
+## FAQ
+
+### SSH Authentication Issues
+
+**Problem:** SSH connection fails with error:
+```
+ssh: handshake failed: ssh: unable to authenticate, attempted methods [none], no supported methods remain
+```
+
+**Solution:** This error occurs when device credentials are not defined. Set the environment variables and restart:
+```bash
+# Set device credentials in .env file
+echo 'DEVICE_USERNAME=your_device_user' >> .env
+echo 'DEVICE_PASSWORD=your_device_password' >> .env
+
+# Or export them directly
+export DEVICE_USERNAME="your_device_user"
+export DEVICE_PASSWORD="your_device_password"
+
+# Restart the services
+make restart
+```
+
+### API Returns 404 Not Found
+
+**Problem:** API endpoints return 404 error
+
+**Solution:** Ensure you're using the correct API path with `/api/v0/` prefix:
+```bash
+# Correct
+curl -H "Authorization: Bearer TOKEN" http://localhost:8080/api/v0/health
+
+# Incorrect (will return 404)
+curl -H "Authorization: Bearer TOKEN" http://localhost:8080/health
+```
+
+### Docker Permission Denied
+
+**Problem:** Container execution fails with Docker permission errors
+
+**Solution:** Add the user to the docker group:
+```bash
+# For development user
+sudo usermod -aG docker $USER
+
+# For production (annet user)
+sudo usermod -aG docker annet
+
+# Apply changes (logout/login or use)
+newgrp docker
+
+# Restart service if using systemd
+make service-restart
+```
+
+### MCP Container Won't Start
+
+**Problem:** MCP container fails to build or start
+
+**Solution:** Check Docker Compose version compatibility:
+```bash
+# Check your docker-compose version
+docker-compose --version
+
+# If version is old, update docker-compose.yml version
+# Change from version: '3.8' to version: '3.3'
+sed -i 's/version: .*/version: "3.3"/' docker-compose.mcp.yml
+
+# Rebuild
+make build-mcp
+```
+
+### Service Fails on System Boot
+
+**Problem:** Systemd service fails to start after system reboot
+
+**Solution:** Ensure Docker service dependency:
+```bash
+# Check if Docker is enabled
+sudo systemctl is-enabled docker
+
+# Enable Docker to start on boot
+sudo systemctl enable docker
+
+# Restart annet-oil service
+sudo systemctl daemon-reload
+sudo systemctl restart annet-oil.service
+```
+
+### Cannot Access Annet Containers
+
+**Problem:** Annet Oil cannot execute commands in Annet containers
+
+**Solution:** Verify containers are running and accessible:
+```bash
+# Check if containers are running
+docker ps | grep annet
+
+# Start Annet containers
+make run-annet
+
+# Test container access manually
+docker exec annet-default annet --help
+
+# Check container configuration in config.yaml
+cat configs/config.yaml | grep -A5 annet_containers
+```
 
 ## License
 
