@@ -260,7 +260,11 @@ health: ## Check service health
 	@echo "     Service Health Check"
 	@echo "═══════════════════════════════════"
 	@echo -n "API Server:       "
-	@curl -s http://localhost:8080/health > /dev/null 2>&1 && echo "✓ Running" || echo "✗ Not running"
+	@if [ -n "$${ANNET_OIL_AUTH_TOKEN}" ]; then \
+		curl -s -H "Authorization: Bearer $${ANNET_OIL_AUTH_TOKEN}" http://localhost:8080/api/v0/health > /dev/null 2>&1 && echo "✓ Running" || echo "✗ Not running"; \
+	else \
+		curl -s http://localhost:8080/api/v0/health > /dev/null 2>&1 && echo "✓ Running" || echo "✗ Not running"; \
+	fi
 	@echo -n "MCP Container:    "
 	@docker ps | grep -q mcp-annet-oil && echo "✓ Running" || echo "✗ Not running"
 	@echo -n "Annet Default:    "

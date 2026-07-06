@@ -19,41 +19,320 @@ annet-oil (port 22 SSH, 8080 API)
 JSON routing hostname → container
     ↓
 ┌─────────────────┬─────────────────┬─────────────────┐
-│   annet-default │   annet-telnet  │   annet-orion   │
-│   (default)     │   (telnet dev.) │   (orion dev.)  │
+│   annet-default │   annet-telnet  │   annet-ssh-c   │
+│   (default)     │   (telnet dev.) │   (custom ssh)  │
 └─────────────────┴─────────────────┴─────────────────┘
 ```
 
-## Quick Start
+## Architecture Decision: Docker Exec API vs SDK Integration
 
-### Installation
+### Current Approach
 
-1. Clone the repository:
+Annet Oil uses Docker Exec API for communication with Annet containers:
+
+```
+Annet Oil (Go application)
+    ↓
+Docker SDK for Go (github.com/docker/docker)
+    ↓
+Docker Exec API
+    ↓
+Container stdin/stdout (annet CLI commands)
+```
+
+### Why Docker Exec API?
+
+**Advantages:**
+
+1. **Simplicity & Reliability**
+   - Uses standard Docker SDK for Go, a mature and well-tested solution
+   - No modifications required to existing Annet containers
+   - Works with any Annet version without compatibility concerns
+
+2. **Container Isolation**
+   - Each Annet container remains fully isolated
+   - No network dependencies between containers
+   - Security boundaries enforced by Docker
+
+3. **Flexibility**
+   - Easy to add new containers with different Annet versions or configurations
+   - Supports custom Annet builds without code changes
+   - Can work with any container that has Annet CLI installed
+
+4. **Sufficient Performance**
+   - Docker Exec API latency (typically <10ms) is negligible for CLI operations
+   - No additional network overhead from API layers
+   - Suitable for typical workloads (up to 100 requests/second)
+
+**Limitations:**
+
+1. **Text-based communication** - requires parsing stdout/stderr
+2. **No real-time progress** for long-running operations
+3. **Limited error handling** compared to structured API responses
+
+### Alternative Approaches Considered
+
+1. **Python SDK Integration**
+   - Would require embedding Python runtime or separate Python service
+   - Adds complexity and version dependency on Annet Python SDK
+   - Not justified for current use cases
+
+2. **gRPC/REST API in Containers**
+   - Requires modifying Annet containers to add API servers
+   - Increases container size and complexity
+   - More moving parts to maintain
+
+### Decision Rationale
+
+The Docker Exec approach is **optimal for the current stage** because:
+- It meets all functional requirements
+- Maintains simplicity and reliability
+- Requires minimal dependencies
+- Provides good performance for expected workloads
+
+### Future Considerations
+
+Migration to SDK-based approach would be considered if:
+- Annet provides an official Go SDK
+- Requirements emerge for real-time operation progress
+- Workload exceeds 100+ requests/second consistently
+- Need for complex data structures that are difficult to parse from text
+
+## Prerequisites
+
+- **Go** 1.21 or later
+- **Docker** and **Docker Compose**
+- **Make** utility
+- **Git**
+- **Linux/macOS** (Windows users can use WSL2)
+
+## Installation
+
+### Method 1: Quick Start (Development)
+
+1. **Clone the repository:**
 ```bash
-git clone <repo-url>
+git clone https://github.com/yourusername/annet-oil.git
 cd annet-oil
 ```
 
-2. Set up the environment:
+2. **Set up the environment:**
 ```bash
+# Create necessary directories and configuration files
 make setup
+
+# This will:
+# - Create .env file from template
+# - Create keys/ directory for SSH keys
+# - Create annet-configs/ directories
+# - Create annet-data/ directories
 ```
 
-3. Build the project:
+3. **Configure authentication:**
 ```bash
+# Edit .env file to set your authentication token
+vim .env
+# Change ANNET_OIL_AUTH_TOKEN to a secure value
+```
+
+4. **Build all components:**
+```bash
+# Build Go binary and Docker containers
 make build
+
+# Or build separately:
+make build-api  # Build only the Go binary
+make build-mcp  # Build only the MCP container
 ```
 
-### Docker
-
-1. Start all services:
+5. **Run services:**
 ```bash
-make docker-run
+# Run in background
+make run-bg
+
+# Or run in foreground (for debugging)
+make run
+
+# Or run specific components
+make run-api     # Run API server only
+make run-mcp     # Run MCP container only
+make run-annet   # Run Annet containers only
 ```
 
-2. Check status:
+6. **Verify installation:**
 ```bash
-make docker-logs
+# Check service health
+make health
+
+# Check service status
+make status
+
+# Test API endpoint (replace TOKEN with your actual token)
+curl -H "Authorization: Bearer YOUR_TOKEN" http://localhost:8080/api/v0/health
+```
+
+### Method 2: Production Installation (systemd)
+
+1. **Prepare the system:**
+```bash
+# Create system user
+sudo useradd -r -s /bin/false annet
+sudo usermod -aG docker annet
+
+# Create installation directories
+sudo mkdir -p /opt/annet-oil/{bin,configs,storage,keys}
+sudo chown -R annet:annet /opt/annet-oil
+```
+
+2. **Build and install:**
+```bash
+# Clone and build
+git clone https://github.com/yourusername/annet-oil.git
+cd annet-oil
+make build-api
+
+# Copy files to system directories
+sudo cp annet-oil-server /opt/annet-oil/bin/annet-oil
+sudo cp -r configs/* /opt/annet-oil/configs/
+sudo cp .env /opt/annet-oil/.env  # After configuring
+sudo chown -R annet:annet /opt/annet-oil
+```
+
+3. **Install and start systemd service:**
+```bash
+# Install service file
+make service-install
+
+# Enable auto-start on boot
+make service-enable
+
+# Start the service
+make service-start
+
+# Check service status
+make service-status
+
+# View logs
+make service-logs
+```
+
+### Method 3: Docker-Only Installation
+
+1. **Using docker-compose:**
+```bash
+# Clone repository
+git clone https://github.com/yourusername/annet-oil.git
+cd annet-oil
+
+# Configure environment
+cp .env.example .env
+vim .env  # Set ANNET_OIL_AUTH_TOKEN
+
+# Start all services
+docker-compose up -d
+
+# Check logs
+docker-compose logs -f
+```
+
+2. **Using pre-built images (if available):**
+```bash
+# Pull images
+docker pull yourusername/annet-oil:latest
+docker pull yourusername/mcp-annet-oil:latest
+
+# Run with docker-compose
+docker-compose up -d
+```
+
+### Post-Installation Configuration
+
+1. **Configure routing:**
+```bash
+# Add device routing
+./annet-oil-server routing add device1.example.com annet-telnet
+./annet-oil-server routing add device2.example.com annet-default
+
+# Or edit storage/routing.json directly
+```
+
+2. **Set up SSH keys (optional):**
+```bash
+# Generate SSH key pair
+ssh-keygen -t rsa -b 4096 -f keys/id_rsa -N ""
+
+# Add public key to authorized_keys for SSH access
+cat keys/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+
+3. **Start Annet containers (if not using docker-compose):**
+```bash
+# Start individual Annet containers
+docker run -d --name annet-default annet:latest
+docker run -d --name annet-telnet annet:telnet
+docker run -d --name annet-orion annet:orion
+```
+
+### Verifying Installation
+
+```bash
+# Check all services
+make health
+
+# API health check
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  http://localhost:8080/api/v0/health
+
+# Extended health check (includes gnetcli status)
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  http://localhost:8080/api/v0/health/extended
+
+# List containers
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  http://localhost:8080/api/v0/containers
+
+# SSH test
+ssh -p 2222 admin@localhost "help"
+```
+
+### Troubleshooting
+
+**Service won't start:**
+```bash
+# Check logs
+make service-logs
+sudo journalctl -u annet-oil.service -n 50
+
+# Check Docker permissions
+ls -la /var/run/docker.sock
+sudo usermod -aG docker $USER  # or annet user
+```
+
+**API returns 401 Unauthorized:**
+```bash
+# Check token in config
+cat /opt/annet-oil/configs/config.yaml | grep auth_token
+# Ensure it matches your Authorization header
+```
+
+**Container connection issues:**
+```bash
+# Check if containers are running
+docker ps | grep annet
+
+# Test container access
+docker exec annet-default annet --help
+
+# Check Docker socket permissions
+sudo chmod 666 /var/run/docker.sock  # temporary fix
+```
+
+**Port conflicts:**
+```bash
+# Check if ports are in use
+sudo netstat -tlnp | grep -E "8080|2222"
+
+# Change ports in configs/config.yaml if needed
 ```
 
 ## Usage
