@@ -43,6 +43,31 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+ip\s+interfaces?(\s+brief)?$`),
 	regexp.MustCompile(`(?i)^show\s+ipv6\s+interfaces?(\s+brief)?$`),
 
+	// Show Cisco BGP
+	// show ip bgp summary
+	regexp.MustCompile(`(?i)^show\s+ip\s+bgp\s+summary$`),
+
+	// show ip bgp neighbors [ip] [routes|advertised-routes]
+	regexp.MustCompile(`(?i)^show\s+ip\s+bgp\s+neighbors(\s+\d{1,3}(\.\d{1,3}){3})?(\s+(routes|advertised-routes))?$`),
+
+	// show ip route bgp
+	regexp.MustCompile(`(?i)^show\s+ip\s+route\s+bgp$`),
+
+	// show interfaces <name>
+	regexp.MustCompile(`(?i)^show\s+interfaces(\s+\S+)?$`),
+
+	// show logging
+	regexp.MustCompile(`(?i)^show\s+logging$`),
+
+	// show route-map <name>
+	regexp.MustCompile(`(?i)^show\s+route-map(\s+\S+)?$`),
+
+	// show ip access-lists [name]
+	regexp.MustCompile(`(?i)^show\s+ip\s+access-lists(\s+\S+)?$`),
+
+	// ping <ip>
+	regexp.MustCompile(`(?i)^ping\s+\d{1,3}(\.\d{1,3}){3}$`),
+
 	// Configuration display
 	regexp.MustCompile(`(?i)^show\s+running-config$`),
 	regexp.MustCompile(`(?i)^show\s+startup-config$`),
