@@ -33,15 +33,18 @@ type ExecuteResponse struct {
 }
 
 var CommandWhitelist = []*regexp.Regexp{
+	// Allow ALL show commands - they are read-only and safe
+	regexp.MustCompile(`(?i)^show\s+.*$`),  // Matches ANY show command
+	
+	// The patterns below are kept for reference but the first pattern already covers everything
 	// Show commands - safe read-only operations
 	regexp.MustCompile(`(?i)^show\s+version$`),
 	regexp.MustCompile(`(?i)^show\s+inventory$`),
-	regexp.MustCompile(`(?i)^show\s+interfaces?(\s+status)?$`),
-	regexp.MustCompile(`(?i)^show\s+interfaces?\s+brief$`),
-	regexp.MustCompile(`(?i)^show\s+interfaces?\s+description$`),
-	regexp.MustCompile(`(?i)^show\s+interfaces?\s+\S+$`),
-	regexp.MustCompile(`(?i)^show\s+ip\s+interfaces?(\s+brief)?$`),
-	regexp.MustCompile(`(?i)^show\s+ipv6\s+interfaces?(\s+brief)?$`),
+	
+	// Interface commands - allow ALL show interfaces commands with any options
+	regexp.MustCompile(`(?i)^show\s+interfaces?\s*.*$`),  // Matches any show interface(s) command
+	regexp.MustCompile(`(?i)^show\s+ip\s+interfaces?(\s+.*)?$`),
+	regexp.MustCompile(`(?i)^show\s+ipv6\s+interfaces?(\s+.*)?$`),
 
 	// Show Cisco BGP
 	// show ip bgp summary
@@ -52,9 +55,6 @@ var CommandWhitelist = []*regexp.Regexp{
 
 	// show ip route bgp
 	regexp.MustCompile(`(?i)^show\s+ip\s+route\s+bgp$`),
-
-	// show interfaces <name>
-	regexp.MustCompile(`(?i)^show\s+interfaces(\s+\S+)?$`),
 
 	// show logging
 	regexp.MustCompile(`(?i)^show\s+logging$`),
@@ -74,6 +74,8 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+config$`),
 	regexp.MustCompile(`(?i)^show\s+configuration$`),
 	regexp.MustCompile(`(?i)^show\s+running-config\s+interface\s+\S+$`),
+	regexp.MustCompile(`(?i)^show\s+run\s+interface\s+\S+$`),  // Shortened form
+	regexp.MustCompile(`(?i)^show\s+run\s+int\s+\S+$`),  // Even shorter form
 	regexp.MustCompile(`(?i)^show\s+running-config\s+\|\s+section\s+\S+$`),
 
 	// Routing protocols
@@ -92,9 +94,27 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+vlan$`),
 	regexp.MustCompile(`(?i)^show\s+vlan\s+brief$`),
 	regexp.MustCompile(`(?i)^show\s+vlan\s+id\s+\d+$`),
+	
+	// Spanning Tree - Cisco
 	regexp.MustCompile(`(?i)^show\s+spanning-tree$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+brief$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+summary$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+detail$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+vlan\s+\d+$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+interface\s+\S+$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+root$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+blockedports$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+inconsistentports$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mst$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mst\s+configuration$`),
+	
+	// Spanning Tree - Juniper (RSTP/MSTP/VSTP)
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+bridge$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+statistics$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mstp\s+configuration$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+interface$`),
+	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+interface\s+\S+$`),
+	
 	regexp.MustCompile(`(?i)^show\s+vpc$`),
 	regexp.MustCompile(`(?i)^show\s+vpc\s+brief$`),
 	regexp.MustCompile(`(?i)^show\s+port-channel\s+summary$`),

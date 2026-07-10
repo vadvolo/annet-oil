@@ -16,6 +16,11 @@ dotenv.config();
 const API_URL = process.env.ANNET_OIL_API_URL || 'http://localhost:8080';
 const AUTH_TOKEN = process.env.ANNET_OIL_AUTH_TOKEN || 'change-me-in-production';
 
+// Debug logging
+console.error(`[DEBUG] MCP Server starting...`);
+console.error(`[DEBUG] API URL: ${API_URL}`);
+console.error(`[DEBUG] Auth Token: ${AUTH_TOKEN.substring(0, 10)}...`);
+
 const annetClient = new AnnetOilClient({
   apiUrl: API_URL,
   authToken: AUTH_TOKEN,
@@ -201,6 +206,8 @@ function formatCommandResponse(response: CommandResponse): string {
 }
 
 async function main() {
+  console.error('[DEBUG] Initializing MCP server...');
+  
   const server = new Server(
     {
       name: 'mcp-annet-oil',
@@ -214,11 +221,15 @@ async function main() {
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
+    console.error('[DEBUG] ListTools request received');
+    console.error(`[DEBUG] Available tools: ${tools.map(t => t.name).join(', ')}`);
     return { tools };
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
+    console.error(`[DEBUG] CallTool request: ${name}`);
+    console.error(`[DEBUG] Arguments:`, JSON.stringify(args, null, 2));
 
     try {
       switch (name) {

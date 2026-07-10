@@ -101,16 +101,18 @@ func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error
 
 // ExecWithDevice executes command with device-specific parameters
 func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string) (*ExecResult, error) {
-	log.Printf("[gnetcli] Executing command with device params: host=%s, cmd=%s, vendor=%s, login=%s, password=%s", host, cmd, vendor, login, password)
+	log.Printf("[gnetcli] Executing command with device params: host=%s, cmd=%s, vendor=%s", host, cmd, vendor)
 
 	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
 
 	// Build host_params
+	// Note: gnetcli server should be configured with SSH config and keys
+	// Always pass credentials with login, but empty password to use SSH key
 	hostParams := &proto.HostParams{
 		Device: vendor,
 		Credentials: &proto.Credentials{
 			Login:    login,
-			Password: password,
+			Password: password, // Will be empty to use SSH key
 		},
 	}
 

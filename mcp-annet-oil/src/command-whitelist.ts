@@ -5,17 +5,22 @@ export interface CommandWhitelistConfig {
 
 // Whitelist configuration for allowed commands
 export const COMMAND_WHITELIST: CommandWhitelistConfig[] = [
-  // Show commands - safe read-only operations
+  // Allow ALL show commands - safe read-only operations
+  {
+    patterns: [
+      /^show\s+.*$/i,  // Matches ANY show command with any parameters
+    ],
+    description: 'All show commands (read-only operations)',
+  },
+  // Show commands - safe read-only operations (kept for specific categorization)
   {
     patterns: [
       /^show\s+version$/i,
       /^show\s+inventory$/i,
-      /^show\s+interfaces?(\s+status)?$/i,
-      /^show\s+interfaces?\s+brief$/i,
-      /^show\s+interfaces?\s+description$/i,
-      /^show\s+interfaces?\s+\S+$/i,
-      /^show\s+ip\s+interfaces?(\s+brief)?$/i,
-      /^show\s+ipv6\s+interfaces?(\s+brief)?$/i,
+      // Allow ALL show interfaces commands with any options (including Juniper's extensive, detail, etc.)
+      /^show\s+interfaces?\s*.*$/i,  // Matches any show interface(s) command
+      /^show\s+ip\s+interfaces?(\s+.*)?$/i,
+      /^show\s+ipv6\s+interfaces?(\s+.*)?$/i,
     ],
     description: 'Interface information commands',
   },
@@ -26,6 +31,8 @@ export const COMMAND_WHITELIST: CommandWhitelistConfig[] = [
       /^show\s+config$/i,
       /^show\s+configuration$/i,
       /^show\s+running-config\s+interface\s+\S+$/i,
+      /^show\s+run\s+interface\s+\S+$/i,  // Shortened form
+      /^show\s+run\s+int\s+\S+$/i,  // Even shorter form
       /^show\s+running-config\s+\|\s+section\s+\S+$/i,
     ],
     description: 'Configuration display commands',
@@ -55,9 +62,27 @@ export const COMMAND_WHITELIST: CommandWhitelistConfig[] = [
       /^show\s+vlan$/i,
       /^show\s+vlan\s+brief$/i,
       /^show\s+vlan\s+id\s+\d+$/i,
+      
+      // Spanning Tree - Cisco
       /^show\s+spanning-tree$/i,
       /^show\s+spanning-tree\s+brief$/i,
+      /^show\s+spanning-tree\s+summary$/i,
+      /^show\s+spanning-tree\s+detail$/i,
       /^show\s+spanning-tree\s+vlan\s+\d+$/i,
+      /^show\s+spanning-tree\s+interface\s+\S+$/i,
+      /^show\s+spanning-tree\s+root$/i,
+      /^show\s+spanning-tree\s+blockedports$/i,
+      /^show\s+spanning-tree\s+inconsistentports$/i,
+      /^show\s+spanning-tree\s+mst$/i,
+      /^show\s+spanning-tree\s+mst\s+configuration$/i,
+      
+      // Spanning Tree - Juniper (RSTP/MSTP/VSTP)
+      /^show\s+spanning-tree\s+bridge$/i,
+      /^show\s+spanning-tree\s+statistics$/i,
+      /^show\s+spanning-tree\s+mstp\s+configuration$/i,
+      /^show\s+spanning-tree\s+interface$/i,
+      /^show\s+spanning-tree\s+interface\s+\S+$/i,
+      
       /^show\s+vpc$/i,
       /^show\s+vpc\s+brief$/i,
       /^show\s+port-channel\s+summary$/i,
