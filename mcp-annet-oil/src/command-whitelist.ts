@@ -165,6 +165,21 @@ export const COMMAND_WHITELIST: CommandWhitelistConfig[] = [
     ],
     description: 'Network connectivity testing',
   },
+  // MikroTik RouterOS - read-only commands.
+  // RouterOS uses "<path> print" / "export" / "monitor" instead of "show".
+  // These are non-mutating debug/monitoring operations. A leading "/" is optional.
+  // e.g. "system resource print", "/system resource print", "/export"
+  {
+    patterns: [
+      /^\/?[a-z0-9 /-]+\s+print(\s+.*)?$/i,      // any "... print" command
+      /^\/?([a-z0-9 /-]+\s+)?export(\s+.*)?$/i,  // config export (bare "/export" or "<path> export")
+      /^\/?[a-z0-9 /-]+\s+monitor(\s+.*)?$/i,    // e.g. interface ethernet monitor
+      /^\/?system\s+resource\s+print$/i,         // explicit, for reference
+      /^\/?ping\s+\S+.*$/i,                       // RouterOS ping (with optional count/interface args)
+      /^\/?tool\s+traceroute\s+\S+.*$/i,         // RouterOS traceroute
+    ],
+    description: 'MikroTik RouterOS read-only commands',
+  },
 ];
 
 export class CommandValidator {

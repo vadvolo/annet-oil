@@ -34,15 +34,15 @@ type ExecuteResponse struct {
 
 var CommandWhitelist = []*regexp.Regexp{
 	// Allow ALL show commands - they are read-only and safe
-	regexp.MustCompile(`(?i)^show\s+.*$`),  // Matches ANY show command
-	
+	regexp.MustCompile(`(?i)^show\s+.*$`), // Matches ANY show command
+
 	// The patterns below are kept for reference but the first pattern already covers everything
 	// Show commands - safe read-only operations
 	regexp.MustCompile(`(?i)^show\s+version$`),
 	regexp.MustCompile(`(?i)^show\s+inventory$`),
-	
+
 	// Interface commands - allow ALL show interfaces commands with any options
-	regexp.MustCompile(`(?i)^show\s+interfaces?\s*.*$`),  // Matches any show interface(s) command
+	regexp.MustCompile(`(?i)^show\s+interfaces?\s*.*$`), // Matches any show interface(s) command
 	regexp.MustCompile(`(?i)^show\s+ip\s+interfaces?(\s+.*)?$`),
 	regexp.MustCompile(`(?i)^show\s+ipv6\s+interfaces?(\s+.*)?$`),
 
@@ -74,8 +74,8 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+config$`),
 	regexp.MustCompile(`(?i)^show\s+configuration$`),
 	regexp.MustCompile(`(?i)^show\s+running-config\s+interface\s+\S+$`),
-	regexp.MustCompile(`(?i)^show\s+run\s+interface\s+\S+$`),  // Shortened form
-	regexp.MustCompile(`(?i)^show\s+run\s+int\s+\S+$`),  // Even shorter form
+	regexp.MustCompile(`(?i)^show\s+run\s+interface\s+\S+$`), // Shortened form
+	regexp.MustCompile(`(?i)^show\s+run\s+int\s+\S+$`),       // Even shorter form
 	regexp.MustCompile(`(?i)^show\s+running-config\s+\|\s+section\s+\S+$`),
 
 	// Routing protocols
@@ -94,7 +94,7 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+vlan$`),
 	regexp.MustCompile(`(?i)^show\s+vlan\s+brief$`),
 	regexp.MustCompile(`(?i)^show\s+vlan\s+id\s+\d+$`),
-	
+
 	// Spanning Tree - Cisco
 	regexp.MustCompile(`(?i)^show\s+spanning-tree$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+brief$`),
@@ -107,14 +107,14 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+inconsistentports$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mst$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mst\s+configuration$`),
-	
+
 	// Spanning Tree - Juniper (RSTP/MSTP/VSTP)
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+bridge$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+statistics$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+mstp\s+configuration$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+interface$`),
 	regexp.MustCompile(`(?i)^show\s+spanning-tree\s+interface\s+\S+$`),
-	
+
 	regexp.MustCompile(`(?i)^show\s+vpc$`),
 	regexp.MustCompile(`(?i)^show\s+vpc\s+brief$`),
 	regexp.MustCompile(`(?i)^show\s+port-channel\s+summary$`),
@@ -174,6 +174,17 @@ var CommandWhitelist = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)^traceroute\s+[\d\.]+$`),
 	regexp.MustCompile(`(?i)^traceroute\s+[a-fA-F0-9:]+$`),
 	regexp.MustCompile(`(?i)^traceroute\s+\S+$`),
+
+	// MikroTik RouterOS - read-only commands.
+	// RouterOS uses "<path> print" / "export" instead of "show". These are
+	// non-mutating debug/monitoring operations. A leading "/" is optional.
+	// e.g. "system resource print", "/system resource print"
+	regexp.MustCompile(`(?i)^/?[a-z0-9 /-]+\s+print(\s+.*)?$`),     // any "... print" command
+	regexp.MustCompile(`(?i)^/?([a-z0-9 /-]+\s+)?export(\s+.*)?$`), // config export (bare "/export" or "<path> export")
+	regexp.MustCompile(`(?i)^/?[a-z0-9 /-]+\s+monitor(\s+.*)?$`),   // e.g. interface ethernet monitor
+	regexp.MustCompile(`(?i)^/?system\s+resource\s+print$`),        // explicit, for reference
+	regexp.MustCompile(`(?i)^/?ping\s+\S+.*$`),                     // RouterOS ping (with optional count/interface args)
+	regexp.MustCompile(`(?i)^/?tool\s+traceroute\s+\S+.*$`),        // RouterOS traceroute
 }
 
 func NewExecuteHandler(client *gnetcli.Client) chi.Router {
