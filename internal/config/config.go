@@ -9,12 +9,80 @@ import (
 )
 
 type Config struct {
-	AnnetContainers []AnnetContainer `yaml:"annet_containers"`
-	SSHKeys         []SSHKey         `yaml:"ssh_keys"`
-	Server          ServerConfig     `yaml:"server"`
-	Storage         StorageConfig    `yaml:"storage"`
-	Docker          DockerConfig     `yaml:"docker"`
-	Gnetcli         GnetcliConfig    `yaml:"gnetcli"`
+	AnnetContainers []AnnetContainer   `yaml:"annet_containers"`
+	SSHKeys         []SSHKey           `yaml:"ssh_keys"`
+	Server          ServerConfig       `yaml:"server"`
+	Storage         StorageConfig      `yaml:"storage"`
+	Docker          DockerConfig       `yaml:"docker"`
+	Gnetcli         GnetcliConfig      `yaml:"gnetcli"`
+	Logging         LoggingConfig      `yaml:"logging,omitempty"`
+	Cache           CacheConfig        `yaml:"cache,omitempty"`
+	Auth            AuthConfig         `yaml:"auth,omitempty"`
+	Integrations    IntegrationsConfig `yaml:"integrations,omitempty"`
+}
+
+type IntegrationsConfig struct {
+	Jira   JiraConfig   `yaml:"jira,omitempty"`
+	GitHub GitHubConfig `yaml:"github,omitempty"`
+}
+
+type JiraConfig struct {
+	Enabled    bool   `yaml:"enabled,omitempty"`
+	URL        string `yaml:"url,omitempty"`
+	Email      string `yaml:"email,omitempty"`
+	Token      string `yaml:"token,omitempty"`
+	ProjectKey string `yaml:"project_key,omitempty"`
+	IssueType  string `yaml:"issue_type,omitempty"`
+}
+
+type GitHubConfig struct {
+	Enabled bool   `yaml:"enabled,omitempty"`
+	Token   string `yaml:"token,omitempty"`
+}
+
+type LoggingConfig struct {
+	Level  string      `yaml:"level,omitempty"`
+	Format string      `yaml:"format,omitempty"`
+	Output string      `yaml:"output,omitempty"`
+	S3     S3LogConfig `yaml:"s3,omitempty"`
+}
+
+type S3LogConfig struct {
+	Enabled bool   `yaml:"enabled,omitempty"`
+	Bucket  string `yaml:"bucket,omitempty"`
+	Prefix  string `yaml:"prefix,omitempty"`
+	Region  string `yaml:"region,omitempty"`
+}
+
+type CacheConfig struct {
+	Enabled bool   `yaml:"enabled,omitempty"`
+	TTL     string `yaml:"ttl,omitempty"`
+	MaxSize string `yaml:"max_size,omitempty"`
+}
+
+type AuthConfig struct {
+	Roles  []RoleConfig  `yaml:"roles,omitempty"`
+	Users  []UserConfig  `yaml:"users,omitempty"`
+	Groups []GroupConfig `yaml:"groups,omitempty"`
+}
+
+type RoleConfig struct {
+	Name         string   `yaml:"name"`
+	DeviceScopes []string `yaml:"device_scopes,omitempty"`
+	Methods      []string `yaml:"methods,omitempty"`
+	Commands     []string `yaml:"commands,omitempty"`
+}
+
+type UserConfig struct {
+	Name  string `yaml:"name"`
+	Token string `yaml:"token"`
+	Role  string `yaml:"role"`
+}
+
+type GroupConfig struct {
+	Name    string   `yaml:"name"`
+	Role    string   `yaml:"role"`
+	Members []string `yaml:"members,omitempty"`
 }
 
 type AnnetContainer struct {

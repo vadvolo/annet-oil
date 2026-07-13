@@ -1,3 +1,7 @@
+# Annet Oil Configuration Example
+# Copy to config.yaml and customize for your environment
+
+# Annet containers configuration
 annet_containers:
   - name: "annet-default"
     container_name: "annet-default"
@@ -6,8 +10,8 @@ annet_containers:
   - name: "annet-telnet"
     container_name: "annet-telnet"
     description: "Telnet devices container"
-  - name: "annet-ssh-10022"
 
+# SSH keys for device connections
 ssh_keys:
   - name: "default"
     path: "/keys/id_rsa"
@@ -16,6 +20,7 @@ ssh_keys:
     path: "/keys/telnet_key"
     user: "telnet_user"
 
+# Server configuration
 server:
   ssh:
     port: 22
@@ -23,24 +28,109 @@ server:
   api:
     port: 8080
     bind: "0.0.0.0"
-    auth_token: "change-me-in-production"
+    # Legacy auth token (grants admin access)
+    # For production, use RBAC users instead
+    auth_token: "${ANNET_OIL_AUTH_TOKEN}"
 
+# Storage paths
 storage:
   routing_file: "./storage/routing.json"
   inventory_file: "./resources/inventory.yaml"
 
+# Gnetcli configuration (for command execution)
 gnetcli:
-  host: "grpc.gnetcli.example.com"
+  host: "localhost"
   port: 50051
-  auth_token: "TOKEN"
-  # Default device credentials (will be replaced with actual values from environment)
+  auth_token: "${GNETCLI_AUTH_TOKEN}"
   login: "${DEVICE_USERNAME}"
   password: "${DEVICE_PASSWORD}"
   tls: false
 
+# Docker configuration
 docker:
-  # Configuration for Colima
-  # Replace username with your username
+  # For Docker Desktop on Mac
+  # host: "unix:///var/run/docker.sock"
+  # For Colima on Mac (replace username)
   host: "unix:///Users/username/.colima/default/docker.sock"
+  # For Linux
+  # host: "unix:///var/run/docker.sock"
   api_version: "1.41"
   tls_verify: false
+
+# Logging configuration
+logging:
+  # Log level: debug, info, warn, error
+  level: "info"
+  # Output format: json (recommended for production) or text
+  format: "json"
+  # File path for logs (empty = stdout only)
+  output: ""
+  # output: "/var/log/annet-oil/api.log"
+  # S3 upload for log archival
+  s3:
+    enabled: false
+    bucket: ""
+    prefix: "logs/annet-oil/"
+    region: "us-east-1"
+
+# Request caching
+cache:
+  enabled: true
+  # Cache TTL (e.g., 5m, 1h)
+  ttl: "5m"
+  # Maximum cache size (e.g., 100MB, 1GB)
+  max_size: "100MB"
+
+# External integrations
+integrations:
+  # Jira integration for RFC workflow
+  jira:
+    enabled: false
+    url: "https://company.atlassian.net"
+    email: "service@company.com"
+    token: "${JIRA_API_TOKEN}"
+    project_key: "NET"
+    issue_type: "Task"
+  # GitHub integration
+  github:
+    enabled: false
+    token: "${GITHUB_TOKEN}"
+
+# Authentication and authorization (RBAC)
+# See resources/groups.example.yaml for detailed examples
+auth:
+  # Define custom roles
+  roles:
+    - name: "operator"
+      device_scopes: ["*"]
+      methods: ["/gen", "/diff", "/patch", "/deploy", "/execute", "/containers", "/routing", "/inventory", "/health", "/rfc"]
+      commands: ["show *", "ping *", "traceroute *"]
+    - name: "viewer"
+      device_scopes: ["*"]
+      methods: ["/gen", "/diff", "/routing", "/health", "/containers", "/inventory"]
+      commands: ["show *"]
+    - name: "lab-admin"
+      device_scopes: ["lab-*", "test-*", "dev-*"]
+      methods: ["*"]
+      commands: ["*"]
+
+  # User groups (optional)
+  groups:
+    - name: "network-ops"
+      role: "operator"
+      members: ["alice", "bob"]
+    - name: "developers"
+      role: "lab-admin"
+      members: ["dev1", "dev2"]
+
+  # Users with tokens
+  users:
+    - name: "admin"
+      token: "${ADMIN_TOKEN}"
+      role: "admin"
+    - name: "alice"
+      token: "${ALICE_TOKEN}"
+      # role: inherited from group
+    - name: "bob"
+      token: "${BOB_TOKEN}"
+      # role: inherited from group

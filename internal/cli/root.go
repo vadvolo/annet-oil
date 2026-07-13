@@ -3,7 +3,6 @@ package cli
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -12,16 +11,18 @@ import (
 	"annet-oil/internal/config"
 	"annet-oil/internal/container"
 	"annet-oil/internal/inventory"
+	"annet-oil/internal/logging"
 	"annet-oil/internal/router"
 )
 
 var configPath string
 
 var (
-	cfg             *config.Config
-	annetService    *annet.Service
-	containerMgr    *container.Manager
-	routerInstance  *router.Router
+	cfg            *config.Config
+	annetService   *annet.Service
+	containerMgr   *container.Manager
+	routerInstance *router.Router
+	s3Uploader     *logging.S3Uploader
 )
 
 var rootCmd = &cobra.Command{
@@ -36,9 +37,25 @@ with automatic container routing based on hostname patterns.`,
 		if err != nil {
 			return fmt.Errorf("failed to load config: %w", err)
 		}
+
+		if _, err := logging.Init(cfg.Logging); err != nil {
+			return fmt.Errorf("failed to initialize logging: %w", err)
+		}
+
+		s3Uploader, err = logging.NewS3Uploader(cfg.Logging)
+		if err != nil {
+			return fmt.Errorf("failed to initialize S3 uploader: %w", err)
+		}
+		if s3Uploader != nil {
+			s3Uploader.Start()
+		}
+
 		return initializeServices()
 	},
 	PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
+		if s3Uploader != nil {
+			s3Uploader.Stop()
+		}
 		if containerMgr != nil {
 			return containerMgr.Close()
 		}
@@ -63,13 +80,11 @@ func initializeServices() error {
 		return fmt.Errorf("failed to load routes: %w", err)
 	}
 
-	// Load inventory if configured
 	if cfg.Storage.InventoryFile != "" {
 		if _, err := inventory.Load(cfg.Storage.InventoryFile); err != nil {
-			log.Printf("Warning: Failed to load inventory from %s: %v", cfg.Storage.InventoryFile, err)
-			// Not fatal - we can work without inventory
+			logging.Warn("Failed to load inventory", "path", cfg.Storage.InventoryFile, "error", err)
 		} else {
-			log.Printf("Loaded inventory from %s", cfg.Storage.InventoryFile)
+			logging.Info("Loaded inventory", "path", cfg.Storage.InventoryFile)
 		}
 	}
 

@@ -1,9 +1,12 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
+import { ResponseCache } from './cache.js';
+import { logger } from './logger.js';
 
 export interface AnnetConfig {
   apiUrl: string;
   authToken: string;
   timeout?: number;
+  cacheTtl?: number;
 }
 
 export interface CommandRequest {
@@ -58,8 +61,42 @@ export interface RoutingInfo {
   }>;
 }
 
+export interface DeviceInfo {
+  hostname: string;
+  ip: string;
+  port: number;
+  vendor: string;
+  platform: string;
+  description?: string;
+}
+
+export interface InventoryResponse {
+  devices: DeviceInfo[];
+  total: number;
+}
+
+export interface CreateRFCRequest {
+  summary: string;
+  description?: string;
+  devices: string[];
+  priority?: string;
+}
+
+export interface CreateRFCResponse {
+  ticket_key: string;
+  url: string;
+}
+
+export interface RFCStatusResponse {
+  ticket_key: string;
+  summary: string;
+  status: string;
+  transitions: string[];
+}
+
 export class AnnetOilClient {
   private client: AxiosInstance;
+  private cache: ResponseCache<CommandResponse>;
 
   constructor(private config: AnnetConfig) {
     this.client = axios.create({
@@ -70,11 +107,20 @@ export class AnnetOilClient {
         'Content-Type': 'application/json',
       },
     });
+    this.cache = new ResponseCache<CommandResponse>(config.cacheTtl || 300);
   }
 
   async gen(request: CommandRequest): Promise<CommandResponse> {
+    const cacheKey = ResponseCache.hashRequest({ op: 'gen', ...request });
+    const cached = this.cache.get(cacheKey);
+    if (cached) {
+      logger.debug({ op: 'gen', cache: 'hit' }, 'cache hit');
+      return cached.value;
+    }
+
     try {
       const response = await this.client.post('/gen', request);
+      this.cache.set(cacheKey, response.data);
       return response.data;
     } catch (error) {
       throw this.handleError(error);
@@ -82,8 +128,16 @@ export class AnnetOilClient {
   }
 
   async diff(request: CommandRequest): Promise<CommandResponse> {
+    const cacheKey = ResponseCache.hashRequest({ op: 'diff', ...request });
+    const cached = this.cache.get(cacheKey);
+    if (cached) {
+      logger.debug({ op: 'diff', cache: 'hit' }, 'cache hit');
+      return cached.value;
+    }
+
     try {
       const response = await this.client.post('/diff', request);
+      this.cache.set(cacheKey, response.data);
       return response.data;
     } catch (error) {
       throw this.handleError(error);
@@ -102,6 +156,7 @@ export class AnnetOilClient {
   async deploy(request: CommandRequest): Promise<CommandResponse> {
     try {
       const response = await this.client.post('/deploy', request);
+      this.cache.invalidateAll();
       return response.data;
     } catch (error) {
       throw this.handleError(error);
@@ -131,6 +186,61 @@ export class AnnetOilClient {
     try {
       const response = await this.client.get('/health');
       return { status: response.data || 'OK' };
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async getInventory(vendor?: string, platform?: string, pattern?: string): Promise<InventoryResponse> {
+    try {
+      const params: Record<string, string> = {};
+      if (vendor) params.vendor = vendor;
+      if (platform) params.platform = platform;
+      if (pattern) params.pattern = pattern;
+      const response = await this.client.get('/inventory', { params });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async createRFC(request: CreateRFCRequest): Promise<CreateRFCResponse> {
+    try {
+      const response = await this.client.post('/rfc/create', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async attachDiffToRFC(ticketKey: string, device: string, diff: string): Promise<void> {
+    try {
+      await this.client.post('/rfc/attach-diff', { ticket_key: ticketKey, device, diff });
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async getRFCStatus(ticketKey: string): Promise<RFCStatusResponse> {
+    try {
+      const response = await this.client.get(`/rfc/status/${ticketKey}`);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async submitRFCForReview(ticketKey: string, comment?: string): Promise<void> {
+    try {
+      await this.client.post(`/rfc/submit/${ticketKey}`, { comment });
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async closeRFC(ticketKey: string, resolution?: string): Promise<void> {
+    try {
+      await this.client.post(`/rfc/close/${ticketKey}`, { resolution });
     } catch (error) {
       throw this.handleError(error);
     }

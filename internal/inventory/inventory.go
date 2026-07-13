@@ -3,23 +3,34 @@ package inventory
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
 type Inventory struct {
-	Devices            []Device           `yaml:"devices"`
-	DefaultCredentials DeviceCredentials  `yaml:"default_credentials"`
+	Devices            []Device          `yaml:"devices"`
+	DefaultCredentials DeviceCredentials `yaml:"default_credentials"`
 }
 
 type Device struct {
 	Hostname    string            `yaml:"hostname"`
 	IP          string            `yaml:"ip"`
+	Port        int               `yaml:"port,omitempty"`
 	Vendor      string            `yaml:"vendor"`
 	Platform    string            `yaml:"platform"`
 	Credentials DeviceCredentials `yaml:"credentials"`
 	Description string            `yaml:"description,omitempty"`
+}
+
+const DefaultSSHPort = 22
+
+func (d *Device) GetPort() int {
+	if d.Port == 0 {
+		return DefaultSSHPort
+	}
+	return d.Port
 }
 
 type DeviceCredentials struct {
@@ -89,14 +100,50 @@ func GetDevice(hostname string) (*Device, error) {
 func GetDeviceOrDefault(hostname string) *Device {
 	device, err := GetDevice(hostname)
 	if err != nil {
-		// Return a default device with basic info
 		return &Device{
 			Hostname:    hostname,
 			IP:          hostname,
-			Vendor:      "cisco", // Default vendor
-			Platform:    "ios",   // Default platform
+			Port:        DefaultSSHPort,
+			Vendor:      "cisco",
+			Platform:    "ios",
 			Credentials: inventory.DefaultCredentials,
 		}
 	}
 	return device
+}
+
+func GetInventory() *Inventory {
+	return inventory
+}
+
+func FilterDevices(vendor, platform, pattern string) []Device {
+	if inventory == nil {
+		return nil
+	}
+
+	var result []Device
+	for _, device := range inventory.Devices {
+		if vendor != "" && device.Vendor != strings.ToLower(vendor) {
+			continue
+		}
+		if platform != "" && device.Platform != strings.ToLower(platform) {
+			continue
+		}
+		if pattern != "" && !matchPattern(pattern, device.Hostname) {
+			continue
+		}
+		result = append(result, device)
+	}
+	return result
+}
+
+func matchPattern(pattern, hostname string) bool {
+	if pattern == "" {
+		return true
+	}
+	if strings.Contains(pattern, "*") {
+		matched, _ := filepath.Match(pattern, hostname)
+		return matched
+	}
+	return strings.Contains(hostname, pattern)
 }

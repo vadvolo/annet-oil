@@ -1,0 +1,166 @@
+# Example RBAC configuration for annet-oil
+# Copy relevant sections to your config.yaml
+
+auth:
+  # Define roles with permissions
+  roles:
+    # Full admin access (built-in, no need to define)
+    # - name: "admin"
+    #   device_scopes: ["*"]
+    #   methods: ["*"]
+    #   commands: ["*"]
+
+    # Network operators - can deploy to all devices
+    - name: "operator"
+      device_scopes: ["*"]
+      methods:
+        - "/gen"
+        - "/diff"
+        - "/patch"
+        - "/deploy"
+        - "/execute"
+        - "/containers"
+        - "/routing"
+        - "/inventory"
+        - "/health"
+        - "/rfc"
+      commands:
+        - "show *"
+        - "ping *"
+        - "traceroute *"
+
+    # Read-only access
+    - name: "viewer"
+      device_scopes: ["*"]
+      methods:
+        - "/gen"
+        - "/diff"
+        - "/routing"
+        - "/inventory"
+        - "/health"
+        - "/containers"
+      commands:
+        - "show *"
+
+    # Lab environment - full access to lab devices only
+    - name: "lab-admin"
+      device_scopes:
+        - "lab-*"
+        - "test-*"
+        - "dev-*"
+      methods: ["*"]
+      commands: ["*"]
+
+    # Production read-only
+    - name: "prod-viewer"
+      device_scopes:
+        - "prod-*"
+        - "prd-*"
+      methods:
+        - "/gen"
+        - "/diff"
+        - "/routing"
+        - "/inventory"
+        - "/health"
+      commands:
+        - "show *"
+
+    # Production operators
+    - name: "prod-operator"
+      device_scopes:
+        - "prod-*"
+        - "prd-*"
+      methods: ["*"]
+      commands: ["*"]
+
+    # Regional access example
+    - name: "emea-operator"
+      device_scopes:
+        - "*-lon-*"
+        - "*-ams-*"
+        - "*-fra-*"
+        - "*-tll-*"
+      methods:
+        - "/gen"
+        - "/diff"
+        - "/patch"
+        - "/deploy"
+        - "/execute"
+        - "/routing"
+        - "/inventory"
+        - "/health"
+      commands:
+        - "show *"
+        - "ping *"
+
+  # Define groups (optional, for easier management)
+  groups:
+    - name: "network-ops"
+      role: "operator"
+      members:
+        - "alice"
+        - "bob"
+        - "charlie"
+
+    - name: "developers"
+      role: "lab-admin"
+      members:
+        - "dev1"
+        - "dev2"
+        - "dev3"
+
+    - name: "monitoring"
+      role: "viewer"
+      members:
+        - "prometheus"
+        - "grafana"
+        - "nagios"
+
+    - name: "emea-team"
+      role: "emea-operator"
+      members:
+        - "alice"
+        - "emma"
+
+  # Define users with tokens
+  users:
+    # Admin user
+    - name: "admin"
+      token: "${ADMIN_TOKEN}"
+      role: "admin"
+
+    # Operators (role from group)
+    - name: "alice"
+      token: "${ALICE_TOKEN}"
+      # role inherited from "network-ops" group
+
+    - name: "bob"
+      token: "${BOB_TOKEN}"
+      # role inherited from "network-ops" group
+
+    - name: "charlie"
+      token: "${CHARLIE_TOKEN}"
+      # role inherited from "network-ops" group
+
+    # Explicit role override
+    - name: "senior-ops"
+      token: "${SENIOR_OPS_TOKEN}"
+      role: "admin"  # Override group role
+
+    # Developers
+    - name: "dev1"
+      token: "${DEV1_TOKEN}"
+
+    - name: "dev2"
+      token: "${DEV2_TOKEN}"
+
+    - name: "dev3"
+      token: "${DEV3_TOKEN}"
+
+    # Service accounts
+    - name: "prometheus"
+      token: "${PROMETHEUS_TOKEN}"
+
+    - name: "ci-bot"
+      token: "${CI_BOT_TOKEN}"
+      role: "viewer"
