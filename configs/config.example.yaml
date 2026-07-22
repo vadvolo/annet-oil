@@ -103,11 +103,11 @@ auth:
   roles:
     - name: "operator"
       device_scopes: ["*"]
-      methods: ["/gen", "/diff", "/patch", "/deploy", "/execute", "/containers", "/routing", "/inventory", "/health", "/rfc"]
+      methods: ["/gen", "/diff", "/patch", "/deploy", "/execute", "/containers", "/routing", "/inventory", "/check", "/health", "/rfc"]
       commands: ["show *", "ping *", "traceroute *"]
     - name: "viewer"
       device_scopes: ["*"]
-      methods: ["/gen", "/diff", "/routing", "/health", "/containers", "/inventory"]
+      methods: ["/gen", "/diff", "/routing", "/health", "/containers", "/inventory", "/check"]
       commands: ["show *"]
     - name: "lab-admin"
       device_scopes: ["lab-*", "test-*", "dev-*"]

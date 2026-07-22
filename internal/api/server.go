@@ -59,6 +59,7 @@ func (s *Server) Router() chi.Router {
 		r.Mount("/routing", handlers.NewRoutingHandler(s.router))
 		r.Mount("/execute", handlers.NewExecuteHandler(s.gnetcliClient))
 		r.Mount("/inventory", handlers.NewInventoryHandler())
+		r.Mount("/check", handlers.NewCheckHandler())
 		r.Mount("/rfc", handlers.NewRFCHandler(s.config.Integrations))
 		r.Get("/health", handlers.HealthHandler)
 		r.Get("/health/extended", handlers.ExtendedHealthHandler)

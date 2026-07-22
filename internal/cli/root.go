@@ -32,24 +32,9 @@ var rootCmd = &cobra.Command{
 It provides both CLI and REST API interfaces for managing annet gen, diff, patch, and deploy operations
 with automatic container routing based on hostname patterns.`,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		var err error
-		cfg, err = config.LoadFrom(configPath)
-		if err != nil {
-			return fmt.Errorf("failed to load config: %w", err)
+		if err := loadConfigAndLogging(); err != nil {
+			return err
 		}
-
-		if _, err := logging.Init(cfg.Logging); err != nil {
-			return fmt.Errorf("failed to initialize logging: %w", err)
-		}
-
-		s3Uploader, err = logging.NewS3Uploader(cfg.Logging)
-		if err != nil {
-			return fmt.Errorf("failed to initialize S3 uploader: %w", err)
-		}
-		if s3Uploader != nil {
-			s3Uploader.Start()
-		}
-
 		return initializeServices()
 	},
 	PersistentPostRunE: func(cmd *cobra.Command, args []string) error {
@@ -67,6 +52,44 @@ func Execute(ctx context.Context) error {
 	return rootCmd.ExecuteContext(ctx)
 }
 
+// loadConfigAndLogging loads the config, initializes logging and the S3
+// uploader. It does not touch Docker, so lightweight commands (e.g. check) can
+// reuse it without requiring a running daemon.
+func loadConfigAndLogging() error {
+	var err error
+	cfg, err = config.LoadFrom(configPath)
+	if err != nil {
+		return fmt.Errorf("failed to load config: %w", err)
+	}
+
+	if _, err := logging.Init(cfg.Logging); err != nil {
+		return fmt.Errorf("failed to initialize logging: %w", err)
+	}
+
+	s3Uploader, err = logging.NewS3Uploader(cfg.Logging)
+	if err != nil {
+		return fmt.Errorf("failed to initialize S3 uploader: %w", err)
+	}
+	if s3Uploader != nil {
+		s3Uploader.Start()
+	}
+
+	return nil
+}
+
+// loadInventory loads the inventory file if one is configured. A missing or
+// unreadable inventory is logged as a warning rather than treated as fatal.
+func loadInventory() {
+	if cfg.Storage.InventoryFile == "" {
+		return
+	}
+	if _, err := inventory.Load(cfg.Storage.InventoryFile); err != nil {
+		logging.Warn("Failed to load inventory", "path", cfg.Storage.InventoryFile, "error", err)
+	} else {
+		logging.Info("Loaded inventory", "path", cfg.Storage.InventoryFile)
+	}
+}
+
 func initializeServices() error {
 	var err error
 
@@ -80,13 +103,7 @@ func initializeServices() error {
 		return fmt.Errorf("failed to load routes: %w", err)
 	}
 
-	if cfg.Storage.InventoryFile != "" {
-		if _, err := inventory.Load(cfg.Storage.InventoryFile); err != nil {
-			logging.Warn("Failed to load inventory", "path", cfg.Storage.InventoryFile, "error", err)
-		} else {
-			logging.Info("Loaded inventory", "path", cfg.Storage.InventoryFile)
-		}
-	}
+	loadInventory()
 
 	annetService = annet.New(cfg, containerMgr, routerInstance)
 

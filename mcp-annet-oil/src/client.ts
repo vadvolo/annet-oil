@@ -75,6 +75,35 @@ export interface InventoryResponse {
   total: number;
 }
 
+export interface CheckPortResult {
+  port: number;
+  open: boolean;
+  latency_ms?: number;
+  error?: string;
+}
+
+export interface CheckResult {
+  hostname: string;
+  ip: string;
+  vendor?: string;
+  timestamp: string;
+  duration_ms: number;
+  reachable: boolean;
+  login: string; // "ok" | "failed" | "skipped"
+  ports: CheckPortResult[];
+  error?: {
+    type: string;
+    message: string;
+  };
+}
+
+export interface CheckRequest {
+  host: string;
+  ports?: number[];
+  login?: boolean;
+  timeout?: number;
+}
+
 export interface CreateRFCRequest {
   summary: string;
   description?: string;
@@ -198,6 +227,15 @@ export class AnnetOilClient {
       if (platform) params.platform = platform;
       if (pattern) params.pattern = pattern;
       const response = await this.client.get('/inventory', { params });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async check(request: CheckRequest): Promise<CheckResult> {
+    try {
+      const response = await this.client.post('/check', request);
       return response.data;
     } catch (error) {
       throw this.handleError(error);
