@@ -2,6 +2,7 @@ package check
 
 import (
 	"context"
+	"errors"
 	"net"
 	"testing"
 	"time"
@@ -136,9 +137,96 @@ func TestDevices_Batch(t *testing.T) {
 	if report.Unreachable != 1 {
 		t.Errorf("expected 1 unreachable, got %d", report.Unreachable)
 	}
+	// No credentials + CheckLogin disabled → every device is login-skipped.
+	if report.LoginSkipped != 3 {
+		t.Errorf("expected 3 login-skipped, got %d", report.LoginSkipped)
+	}
 	// Sorted by hostname.
 	if report.Results[0].Hostname != "a" {
 		t.Errorf("expected results sorted by hostname, got %q first", report.Results[0].Hostname)
+	}
+}
+
+func TestClassifyLoginError(t *testing.T) {
+	cases := []struct {
+		msg  string
+		want string
+	}{
+		{"ssh: handshake failed: read tcp ...: use of closed network connection", ErrTimeout},
+		{"ssh: handshake failed: read tcp ...: i/o timeout", ErrTimeout},
+		{"context deadline exceeded", ErrTimeout},
+		{"ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain", ErrAuth},
+		{"ssh: handshake failed: ssh: unable to authenticate", ErrAuth},
+		{"permission denied", ErrAuth},
+		{"ssh: handshake failed: EOF", ErrLogin},
+		{"connection reset by peer", ErrLogin},
+	}
+	for _, c := range cases {
+		if got := classifyLoginError(errors.New(c.msg)); got != c.want {
+			t.Errorf("classifyLoginError(%q) = %q, want %q", c.msg, got, c.want)
+		}
+	}
+}
+
+// TestDevice_LoginHandshakeTimeout verifies that a server which accepts the TCP
+// connection but never speaks SSH is reported as a timeout, not a generic
+// login error — the regression this fix addresses.
+func TestDevice_LoginHandshakeTimeout(t *testing.T) {
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatalf("listen: %v", err)
+	}
+	defer ln.Close()
+	// Accept and hold the connection open without sending an SSH banner.
+	go func() {
+		for {
+			c, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			defer c.Close()
+			_ = c
+		}
+	}()
+	port := ln.Addr().(*net.TCPAddr).Port
+
+	dev := &inventory.Device{
+		Hostname:    "silent",
+		IP:          "127.0.0.1",
+		Port:        port,
+		Credentials: inventory.DeviceCredentials{Login: "admin", Password: "x"},
+	}
+	res := Device(context.Background(), dev, Options{
+		CheckLogin:   true,
+		DialTimeout:  time.Second,
+		LoginTimeout: 300 * time.Millisecond,
+	})
+
+	if res.Login != LoginFailed {
+		t.Fatalf("expected login failed, got %q", res.Login)
+	}
+	if res.Error == nil || res.Error.Type != ErrTimeout {
+		t.Errorf("expected timeout error, got %+v", res.Error)
+	}
+}
+
+// TestDevice_CanceledNotUnreachable verifies that a device probed under an
+// already-canceled context is reported as canceled, not falsely unreachable.
+func TestDevice_CanceledNotUnreachable(t *testing.T) {
+	port, closeFn := listenTCP(t)
+	defer closeFn()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // cancel before probing
+
+	dev := &inventory.Device{Hostname: "x", IP: "127.0.0.1", Port: port}
+	res := Device(ctx, dev, Options{DialTimeout: time.Second})
+
+	if res.Reachable {
+		t.Fatalf("expected not reachable under canceled ctx")
+	}
+	if res.Error == nil || res.Error.Type != ErrCanceled {
+		t.Errorf("expected canceled error, got %+v", res.Error)
 	}
 }
 

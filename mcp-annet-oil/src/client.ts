@@ -75,6 +75,13 @@ export interface InventoryResponse {
   total: number;
 }
 
+export interface ReloadResponse {
+  status: string;
+  path: string;
+  devices: number;
+  reloaded_at: string;
+}
+
 export interface CheckPortResult {
   port: number;
   open: boolean;
@@ -227,6 +234,15 @@ export class AnnetOilClient {
       if (platform) params.platform = platform;
       if (pattern) params.pattern = pattern;
       const response = await this.client.get('/inventory', { params });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async reloadInventory(): Promise<ReloadResponse> {
+    try {
+      const response = await this.client.post('/inventory/reload');
       return response.data;
     } catch (error) {
       throw this.handleError(error);

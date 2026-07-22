@@ -361,6 +361,12 @@ annet-oil check router1.example.com                 # single host/IP
 annet-oil check --vendor cisco --no-login           # all Cisco devices, ports only
 annet-oil check --ports 22,23,10022,21022 \
   --concurrency 100 -o availability-report.json      # batch the whole inventory in parallel
+annet-oil check --concurrency 100 -o report.csv      # CSV report (format inferred from extension)
+annet-oil check --failures-only --format csv          # CSV of only unreachable/login-failed devices
+
+# SSH login is attempted when DEVICE_USERNAME/DEVICE_PASSWORD (or per-device
+# inventory credentials) are set; otherwise login shows as "skipped".
+DEVICE_USERNAME=admin DEVICE_PASSWORD=secret annet-oil check router1.example.com --format json
 
 # Start servers
 annet-oil server start        # API + SSH
@@ -391,6 +397,10 @@ curl "http://localhost:8080/api/v0/containers" \
 
 # Routing
 curl "http://localhost:8080/api/v0/routing" \
+  -H "Authorization: Bearer your-token"
+
+# Reload inventory after editing the inventory file
+curl -X POST "http://localhost:8080/api/v0/inventory/reload" \
   -H "Authorization: Bearer your-token"
 
 # Device availability check
@@ -475,6 +485,7 @@ docker:
 | `/api/v0/containers` | GET | Container status |
 | `/api/v0/routing` | GET, POST, DELETE | Manage routing |
 | `/api/v0/inventory` | GET | List inventory devices |
+| `/api/v0/inventory/reload` | POST | Reload inventory from file on the fly |
 | `/api/v0/check` | GET, POST | Device availability (ports + SSH login) |
 | `/api/v0/health` | GET | Health check |
 

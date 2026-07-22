@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -70,7 +71,14 @@ func runCheck(w http.ResponseWriter, r *http.Request, req CheckRequest) {
 	device, err := inventory.GetDevice(req.Host)
 	if err != nil {
 		log.Printf("[check] host %s not in inventory, probing directly: %v", req.Host, err)
-		device = &inventory.Device{Hostname: req.Host, IP: req.Host}
+		device = &inventory.Device{
+			Hostname: req.Host,
+			IP:       req.Host,
+			Credentials: inventory.DeviceCredentials{
+				Login:    os.Getenv("DEVICE_USERNAME"),
+				Password: os.Getenv("DEVICE_PASSWORD"),
+			},
+		}
 	}
 
 	checkLogin := true

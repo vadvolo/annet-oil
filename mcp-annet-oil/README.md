@@ -16,6 +16,7 @@ The MCP server exposes the following tools to AI agents:
 - **annet_execute** - Execute whitelisted commands on network devices
 - **annet_list_allowed_commands** - List categories of allowed commands
 - **annet_inventory** - List network devices from the inventory
+- **annet_inventory_reload** - Reload the inventory from its file on the fly
 - **annet_check** - Check device availability (ports + SSH login) by hostname or IP
 
 ## Installation

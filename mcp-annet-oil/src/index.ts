@@ -190,6 +190,14 @@ const tools: Tool[] = [
     },
   },
   {
+    name: 'annet_inventory_reload',
+    description: 'Reload the device inventory from its file on disk without restarting the server. Use after the inventory file has changed.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {},
+    },
+  },
+  {
     name: 'annet_check',
     description: 'Check device availability: probe configured ports (22, 23, 10022, 21022, ...) and verify SSH login. Returns reachability, open ports, login status, timestamp and any error. Address the device by hostname or IP.',
     inputSchema: {
@@ -630,6 +638,18 @@ async function main() {
               {
                 type: 'text',
                 text: output,
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_inventory_reload': {
+          const result = await annetClient.reloadInventory();
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Inventory reloaded\n\nPath: ${result.path}\nDevices: ${result.devices}\nReloaded at: ${result.reloaded_at}`,
               } as TextContent,
             ],
           };

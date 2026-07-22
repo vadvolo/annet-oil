@@ -17,9 +17,11 @@ import (
 // Error types reported in Result.Error.Type.
 const (
 	ErrUnreachable = "unreachable" // no probed port accepted a connection
-	ErrAuth        = "auth_err"    // TCP ok but SSH authentication failed
-	ErrLogin       = "login_err"   // SSH transport/handshake failed (not auth)
+	ErrAuth        = "auth_err"    // TCP ok but SSH authentication was rejected
+	ErrTimeout     = "timeout"     // SSH dial/handshake exceeded its deadline
+	ErrLogin       = "login_err"   // SSH transport/handshake failed (not auth/timeout)
 	ErrConfig      = "config_err"  // missing credentials / bad input
+	ErrCanceled    = "canceled"    // the run was canceled before the device finished probing
 )
 
 // Login states reported in Result.Login.
@@ -98,7 +100,7 @@ func (o Options) dialTimeout() time.Duration {
 
 func (o Options) loginTimeout() time.Duration {
 	if o.LoginTimeout <= 0 {
-		return 5 * time.Second
+		return 8 * time.Second
 	}
 	return o.LoginTimeout
 }
@@ -139,9 +141,19 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 	}
 
 	if !res.Reachable {
-		res.Error = &CheckError{
-			Type:    ErrUnreachable,
-			Message: fmt.Sprintf("no open ports among %v on %s", ports, target),
+		// If the run was canceled (e.g. Ctrl+C) while this device was still
+		// being probed, the ports were not truly closed — report it as
+		// canceled rather than a false "unreachable".
+		if ctx.Err() != nil {
+			res.Error = &CheckError{
+				Type:    ErrCanceled,
+				Message: fmt.Sprintf("check canceled before %s was fully probed", target),
+			}
+		} else {
+			res.Error = &CheckError{
+				Type:    ErrUnreachable,
+				Message: fmt.Sprintf("no open ports among %v on %s", ports, target),
+			}
 		}
 		res.DurationMs = time.Since(start).Milliseconds()
 		return res
@@ -149,7 +161,7 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 
 	// Login attempt (optional).
 	if opts.CheckLogin {
-		res.Login = attemptLogin(ctx, target, dev, openPorts, opts.loginTimeout(), res)
+		res.Login = attemptLogin(ctx, target, dev, openPorts, opts.dialTimeout(), opts.loginTimeout(), res)
 	}
 
 	res.DurationMs = time.Since(start).Milliseconds()
@@ -158,7 +170,7 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 
 // attemptLogin tries an SSH login on the best available open port and updates
 // res.Error on failure. It returns the resulting Login state.
-func attemptLogin(ctx context.Context, target string, dev *inventory.Device, openPorts []int, timeout time.Duration, res *Result) string {
+func attemptLogin(ctx context.Context, target string, dev *inventory.Device, openPorts []int, dialTimeout, handshakeTimeout time.Duration, res *Result) string {
 	if dev.Credentials.Login == "" {
 		return LoginSkipped
 	}
@@ -170,12 +182,8 @@ func attemptLogin(ctx context.Context, target string, dev *inventory.Device, ope
 	}
 
 	if err := sshLogin(ctx, net.JoinHostPort(target, fmt.Sprint(loginPort)),
-		dev.Credentials.Login, dev.Credentials.Password, timeout); err != nil {
-		if isAuthError(err) {
-			res.Error = &CheckError{Type: ErrAuth, Message: err.Error()}
-			return LoginFailed
-		}
-		res.Error = &CheckError{Type: ErrLogin, Message: err.Error()}
+		dev.Credentials.Login, dev.Credentials.Password, dialTimeout, handshakeTimeout); err != nil {
+		res.Error = &CheckError{Type: classifyLoginError(err), Message: err.Error()}
 		return LoginFailed
 	}
 	return LoginOK
@@ -227,6 +235,12 @@ func pickSSHPort(devicePort int, openPorts []int) int {
 func probePort(ctx context.Context, host string, port int, timeout time.Duration) PortResult {
 	pr := PortResult{Port: port}
 
+	// Don't misreport a port as closed when the run was already canceled.
+	if err := ctx.Err(); err != nil {
+		pr.Error = "canceled: " + err.Error()
+		return pr
+	}
+
 	dialCtx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
@@ -243,39 +257,48 @@ func probePort(ctx context.Context, host string, port int, timeout time.Duration
 	return pr
 }
 
-func sshLogin(ctx context.Context, addr, user, password string, timeout time.Duration) error {
+// sshLogin performs an SSH login attempt. The TCP dial and the SSH handshake
+// each get their own timeout budget so a slow dial does not starve the
+// handshake (which previously surfaced as "use of closed network connection").
+// Both password and keyboard-interactive auth are offered, since some devices
+// (notably RouterOS/MikroTik) reject bare "password" but accept the same
+// credentials via keyboard-interactive.
+func sshLogin(ctx context.Context, addr, user, password string, dialTimeout, handshakeTimeout time.Duration) error {
 	cfg := &ssh.ClientConfig{
-		User:            user,
-		Auth:            []ssh.AuthMethod{ssh.Password(password)},
+		User: user,
+		Auth: []ssh.AuthMethod{
+			ssh.Password(password),
+			ssh.KeyboardInteractive(func(name, instruction string, questions []string, echos []bool) ([]string, error) {
+				// Answer every prompt with the password.
+				answers := make([]string, len(questions))
+				for i := range questions {
+					answers[i] = password
+				}
+				return answers, nil
+			}),
+		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-		Timeout:         timeout,
+		Timeout:         handshakeTimeout,
 	}
 
-	dialCtx, cancel := context.WithTimeout(ctx, timeout)
-	defer cancel()
-
-	var d net.Dialer
-	conn, err := d.DialContext(dialCtx, "tcp", addr)
+	d := net.Dialer{Timeout: dialTimeout}
+	conn, err := d.DialContext(ctx, "tcp", addr)
 	if err != nil {
 		return fmt.Errorf("dial: %w", err)
 	}
+	defer conn.Close()
 
-	// Bound the handshake by closing the raw conn when the context expires.
-	done := make(chan struct{})
-	defer close(done)
-	go func() {
-		select {
-		case <-dialCtx.Done():
-			_ = conn.Close()
-		case <-done:
-		}
-	}()
+	// Bound the handshake with its own deadline on the raw connection. A
+	// deadline surfaces as a clean i/o timeout rather than closing the fd
+	// mid-handshake.
+	_ = conn.SetDeadline(time.Now().Add(handshakeTimeout))
 
 	sshConn, chans, reqs, err := ssh.NewClientConn(conn, addr, cfg)
 	if err != nil {
-		_ = conn.Close()
 		return err
 	}
+	// Handshake done: clear the deadline before tearing the session down.
+	_ = conn.SetDeadline(time.Time{})
 	client := ssh.NewClient(sshConn, chans, reqs)
 	return client.Close()
 }

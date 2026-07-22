@@ -2,6 +2,8 @@ package check
 
 import (
 	"context"
+	"errors"
+	"net"
 	"sort"
 	"strings"
 	"sync"
@@ -12,15 +14,17 @@ import (
 
 // BatchReport aggregates the results of checking many devices.
 type BatchReport struct {
-	GeneratedAt time.Time `json:"generated_at"`
-	DurationMs  int64     `json:"duration_ms"`
-	Concurrency int       `json:"concurrency"`
-	Total       int       `json:"total"`
-	Reachable   int       `json:"reachable"`
-	Unreachable int       `json:"unreachable"`
-	LoginOK     int       `json:"login_ok"`
-	LoginFailed int       `json:"login_failed"`
-	Results     []*Result `json:"results"`
+	GeneratedAt  time.Time `json:"generated_at"`
+	DurationMs   int64     `json:"duration_ms"`
+	Concurrency  int       `json:"concurrency"`
+	Total        int       `json:"total"`
+	Reachable    int       `json:"reachable"`
+	Unreachable  int       `json:"unreachable"`
+	Canceled     int       `json:"canceled"`
+	LoginOK      int       `json:"login_ok"`
+	LoginFailed  int       `json:"login_failed"`
+	LoginSkipped int       `json:"login_skipped"`
+	Results      []*Result `json:"results"`
 }
 
 // Devices checks a set of devices concurrently in batches of `concurrency`
@@ -64,9 +68,12 @@ func Devices(ctx context.Context, devices []inventory.Device, opts Options, conc
 			continue
 		}
 		results = append(results, r)
-		if r.Reachable {
+		switch {
+		case r.Reachable:
 			report.Reachable++
-		} else {
+		case r.Error != nil && r.Error.Type == ErrCanceled:
+			report.Canceled++
+		default:
 			report.Unreachable++
 		}
 		switch r.Login {
@@ -74,6 +81,8 @@ func Devices(ctx context.Context, devices []inventory.Device, opts Options, conc
 			report.LoginOK++
 		case LoginFailed:
 			report.LoginFailed++
+		case LoginSkipped:
+			report.LoginSkipped++
 		}
 	}
 	report.Results = results
@@ -86,7 +95,38 @@ func Devices(ctx context.Context, devices []inventory.Device, opts Options, conc
 	return report
 }
 
-// isAuthError reports whether an SSH error is an authentication failure as
+// classifyLoginError maps an SSH login error to a Result error type:
+// timeout, auth_err, or login_err (transport/other).
+func classifyLoginError(err error) string {
+	if err == nil {
+		return ""
+	}
+	if isTimeoutError(err) {
+		return ErrTimeout
+	}
+	if isAuthError(err) {
+		return ErrAuth
+	}
+	return ErrLogin
+}
+
+// isTimeoutError reports whether the error is a dial/handshake timeout,
+// including a deadline that closed the connection mid-handshake.
+func isTimeoutError(err error) bool {
+	if err == nil {
+		return false
+	}
+	var ne net.Error
+	if errors.As(err, &ne) && ne.Timeout() {
+		return true
+	}
+	msg := strings.ToLower(err.Error())
+	return strings.Contains(msg, "i/o timeout") ||
+		strings.Contains(msg, "deadline exceeded") ||
+		strings.Contains(msg, "use of closed network connection")
+}
+
+// isAuthError reports whether an SSH error is an authentication rejection as
 // opposed to a transport/connectivity problem.
 func isAuthError(err error) bool {
 	if err == nil {
@@ -95,6 +135,5 @@ func isAuthError(err error) bool {
 	msg := strings.ToLower(err.Error())
 	return strings.Contains(msg, "unable to authenticate") ||
 		strings.Contains(msg, "no supported methods remain") ||
-		strings.Contains(msg, "permission denied") ||
-		strings.Contains(msg, "auth")
+		strings.Contains(msg, "permission denied")
 }

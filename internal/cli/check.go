@@ -1,9 +1,13 @@
 package cli
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
+	"strconv"
 	"strings"
 	"text/tabwriter"
 	"time"
@@ -53,6 +57,7 @@ var (
 	checkLoginTO      int
 	checkNoLogin      bool
 	checkOutput       string
+	checkOutputFormat string
 	checkFormat       string
 	checkFailuresOnly bool
 )
@@ -64,10 +69,11 @@ func init() {
 	checkCmd.Flags().StringVar(&checkPattern, "pattern", "", "Filter inventory by hostname pattern (supports wildcards)")
 	checkCmd.Flags().IntVar(&checkConcurrency, "concurrency", 50, "Number of devices checked in parallel per batch")
 	checkCmd.Flags().IntVar(&checkTimeout, "timeout", 3, "Per-port TCP dial timeout in seconds")
-	checkCmd.Flags().IntVar(&checkLoginTO, "login-timeout", 5, "SSH login timeout in seconds")
+	checkCmd.Flags().IntVar(&checkLoginTO, "login-timeout", 8, "SSH handshake timeout in seconds")
 	checkCmd.Flags().BoolVar(&checkNoLogin, "no-login", false, "Only check port reachability, skip SSH login")
-	checkCmd.Flags().StringVarP(&checkOutput, "output", "o", "", "Write JSON availability report to this file")
-	checkCmd.Flags().StringVar(&checkFormat, "format", "table", "Console output format (table|json|summary)")
+	checkCmd.Flags().StringVarP(&checkOutput, "output", "o", "", "Write availability report to this file (format inferred from .json/.csv extension, or set with --output-format)")
+	checkCmd.Flags().StringVar(&checkOutputFormat, "output-format", "", "Report file format (json|csv); default inferred from --output extension")
+	checkCmd.Flags().StringVar(&checkFormat, "format", "table", "Console output format (table|json|csv|summary)")
 	checkCmd.Flags().BoolVar(&checkFailuresOnly, "failures-only", false, "Only print unreachable / login-failed devices to console")
 
 	rootCmd.AddCommand(checkCmd)
@@ -111,7 +117,13 @@ func resolveCheckDevices(args []string) ([]inventory.Device, error) {
 			if dev, err := inventory.GetDevice(host); err == nil {
 				devices = append(devices, *dev)
 			} else {
-				devices = append(devices, inventory.Device{Hostname: host, IP: host})
+				// Host not in inventory: probe directly, taking credentials
+				// from the environment (as the execute handler does).
+				devices = append(devices, inventory.Device{
+					Hostname:    host,
+					IP:          host,
+					Credentials: envCredentials(),
+				})
 			}
 		}
 		return devices, nil
@@ -123,22 +135,51 @@ func resolveCheckDevices(args []string) ([]inventory.Device, error) {
 	return inventory.FilterDevices(checkVendor, checkPlatform, checkPattern), nil
 }
 
+// envCredentials returns device credentials sourced from the DEVICE_USERNAME /
+// DEVICE_PASSWORD environment variables, used for hosts not present in the
+// inventory.
+func envCredentials() inventory.DeviceCredentials {
+	return inventory.DeviceCredentials{
+		Login:    os.Getenv("DEVICE_USERNAME"),
+		Password: os.Getenv("DEVICE_PASSWORD"),
+	}
+}
+
 func writeCheckReport(path string, report *check.BatchReport) error {
-	data, err := json.MarshalIndent(report, "", "  ")
+	format := resolveOutputFormat(path, checkOutputFormat)
+
+	f, err := os.Create(path)
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(path, data, 0644)
+	defer f.Close()
+
+	switch format {
+	case "csv":
+		return writeCheckCSV(f, report)
+	default:
+		return writeCheckJSON(f, report)
+	}
+}
+
+// resolveOutputFormat picks the report file format: the explicit --output-format
+// when set, otherwise inferred from the file extension, defaulting to json.
+func resolveOutputFormat(path, explicit string) string {
+	if explicit != "" {
+		return strings.ToLower(explicit)
+	}
+	if strings.EqualFold(filepath.Ext(path), ".csv") {
+		return "csv"
+	}
+	return "json"
 }
 
 func printCheckReport(report *check.BatchReport, format string) error {
 	switch format {
 	case "json":
-		data, err := json.MarshalIndent(report, "", "  ")
-		if err != nil {
-			return err
-		}
-		fmt.Println(string(data))
+		return writeCheckJSON(os.Stdout, report)
+	case "csv":
+		return writeCheckCSV(os.Stdout, report)
 	case "summary":
 		printCheckSummary(report)
 	case "table":
@@ -148,6 +189,59 @@ func printCheckReport(report *check.BatchReport, format string) error {
 		printCheckSummary(report)
 	}
 	return nil
+}
+
+func writeCheckJSON(w io.Writer, report *check.BatchReport) error {
+	enc := json.NewEncoder(w)
+	enc.SetIndent("", "  ")
+	return enc.Encode(report)
+}
+
+// writeCheckCSV writes one row per checked device. Open/closed ports are
+// semicolon-joined so each device stays on a single line.
+func writeCheckCSV(w io.Writer, report *check.BatchReport) error {
+	cw := csv.NewWriter(w)
+
+	header := []string{
+		"hostname", "ip", "vendor", "reachable", "login",
+		"open_ports", "closed_ports", "error_type", "error_message",
+		"duration_ms", "timestamp",
+	}
+	if err := cw.Write(header); err != nil {
+		return err
+	}
+
+	for _, r := range report.Results {
+		var open, closed []string
+		for _, p := range r.Ports {
+			if p.Open {
+				open = append(open, strconv.Itoa(p.Port))
+			} else {
+				closed = append(closed, strconv.Itoa(p.Port))
+			}
+		}
+
+		errType, errMsg := "", ""
+		if r.Error != nil {
+			errType = r.Error.Type
+			errMsg = r.Error.Message
+		}
+
+		row := []string{
+			r.Hostname, r.IP, r.Vendor,
+			strconv.FormatBool(r.Reachable), r.Login,
+			strings.Join(open, ";"), strings.Join(closed, ";"),
+			errType, errMsg,
+			strconv.FormatInt(r.DurationMs, 10),
+			r.Timestamp.Format(time.RFC3339),
+		}
+		if err := cw.Write(row); err != nil {
+			return err
+		}
+	}
+
+	cw.Flush()
+	return cw.Error()
 }
 
 func printCheckTable(report *check.BatchReport) {
@@ -186,10 +280,15 @@ func openPortsString(r *check.Result) string {
 }
 
 func printCheckSummary(report *check.BatchReport) {
-	fmt.Printf("\nChecked %d device(s) in %dms (concurrency %d)\n",
-		report.Total, report.DurationMs, report.Concurrency)
-	fmt.Printf("  Reachable:    %d\n", report.Reachable)
-	fmt.Printf("  Unreachable:  %d\n", report.Unreachable)
-	fmt.Printf("  Login OK:     %d\n", report.LoginOK)
-	fmt.Printf("  Login failed: %d\n", report.LoginFailed)
+	processed := report.Reachable + report.Unreachable + report.Canceled
+	fmt.Printf("\nChecked %d of %d device(s) in %dms (concurrency %d)\n",
+		processed, report.Total, report.DurationMs, report.Concurrency)
+	fmt.Printf("  Reachable:     %d\n", report.Reachable)
+	fmt.Printf("  Unreachable:   %d\n", report.Unreachable)
+	if report.Canceled > 0 {
+		fmt.Printf("  Canceled:      %d\n", report.Canceled)
+	}
+	fmt.Printf("  Login OK:      %d\n", report.LoginOK)
+	fmt.Printf("  Login failed:  %d\n", report.LoginFailed)
+	fmt.Printf("  Login skipped: %d\n", report.LoginSkipped)
 }
