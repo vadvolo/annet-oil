@@ -203,7 +203,7 @@ func writeCheckCSV(w io.Writer, report *check.BatchReport) error {
 	cw := csv.NewWriter(w)
 
 	header := []string{
-		"hostname", "ip", "vendor", "reachable", "login",
+		"hostname", "ip", "vendor", "reachable", "login", "login_user",
 		"open_ports", "closed_ports", "error_type", "error_message",
 		"duration_ms", "timestamp",
 	}
@@ -229,7 +229,7 @@ func writeCheckCSV(w io.Writer, report *check.BatchReport) error {
 
 		row := []string{
 			r.Hostname, r.IP, r.Vendor,
-			strconv.FormatBool(r.Reachable), r.Login,
+			strconv.FormatBool(r.Reachable), r.Login, r.LoginUser,
 			strings.Join(open, ";"), strings.Join(closed, ";"),
 			errType, errMsg,
 			strconv.FormatInt(r.DurationMs, 10),
@@ -260,8 +260,12 @@ func printCheckTable(report *check.BatchReport) {
 		if r.Error != nil {
 			errMsg = fmt.Sprintf("%s: %s", r.Error.Type, r.Error.Message)
 		}
+		login := r.Login
+		if r.LoginUser != "" {
+			login = fmt.Sprintf("%s (%s)", r.Login, r.LoginUser)
+		}
 		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n",
-			r.Hostname, r.IP, reachable, openPortsString(r), r.Login, errMsg)
+			r.Hostname, r.IP, reachable, openPortsString(r), login, errMsg)
 	}
 	w.Flush()
 }

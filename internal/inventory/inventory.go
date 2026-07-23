@@ -4,23 +4,36 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
 type Inventory struct {
-	Devices            []Device          `yaml:"devices"`
+	Devices []Device `yaml:"devices"`
+	// Credentials holds named credential groups. The "default" group is used as
+	// the final fallback. Other groups (e.g. "infra-router") are referenced by a
+	// device's role field.
+	Credentials map[string]DeviceCredentials `yaml:"credentials"`
+	// DefaultCredentials is the legacy single default. Deprecated: use the
+	// "default" entry of Credentials. Kept for backward compatibility and
+	// merged into Credentials["default"] on load.
 	DefaultCredentials DeviceCredentials `yaml:"default_credentials"`
 }
 
 type Device struct {
-	Hostname    string            `yaml:"hostname"`
-	IP          string            `yaml:"ip"`
-	Port        int               `yaml:"port,omitempty"`
-	Vendor      string            `yaml:"vendor"`
-	Platform    string            `yaml:"platform"`
-	Credentials DeviceCredentials `yaml:"credentials"`
+	Hostname string `yaml:"hostname"`
+	IP       string `yaml:"ip"`
+	Port     int    `yaml:"port,omitempty"`
+	Vendor   string `yaml:"vendor"`
+	Platform string `yaml:"platform"`
+	// Role names a credential group (see Inventory.Credentials) tried before the
+	// default group at login time.
+	Role string `yaml:"role,omitempty"`
+	// Credentials, when set on a device, are the most specific credentials and
+	// are tried first (an explicit per-device override).
+	Credentials DeviceCredentials `yaml:"credentials,omitempty"`
 	Description string            `yaml:"description,omitempty"`
 }
 
@@ -55,17 +68,71 @@ func Load(path string) (*Inventory, error) {
 		return nil, fmt.Errorf("failed to parse inventory: %w", err)
 	}
 
-	// Apply default credentials where needed
+	if inv.Credentials == nil {
+		inv.Credentials = map[string]DeviceCredentials{}
+	}
+	// Backward compatibility: fold the legacy default_credentials into the
+	// "default" credential group when the group isn't explicitly set.
+	if _, ok := inv.Credentials["default"]; !ok && inv.DefaultCredentials.Login != "" {
+		inv.Credentials["default"] = inv.DefaultCredentials
+	}
+
+	// Credentials are resolved lazily per device (see CredentialsFor); we only
+	// normalize vendor names here.
 	for i := range inv.Devices {
-		if inv.Devices[i].Credentials.Login == "" {
-			inv.Devices[i].Credentials = inv.DefaultCredentials
-		}
-		// Normalize vendor names
 		inv.Devices[i].Vendor = strings.ToLower(inv.Devices[i].Vendor)
 	}
 
 	inventory = &inv
 	return &inv, nil
+}
+
+// CredentialsFor returns the ordered list of credential candidates to try for a
+// device: the device's explicit credentials first (if any), then its role
+// group, then the "default" group. Entries with an empty login and duplicates
+// are removed. Login attempts should try them in order.
+func (inv *Inventory) CredentialsFor(d *Device) []DeviceCredentials {
+	var out []DeviceCredentials
+	add := func(c DeviceCredentials) {
+		if c.Login == "" || slices.Contains(out, c) {
+			return
+		}
+		out = append(out, c)
+	}
+
+	if d != nil {
+		add(d.Credentials)
+		if d.Role != "" {
+			if c, ok := inv.Credentials[d.Role]; ok {
+				add(c)
+			}
+		}
+	}
+	add(inv.Credentials["default"])
+	return out
+}
+
+// CredentialsFor resolves credential candidates for a device against the
+// currently loaded inventory. When no inventory is loaded it falls back to the
+// device's own explicit credentials.
+func CredentialsFor(d *Device) []DeviceCredentials {
+	if inventory == nil {
+		if d != nil && d.Credentials.Login != "" {
+			return []DeviceCredentials{d.Credentials}
+		}
+		return nil
+	}
+	return inventory.CredentialsFor(d)
+}
+
+// PrimaryCredentials returns the single most-specific credential for a device
+// (the first candidate), or an empty credential when none resolve. Used by
+// callers that perform a single login rather than a fallback chain.
+func PrimaryCredentials(d *Device) DeviceCredentials {
+	if cands := CredentialsFor(d); len(cands) > 0 {
+		return cands[0]
+	}
+	return DeviceCredentials{}
 }
 
 func GetDevice(hostname string) (*Device, error) {
@@ -100,13 +167,17 @@ func GetDevice(hostname string) (*Device, error) {
 func GetDeviceOrDefault(hostname string) *Device {
 	device, err := GetDevice(hostname)
 	if err != nil {
+		var def DeviceCredentials
+		if inventory != nil {
+			def = inventory.Credentials["default"]
+		}
 		return &Device{
 			Hostname:    hostname,
 			IP:          hostname,
 			Port:        DefaultSSHPort,
 			Vendor:      "cisco",
 			Platform:    "ios",
-			Credentials: inventory.DefaultCredentials,
+			Credentials: def,
 		}
 	}
 	return device

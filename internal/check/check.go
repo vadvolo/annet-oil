@@ -68,6 +68,7 @@ type Result struct {
 	DurationMs int64        `json:"duration_ms"`
 	Reachable  bool         `json:"reachable"`
 	Login      string       `json:"login"`
+	LoginUser  string       `json:"login_user,omitempty"` // login of the credential that succeeded
 	Ports      []PortResult `json:"ports"`
 	Error      *CheckError  `json:"error,omitempty"`
 }
@@ -168,10 +169,14 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 	return res
 }
 
-// attemptLogin tries an SSH login on the best available open port and updates
-// res.Error on failure. It returns the resulting Login state.
+// attemptLogin tries an SSH login on the best available open port, trying each
+// resolved credential candidate (device -> role group -> default) in order. It
+// advances to the next credential only on an authentication rejection; a
+// timeout or transport error stops the chain. It updates res.Error/res.LoginUser
+// and returns the resulting Login state.
 func attemptLogin(ctx context.Context, target string, dev *inventory.Device, openPorts []int, dialTimeout, handshakeTimeout time.Duration, res *Result) string {
-	if dev.Credentials.Login == "" {
+	candidates := inventory.CredentialsFor(dev)
+	if len(candidates) == 0 {
 		return LoginSkipped
 	}
 
@@ -181,12 +186,25 @@ func attemptLogin(ctx context.Context, target string, dev *inventory.Device, ope
 		return LoginSkipped
 	}
 
-	if err := sshLogin(ctx, net.JoinHostPort(target, fmt.Sprint(loginPort)),
-		dev.Credentials.Login, dev.Credentials.Password, dialTimeout, handshakeTimeout); err != nil {
-		res.Error = &CheckError{Type: classifyLoginError(err), Message: err.Error()}
-		return LoginFailed
+	addr := net.JoinHostPort(target, fmt.Sprint(loginPort))
+	var lastErr error
+	for _, c := range candidates {
+		err := sshLogin(ctx, addr, c.Login, c.Password, dialTimeout, handshakeTimeout)
+		if err == nil {
+			res.Error = nil
+			res.LoginUser = c.Login
+			return LoginOK
+		}
+		lastErr = err
+		// A different credential can only help for an auth rejection; a
+		// timeout/transport error won't be fixed by trying another password.
+		if classifyLoginError(err) != ErrAuth {
+			break
+		}
 	}
-	return LoginOK
+
+	res.Error = &CheckError{Type: classifyLoginError(lastErr), Message: lastErr.Error()}
+	return LoginFailed
 }
 
 // resolvePorts returns the sorted, de-duplicated set of ports to probe,
