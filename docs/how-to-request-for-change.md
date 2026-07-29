@@ -83,16 +83,17 @@ curl -X POST \
 
 Save the diff output for the next step.
 
-### Step 3: Attach Diff to RFC
+### Step 3: Post the Diff (or any note) to the RFC
 
-Attach the generated diff to the RFC ticket:
+Post the generated diff to the RFC ticket as a comment. The comment body can be
+anything — a diff, a note, a status update — and supports Jira wiki markup (wrap
+diffs in `{code}...{code}`):
 
 **Using MCP:**
 ```
-annet_rfc_attach_diff(
+annet_rfc_post_comment(
   ticket_key="NET-123",
-  device="core-rtr-1",
-  diff="[paste diff output here]"
+  comment="*Configuration diff for core-rtr-1*\n{code}\n[paste diff output here]\n{code}"
 )
 ```
 
@@ -103,10 +104,9 @@ curl -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "ticket_key": "NET-123",
-    "device": "core-rtr-1",
-    "diff": "- delete protocols bgp\n+ set protocols bgp group TRANSIT..."
+    "comment": "*Configuration diff for core-rtr-1*\n{code}\n- delete protocols bgp\n+ set protocols bgp group TRANSIT...\n{code}"
   }' \
-  http://localhost:8080/api/v0/rfc/attach-diff
+  http://localhost:8080/api/v0/rfc/comment
 ```
 
 Repeat for each device in the RFC.
@@ -224,14 +224,14 @@ Diff for sw-1:
 + set vlans VLAN100 vlan-id 100
 + set vlans VLAN100 description "Department Network"
 
-> annet_rfc_attach_diff(ticket_key="NET-456", device="sw-1", diff="...")
+> annet_rfc_post_comment(ticket_key="NET-456", comment="*Diff for sw-1*\n{code}...{code}")
 
-Diff attached to NET-456 for sw-1.
+Comment posted to NET-456.
 
 > annet_diff(filters=["sw-2"])
-> annet_rfc_attach_diff(ticket_key="NET-456", device="sw-2", diff="...")
+> annet_rfc_post_comment(ticket_key="NET-456", comment="*Diff for sw-2*\n{code}...{code}")
 
-Both diffs attached. Submitting for review.
+Both diffs posted. Submitting for review.
 
 > annet_rfc_submit(ticket_key="NET-456", comment="VLAN 100 configuration ready for review")
 
@@ -360,10 +360,9 @@ If deployment fails:
 
 ```
 # Deployment failed
-annet_rfc_attach_diff(
+annet_rfc_post_comment(
   ticket_key="NET-123",
-  device="sw-1",
-  diff="DEPLOYMENT FAILED: BGP session did not establish"
+  comment="*DEPLOYMENT FAILED on sw-1:* BGP session did not establish"
 )
 
 # Generate rollback (previous config)
@@ -385,7 +384,7 @@ annet_rfc_submit(
 |------|---------|
 | `annet_rfc_create` | Create new RFC ticket |
 | `annet_diff` | Generate configuration diff |
-| `annet_rfc_attach_diff` | Attach diff to RFC |
+| `annet_rfc_post_comment` | Post a comment (diff, note, status) to RFC |
 | `annet_rfc_status` | Check RFC status |
 | `annet_rfc_submit` | Submit for review |
 | `annet_deploy` | Deploy changes |
@@ -397,7 +396,7 @@ annet_rfc_submit(
 |--------|----------|---------|
 | POST | `/api/v0/rfc/create` | Create RFC |
 | POST | `/api/v0/diff` | Generate diff |
-| POST | `/api/v0/rfc/attach-diff` | Attach diff |
+| POST | `/api/v0/rfc/comment` | Post a comment |
 | GET | `/api/v0/rfc/status/{key}` | Get status |
 | POST | `/api/v0/rfc/submit/{key}` | Submit for review |
 | POST | `/api/v0/deploy` | Deploy changes |

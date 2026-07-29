@@ -268,13 +268,6 @@ func (c *Client) AddDeployComment(ctx context.Context, issueKey string, info Dep
 	return c.AddComment(ctx, issueKey, comment)
 }
 
-func (c *Client) AddDiffComment(ctx context.Context, issueKey, device, diff string) error {
-	comment := fmt.Sprintf(
-		"*Configuration Diff for %s*\n\n{code}\n%s\n{code}",
-		device, diff)
-	return c.AddComment(ctx, issueKey, comment)
-}
-
 func (c *Client) GetCurrentUser(ctx context.Context) (*jira.User, error) {
 	user, _, err := c.client.User.GetSelfWithContext(ctx)
 	if err != nil {

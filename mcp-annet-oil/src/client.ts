@@ -327,9 +327,9 @@ export class AnnetOilClient {
     }
   }
 
-  async attachDiffToRFC(ticketKey: string, device: string, diff: string): Promise<void> {
+  async postRFCComment(ticketKey: string, comment: string): Promise<void> {
     try {
-      await this.client.post('/rfc/attach-diff', { ticket_key: ticketKey, device, diff });
+      await this.client.post('/rfc/comment', { ticket_key: ticketKey, comment });
     } catch (error) {
       throw this.handleError(error);
     }

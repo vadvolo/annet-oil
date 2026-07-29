@@ -41,7 +41,7 @@ func NewRFCHandler(cfg config.IntegrationsConfig) http.Handler {
 	}
 
 	r.Post("/create", handler.createRFC)
-	r.Post("/attach-diff", handler.attachDiff)
+	r.Post("/comment", handler.postComment)
 	r.Get("/status/{ticketKey}", handler.getStatus)
 	r.Post("/submit/{ticketKey}", handler.submitForReview)
 	r.Post("/close/{ticketKey}", handler.closeRFC)
@@ -101,27 +101,34 @@ func (h *RFCHandler) createRFC(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-type AttachDiffRequest struct {
+type PostCommentRequest struct {
 	TicketKey string `json:"ticket_key"`
-	Device    string `json:"device"`
-	Diff      string `json:"diff"`
+	Comment   string `json:"comment"`
 }
 
-func (h *RFCHandler) attachDiff(w http.ResponseWriter, r *http.Request) {
+// postComment adds a free-form comment to an RFC ticket. The comment body may be
+// anything (a config diff, a note, a status update); Jira wiki markup such as
+// {code}...{code} can be included by the caller.
+func (h *RFCHandler) postComment(w http.ResponseWriter, r *http.Request) {
 	if !h.enabled || h.jiraClient == nil {
 		http.Error(w, "Jira integration not configured", http.StatusServiceUnavailable)
 		return
 	}
 
-	var req AttachDiffRequest
+	var req PostCommentRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.jiraClient.AddDiffComment(r.Context(), req.TicketKey, req.Device, req.Diff); err != nil {
-		logging.Error("Failed to attach diff", "ticket", req.TicketKey, "error", err)
-		http.Error(w, "Failed to attach diff: "+err.Error(), http.StatusInternalServerError)
+	if req.TicketKey == "" || req.Comment == "" {
+		http.Error(w, "ticket_key and comment are required", http.StatusBadRequest)
+		return
+	}
+
+	if err := h.jiraClient.AddComment(r.Context(), req.TicketKey, req.Comment); err != nil {
+		logging.Error("Failed to post comment", "ticket", req.TicketKey, "error", err)
+		http.Error(w, "Failed to post comment: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 

@@ -309,8 +309,8 @@ const tools: Tool[] = [
     },
   },
   {
-    name: 'annet_rfc_attach_diff',
-    description: 'Attach configuration diff to an existing RFC ticket',
+    name: 'annet_rfc_post_comment',
+    description: 'Post a free-form comment to an existing RFC ticket. The comment can be anything — a configuration diff, a note, a status update, a summary — not just a diff. Jira wiki markup is supported (e.g. wrap code/diffs in {code}...{code}, use *bold*, tables with ||header||).',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -318,16 +318,12 @@ const tools: Tool[] = [
           type: 'string',
           description: 'Jira ticket key (e.g., NET-123)',
         },
-        device: {
+        comment: {
           type: 'string',
-          description: 'Device hostname',
-        },
-        diff: {
-          type: 'string',
-          description: 'Configuration diff content',
+          description: 'Comment body (any text; supports Jira wiki markup like {code}...{code})',
         },
       },
-      required: ['ticket_key', 'device', 'diff'],
+      required: ['ticket_key', 'comment'],
     },
   },
   {
@@ -842,26 +838,25 @@ async function main() {
             content: [
               {
                 type: 'text',
-                text: `RFC Created Successfully\n\nTicket: ${rfc.ticket_key}\nURL: ${rfc.url}\n\nNext steps:\n1. Generate diff with annet_diff for affected devices\n2. Attach diff to RFC with annet_rfc_attach_diff\n3. Submit for review with annet_rfc_submit`,
+                text: `RFC Created Successfully\n\nTicket: ${rfc.ticket_key}\nURL: ${rfc.url}\n\nNext steps:\n1. Generate diff with annet_diff for affected devices\n2. Post the diff (or any note) to the RFC with annet_rfc_post_comment\n3. Submit for review with annet_rfc_submit`,
               } as TextContent,
             ],
           };
         }
 
-        case 'annet_rfc_attach_diff': {
-          const { ticket_key, device, diff } = args as {
+        case 'annet_rfc_post_comment': {
+          const { ticket_key, comment } = args as {
             ticket_key: string;
-            device: string;
-            diff: string;
+            comment: string;
           };
 
-          await annetClient.attachDiffToRFC(ticket_key, device, diff);
+          await annetClient.postRFCComment(ticket_key, comment);
 
           return {
             content: [
               {
                 type: 'text',
-                text: `Diff attached to ${ticket_key} for device ${device}`,
+                text: `Comment posted to ${ticket_key}`,
               } as TextContent,
             ],
           };
