@@ -117,6 +117,10 @@ type APIConfig struct {
 type StorageConfig struct {
 	RoutingFile   string `yaml:"routing_file"`
 	InventoryFile string `yaml:"inventory_file,omitempty"`
+	// FeatureSetFile points at the feature-set knowledge base (see
+	// resources/featuresets.yaml). Optional; when empty the featureset API/CLI
+	// report that no knowledge base is loaded.
+	FeatureSetFile string `yaml:"featureset_file,omitempty"`
 }
 
 type DockerConfig struct {
@@ -269,7 +273,8 @@ func createDefaultConfig(configPath string) (*Config, error) {
 			},
 		},
 		Storage: StorageConfig{
-			RoutingFile: "./storage/routing.json",
+			RoutingFile:    "./storage/routing.json",
+			FeatureSetFile: "./resources/featuresets.yaml",
 		},
 		Docker: DockerConfig{
 			Host: "", // Empty value = auto-detect

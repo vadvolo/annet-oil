@@ -9,6 +9,7 @@ Annet Oil is a Go wrapper for orchestrating multiple annet containers. It provid
 - 💻 **CLI interface** - convenient command line with Cobra
 - 🔀 **Automatic routing** - distribute commands to containers based on hostname
 - 🔐 **SSH server** - remote access to commands
+- 🧭 **Feature sets** - query capability support by vendor/model/version so agents don't propose unsupported config
 - ⚙️ **Flexible configuration** - YAML configuration with SSH key support
 
 ## Architecture
@@ -368,6 +369,11 @@ annet-oil check --failures-only --format csv          # CSV of only unreachable/
 # inventory credentials) are set; otherwise login shows as "skipped".
 DEVICE_USERNAME=admin DEVICE_PASSWORD=secret annet-oil check router1.example.com --format json
 
+# Feature set: what does a vendor/model/version support? (curated knowledge base)
+annet-oil featureset --vendor juniper --model EX4100-48MP --version 24.4R2.23
+annet-oil featureset --vendor juniper --model EX4100-48MP --feature ptp   # -> transparent only, no boundary clock
+annet-oil featureset leaf-01 --model EX4100-48MP --version 24.4R2.23 --format json  # vendor from inventory
+
 # Start servers
 annet-oil server start        # API + SSH
 annet-oil server api          # API only
@@ -411,6 +417,15 @@ curl -X POST "http://localhost:8080/api/v0/check" \
   -H "Authorization: Bearer your-token" \
   -H "Content-Type: application/json" \
   -d '{"host": "10.0.0.1", "ports": [22, 23, 10022], "login": true}'
+
+# Feature set for a platform (vendor/model/version)
+curl "http://localhost:8080/api/v0/featureset?vendor=juniper&model=EX4100-48MP&version=24.4R2.23&feature=ptp" \
+  -H "Authorization: Bearer your-token"
+
+curl -X POST "http://localhost:8080/api/v0/featureset" \
+  -H "Authorization: Bearer your-token" \
+  -H "Content-Type: application/json" \
+  -d '{"vendor": "juniper", "model": "EX4100-48MP", "version": "24.4R2.23"}'
 ```
 
 ### SSH
@@ -453,6 +468,8 @@ server:
 
 storage:
   routing_file: "./storage/routing.json"
+  inventory_file: "./resources/inventory.yaml"       # optional
+  featureset_file: "./resources/featuresets.yaml"    # optional; capability knowledge base
 
 docker:
   # For Docker Desktop: leave empty (auto-detect)
@@ -487,6 +504,7 @@ docker:
 | `/api/v0/inventory` | GET | List inventory devices |
 | `/api/v0/inventory/reload` | POST | Reload inventory from file on the fly |
 | `/api/v0/check` | GET, POST | Device availability (ports + SSH login) |
+| `/api/v0/featureset` | GET, POST | Feature/capability support by vendor/model/version |
 | `/api/v0/health` | GET | Health check |
 
 ## Makefile commands
