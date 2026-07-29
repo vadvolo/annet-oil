@@ -1,10 +1,24 @@
 package opstate
 
 import (
+	"bufio"
 	"fmt"
 	"sort"
 	"strings"
 )
+
+// maxLineBuffer bounds a single scanned line. Device tables are line-oriented
+// with short lines, but the default bufio.Scanner limit (64 KB) would silently
+// truncate the rest of the output on a single pathological long line; 4 MB is a
+// safe ceiling.
+const maxLineBuffer = 4 * 1024 * 1024
+
+// lineScanner returns a line scanner over raw with an enlarged token buffer.
+func lineScanner(raw string) *bufio.Scanner {
+	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc.Buffer(make([]byte, 0, 64*1024), maxLineBuffer)
+	return sc
+}
 
 // Parser turns raw device command output into normalized operational state for
 // one vendor. Implementations are pure (no I/O): the collector runs Command(t)

@@ -88,12 +88,23 @@ func (r *Router) GetContainerForHost(hostname string) string {
 }
 
 func (r *Router) GetContainerForHosts(hostnames []string) map[string]string {
-	result := make(map[string]string)
+	result := make(map[string]string, len(hostnames))
 
+	// Resolve the default container and take the read lock once for the whole
+	// batch instead of per host (GetContainerForHost would do both per call).
+	defaultContainer := ""
+	if dc := r.config.GetDefaultContainer(); dc != nil {
+		defaultContainer = dc.Name
+	}
+
+	r.mu.RLock()
+	defer r.mu.RUnlock()
 	for _, hostname := range hostnames {
-		containerName := r.GetContainerForHost(hostname)
-		if containerName != "" {
+		key := strings.ToLower(strings.TrimSpace(hostname))
+		if containerName, ok := r.routing[key]; ok {
 			result[hostname] = containerName
+		} else if defaultContainer != "" {
+			result[hostname] = defaultContainer
 		}
 	}
 
@@ -164,9 +175,9 @@ func (r *Router) ensureRoutingFile() error {
 
 		defaultRouting := RoutingData{
 			Routes: map[string]string{
-				"router1.example.com":      "annet",
-				"switch1.example.com":      "annet",
-				"old-router.example.com":   "annet-telnet",
+				"router1.example.com":       "annet",
+				"switch1.example.com":       "annet",
+				"old-router.example.com":    "annet-telnet",
 				"legacy-switch.example.com": "annet-telnet",
 			},
 		}
