@@ -22,6 +22,7 @@ auth:
         - "/containers"
         - "/routing"
         - "/inventory"
+        - "/check"
         - "/health"
         - "/rfc"
       commands:
@@ -37,6 +38,7 @@ auth:
         - "/diff"
         - "/routing"
         - "/inventory"
+        - "/check"
         - "/health"
         - "/containers"
       commands:
@@ -61,6 +63,7 @@ auth:
         - "/diff"
         - "/routing"
         - "/inventory"
+        - "/check"
         - "/health"
       commands:
         - "show *"
@@ -88,6 +91,7 @@ auth:
         - "/execute"
         - "/routing"
         - "/inventory"
+        - "/check"
         - "/health"
       commands:
         - "show *"

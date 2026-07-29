@@ -8,7 +8,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import dotenv from 'dotenv';
-import { AnnetOilClient, CommandRequest, CommandResponse } from './client.js';
+import { AnnetOilClient, CommandRequest, CommandResponse, CheckResult } from './client.js';
 import { CommandValidator } from './command-whitelist.js';
 import { logger, createRequestLogger } from './logger.js';
 
@@ -190,6 +190,41 @@ const tools: Tool[] = [
     },
   },
   {
+    name: 'annet_inventory_reload',
+    description: 'Reload the device inventory from its file on disk without restarting the server. Use after the inventory file has changed.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {},
+    },
+  },
+  {
+    name: 'annet_check',
+    description: 'Check device availability: probe configured ports (22, 23, 10022, 21022, ...) and verify SSH login. Returns reachability, open ports, login status, timestamp and any error. Address the device by hostname or IP.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        host: {
+          type: 'string',
+          description: 'Device hostname or IP address to check',
+        },
+        ports: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Extra TCP ports to probe (the device\'s own inventory port is always included)',
+        },
+        login: {
+          type: 'boolean',
+          description: 'Attempt SSH login verification (default: true)',
+        },
+        timeout: {
+          type: 'number',
+          description: 'Per-port TCP dial timeout in seconds',
+        },
+      },
+      required: ['host'],
+    },
+  },
+  {
     name: 'annet_rfc_create',
     description: 'Create a new RFC (Request for Change) ticket in Jira for network configuration changes',
     inputSchema: {
@@ -318,6 +353,33 @@ function formatCommandResponse(response: CommandResponse): string {
 
       output += '\n';
     }
+  }
+
+  return output;
+}
+
+function formatCheckResult(result: CheckResult): string {
+  let output = `Device Check: ${result.hostname}`;
+  if (result.ip && result.ip !== result.hostname) {
+    output += ` (${result.ip})`;
+  }
+  output += '\n\n';
+  output += `Timestamp:  ${result.timestamp}\n`;
+  output += `Reachable:  ${result.reachable ? 'yes' : 'no'}\n`;
+  output += `Login:      ${result.login}\n`;
+  output += `Duration:   ${result.duration_ms}ms\n`;
+
+  output += '\nPorts:\n';
+  for (const p of result.ports) {
+    if (p.open) {
+      output += `  ${p.port}: open${p.latency_ms !== undefined ? ` (${p.latency_ms}ms)` : ''}\n`;
+    } else {
+      output += `  ${p.port}: closed${p.error ? ` (${p.error})` : ''}\n`;
+    }
+  }
+
+  if (result.error) {
+    output += `\nError [${result.error.type}]: ${result.error.message}\n`;
   }
 
   return output;
@@ -578,6 +640,39 @@ async function main() {
                 text: output,
               } as TextContent,
             ],
+          };
+        }
+
+        case 'annet_inventory_reload': {
+          const result = await annetClient.reloadInventory();
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Inventory reloaded\n\nPath: ${result.path}\nDevices: ${result.devices}\nReloaded at: ${result.reloaded_at}`,
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_check': {
+          const { host, ports, login, timeout } = args as {
+            host: string;
+            ports?: number[];
+            login?: boolean;
+            timeout?: number;
+          };
+
+          const result = await annetClient.check({ host, ports, login, timeout });
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: formatCheckResult(result),
+              } as TextContent,
+            ],
+            isError: !result.reachable || result.login === 'failed',
           };
         }
 

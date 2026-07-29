@@ -1,15 +1,57 @@
-# This file store device's creds to connect to devices and exec commands
+# This file stores devices and the credentials used to connect to them.
+#
+# Credentials are resolved per device as an ordered fallback chain and tried in
+# this order at login time:
+#   1. the device's own `credentials:` block (most specific, optional)
+#   2. the group named by the device's `role:` (if set)
+#   3. the `default` group
+# Login advances to the next credential only when the previous one is rejected
+# by authentication; a timeout/transport error stops the chain.
+
+# Named credential groups. "default" is the final fallback; add any custom
+# groups (e.g. infra-router, edge, mgmt) and reference them via a device role.
+credentials:
+  default:
+    login: "${DEVICE_USERNAME}"
+    password: "${DEVICE_PASSWORD}"
+  infra-router:
+    login: "admin"
+    password: "${INFRA_ROUTER_PASSWORD}"
+  edge:
+    login: "edge-admin"
+    password: "${EDGE_PASSWORD}"
+
 devices:
-  - hostname: test.device.com
+  # Uses the infra-router group creds first, then falls back to default.
+  - hostname: core1.example.com
     ip: 192.168.1.1
     vendor: cisco
     platform: ios
-    credentials:
-      login: "${DEVICE_USERNAME}"
-      password: "${DEVICE_PASSWORD}"
+    role: infra-router
+    description: "Core router"
+
+  # No role -> only the default group is used.
+  - hostname: test.device.com
+    ip: 192.168.1.2
+    vendor: cisco
+    platform: ios
     description: "Cisco Test Router"
 
-# Default credentials (can be overridden per device)
-default_credentials:
-  login: "${DEVICE_USERNAME}"
-  password: "${DEVICE_PASSWORD}"
+  # Explicit per-device credentials win over role/default (tried first).
+  - hostname: special.device.com
+    ip: 192.168.1.3
+    vendor: ros
+    platform: routeros
+    role: infra-router
+    credentials:
+      login: "admin"
+      password: "mnaxxx"
+    description: "Device with a one-off password"
+
+# Backward compatibility: the legacy `default_credentials:` block is still
+# accepted and is treated as the `default` credential group when `credentials:`
+# has no `default` entry.
+#
+# default_credentials:
+#   login: "${DEVICE_USERNAME}"
+#   password: "${DEVICE_PASSWORD}"

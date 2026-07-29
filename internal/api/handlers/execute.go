@@ -253,8 +253,11 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		targetHost = device.Hostname
 	}
 
+	// Resolve the most-specific credential (device -> role group -> default).
+	creds := inventory.PrimaryCredentials(device)
+
 	log.Printf("[execute] Executing command on device: host=%s, ip=%s, port=%d, vendor=%s, login=%s",
-		device.Hostname, targetHost, device.GetPort(), device.Vendor, device.Credentials.Login)
+		device.Hostname, targetHost, device.GetPort(), device.Vendor, creds.Login)
 
 	// Execute command with device parameters
 	result, err := h.client.ExecWithDevice(
@@ -262,8 +265,8 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		targetHost,
 		req.Command,
 		device.Vendor,
-		device.Credentials.Login,
-		device.Credentials.Password,
+		creds.Login,
+		creds.Password,
 		device.GetPort(),
 	)
 	if err != nil {

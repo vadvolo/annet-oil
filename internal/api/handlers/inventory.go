@@ -2,12 +2,19 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 
 	"annet-oil/internal/inventory"
 )
+
+// InventoryHandler serves inventory listing and on-the-fly reload.
+type InventoryHandler struct {
+	inventoryFile string
+}
 
 type InventoryResponse struct {
 	Devices []DeviceInfo `json:"devices"`
@@ -23,10 +30,47 @@ type DeviceInfo struct {
 	Description string `json:"description,omitempty"`
 }
 
-func NewInventoryHandler() http.Handler {
+// ReloadResponse is returned by the inventory reload endpoint.
+type ReloadResponse struct {
+	Status     string    `json:"status"`
+	Path       string    `json:"path"`
+	Devices    int       `json:"devices"`
+	ReloadedAt time.Time `json:"reloaded_at"`
+}
+
+func NewInventoryHandler(inventoryFile string) http.Handler {
+	h := &InventoryHandler{inventoryFile: inventoryFile}
+
 	r := chi.NewRouter()
 	r.Get("/", listInventory)
+	r.Post("/reload", h.reloadInventory)
 	return r
+}
+
+// reloadInventory re-reads the inventory file into memory, replacing the
+// current in-memory inventory without restarting the server.
+func (h *InventoryHandler) reloadInventory(w http.ResponseWriter, r *http.Request) {
+	if h.inventoryFile == "" {
+		http.Error(w, "no inventory file configured (storage.inventory_file)", http.StatusBadRequest)
+		return
+	}
+
+	inv, err := inventory.Load(h.inventoryFile)
+	if err != nil {
+		log.Printf("[inventory] reload failed: %v", err)
+		http.Error(w, "failed to reload inventory: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("[inventory] reloaded %d device(s) from %s", len(inv.Devices), h.inventoryFile)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(ReloadResponse{
+		Status:     "ok",
+		Path:       h.inventoryFile,
+		Devices:    len(inv.Devices),
+		ReloadedAt: time.Now(),
+	})
 }
 
 func listInventory(w http.ResponseWriter, r *http.Request) {
