@@ -186,37 +186,3 @@ func TestAddDeployComment(t *testing.T) {
 		t.Error("comment body should not be empty")
 	}
 }
-
-func TestAddDiffComment(t *testing.T) {
-	var capturedBody string
-
-	server, client := setupTestServer(t, func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "POST" && r.URL.Path == "/rest/api/2/issue/TEST-123/comment" {
-			var req map[string]string
-			json.NewDecoder(r.Body).Decode(&req)
-			capturedBody = req["body"]
-
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusCreated)
-			json.NewEncoder(w).Encode(map[string]interface{}{"id": "10001"})
-			return
-		}
-		w.WriteHeader(http.StatusNotFound)
-	})
-	defer server.Close()
-
-	diff := `- interface GigabitEthernet0/0
-+ interface GigabitEthernet0/0
-+  description Uplink to Core
-+  ip address 10.0.0.1 255.255.255.0`
-
-	err := client.AddDiffComment(context.Background(), "TEST-123", "router-1", diff)
-
-	if err != nil {
-		t.Fatalf("AddDiffComment() error = %v", err)
-	}
-
-	if capturedBody == "" {
-		t.Error("comment body should not be empty")
-	}
-}

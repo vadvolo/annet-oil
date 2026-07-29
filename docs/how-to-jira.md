@@ -77,17 +77,16 @@ curl -X POST -H "Authorization: Bearer $TOKEN" \
   http://localhost:8080/api/v0/rfc/create
 ```
 
-### 2. Generate and Attach Diff
+### 2. Generate and Post Diff
 
 ```
 # Generate diff
 annet_diff(filters=["core-rtr-1"])
 
-# Attach to ticket
-annet_rfc_attach_diff(
+# Post it to the ticket (comment body is free-form; {code} preserves formatting)
+annet_rfc_post_comment(
   ticket_key="NET-123",
-  device="core-rtr-1",
-  diff="<diff output from previous command>"
+  comment="*Configuration diff for core-rtr-1*\n{code}\n<diff output from previous command>\n{code}"
 )
 ```
 
@@ -120,7 +119,7 @@ annet_rfc_close(
 | Tool | Description |
 |------|-------------|
 | `annet_rfc_create` | Create new RFC ticket |
-| `annet_rfc_attach_diff` | Attach config diff to ticket |
+| `annet_rfc_post_comment` | Post a comment (diff, note, status) to ticket |
 | `annet_rfc_status` | Get ticket status and transitions |
 | `annet_rfc_submit` | Submit for review/approval |
 | `annet_rfc_close` | Close ticket after deployment |
@@ -130,7 +129,7 @@ annet_rfc_close(
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/v0/rfc/create` | Create RFC |
-| POST | `/api/v0/rfc/attach-diff` | Attach diff |
+| POST | `/api/v0/rfc/comment` | Post a comment |
 | GET | `/api/v0/rfc/status/{key}` | Get status |
 | POST | `/api/v0/rfc/submit/{key}` | Submit for review |
 | POST | `/api/v0/rfc/close/{key}` | Close ticket |
