@@ -65,7 +65,7 @@ func (c *MemoryCache) Get(key string) ([]byte, bool) {
 		return nil, false
 	}
 
-	logging.Debug("cache hit", "key", key[:16])
+	logging.Debug("cache hit", "key", keyPrefix(key))
 	return e.value, true
 }
 
@@ -77,7 +77,9 @@ func (c *MemoryCache) Set(key string, value []byte) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	if c.size+int64(len(value)) > c.maxSize {
+	// Evict oldest entries until the new value fits, rather than evicting a
+	// single entry that may not free enough space.
+	for c.size+int64(len(value)) > c.maxSize && len(c.items) > 0 {
 		c.evictOldest()
 	}
 
@@ -87,7 +89,7 @@ func (c *MemoryCache) Set(key string, value []byte) {
 	}
 	c.size += int64(len(value))
 
-	logging.Debug("cache set", "key", key[:16], "size", len(value))
+	logging.Debug("cache set", "key", keyPrefix(key), "size", len(value))
 }
 
 func (c *MemoryCache) Delete(key string) {
@@ -115,10 +117,27 @@ func (c *MemoryCache) cleanup() {
 	defer ticker.Stop()
 
 	for range ticker.C {
-		c.mu.Lock()
 		now := time.Now()
+
+		// Collect expired keys under a read lock so Get/Set aren't blocked for
+		// the whole scan, then delete them under a short write lock.
+		var expired []string
+		c.mu.RLock()
 		for key, e := range c.items {
 			if now.After(e.expiresAt) {
+				expired = append(expired, key)
+			}
+		}
+		c.mu.RUnlock()
+
+		if len(expired) == 0 {
+			continue
+		}
+
+		c.mu.Lock()
+		for _, key := range expired {
+			// Re-check under the write lock in case the entry was refreshed.
+			if e, ok := c.items[key]; ok && now.After(e.expiresAt) {
 				c.size -= int64(len(e.value))
 				delete(c.items, key)
 			}
@@ -142,6 +161,15 @@ func (c *MemoryCache) evictOldest() {
 		c.size -= int64(len(c.items[oldestKey].value))
 		delete(c.items, oldestKey)
 	}
+}
+
+// keyPrefix returns the first 16 chars of a key for debug logging, guarding
+// against keys shorter than 16 (production keys are 64-char sha256 hex).
+func keyPrefix(key string) string {
+	if len(key) > 16 {
+		return key[:16]
+	}
+	return key
 }
 
 func HashRequest(v any) string {

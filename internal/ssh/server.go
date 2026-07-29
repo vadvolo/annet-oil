@@ -1,6 +1,7 @@
 package ssh
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
@@ -228,18 +229,25 @@ func (s *Server) handleShell(channel ssh.Channel) {
 	fmt.Fprintln(channel, "Available commands: annet-oil")
 	fmt.Fprintln(channel, "Type 'exit' to close the connection")
 
+	// Read line by line. Reading from the channel (rather than fmt.Fscanf, whose
+	// error was ignored) lets us exit the loop when the peer disconnects/sends
+	// EOF — otherwise the loop would spin at 100% CPU and leak the goroutine.
+	reader := bufio.NewReader(channel)
 	for {
 		fmt.Fprint(channel, "annet-oil> ")
 
-		var command string
-		fmt.Fscanf(channel, "%s\n", &command)
-
-		if command == "exit" {
-			fmt.Fprintln(channel, "Goodbye!")
+		line, err := reader.ReadString('\n')
+		if err != nil {
+			// EOF or transport error: the session is gone.
 			return
 		}
 
-		if command == "" {
+		command := strings.TrimSpace(line)
+		switch command {
+		case "exit":
+			fmt.Fprintln(channel, "Goodbye!")
+			return
+		case "":
 			continue
 		}
 
