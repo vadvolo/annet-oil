@@ -1,0 +1,123 @@
+# Feature-set knowledge base.
+#
+# Answers "does vendor/model/version support feature X (and in which modes)?"
+# so operators and AI agents don't propose configuration the hardware can't run.
+#
+# Structure:
+#   vendors.<vendor>.version_scheme   informational label for the version format
+#   vendors.<vendor>.models[]         model blocks, matched by `match` glob
+#     match      case-insensitive shell glob against the model ("*" = vendor-wide
+#                baseline that model-specific blocks override by feature name)
+#     family     optional grouping label surfaced in results
+#     platform   optional annet platform (junos, eos, ...)
+#     features[] capabilities for the matched models
+#       name/category/title   identity
+#       support               supported | unsupported | partial | unknown
+#                             (omit to derive from modes)
+#       since / until         inclusive version window the feature is available in
+#       modes[]               per-mode support (each with optional since/until)
+#       notes / refs          free-text caveat and documentation links
+#
+# Version comparison is a scheme-agnostic tokenizer (see internal/featureset/version.go);
+# write `since`/`until` in the same format the device reports (e.g. Junos "21.4R1").
+
+vendors:
+  juniper:
+    version_scheme: junos
+    models:
+      # Vendor-wide baseline for all Juniper switches/routers.
+      - match: "*"
+        features:
+          - name: lldp
+            category: management
+            title: Link Layer Discovery Protocol
+            support: supported
+          - name: netconf
+            category: management
+            title: NETCONF over SSH
+            support: supported
+
+      # EX4100 access switches: PTP is Transparent Clock only — this is the
+      # canonical "don't propose Boundary Clock here" case.
+      - match: "EX4100-*"
+        family: ex4100
+        platform: junos
+        features:
+          - name: ptp
+            category: timing
+            title: Precision Time Protocol (IEEE 1588v2)
+            since: "21.4R1"
+            notes: EX4100 implements PTP transparent clock only; boundary and ordinary clock are not supported.
+            refs:
+              - https://www.juniper.net/documentation/us/en/software/junos/time-mgmt/
+            modes:
+              - name: transparent_clock
+                support: supported
+              - name: boundary_clock
+                support: unsupported
+                notes: Not available on EX4100 hardware.
+              - name: ordinary_clock
+                support: unsupported
+          - name: evpn_vxlan
+            category: overlay
+            title: EVPN-VXLAN
+            support: supported
+            since: "22.2R1"
+            notes: Supported as VTEP leaf; EVPN multihoming (ESI-LAG) supported.
+          - name: macsec
+            category: security
+            title: MACsec (802.1AE)
+            support: supported
+            notes: Line-rate MACsec on all ports.
+
+      # QFX5120 data-center switches: full PTP including Boundary Clock.
+      - match: "QFX5120-*"
+        family: qfx5120
+        platform: junos
+        features:
+          - name: ptp
+            category: timing
+            title: Precision Time Protocol (IEEE 1588v2)
+            since: "18.4R1"
+            modes:
+              - name: transparent_clock
+                support: supported
+              - name: boundary_clock
+                support: supported
+              - name: ordinary_clock
+                support: supported
+          - name: evpn_vxlan
+            category: overlay
+            title: EVPN-VXLAN
+            support: supported
+
+  arista:
+    version_scheme: eos
+    models:
+      - match: "*"
+        platform: eos
+        features:
+          - name: lldp
+            category: management
+            title: Link Layer Discovery Protocol
+            support: supported
+          - name: ptp
+            category: timing
+            title: Precision Time Protocol (IEEE 1588v2)
+            notes: Most 7000-series platforms support boundary and transparent clock; verify per SKU.
+            modes:
+              - name: transparent_clock
+                support: supported
+              - name: boundary_clock
+                support: supported
+
+  cisco:
+    version_scheme: ios-xe
+    models:
+      - match: "*"
+        platform: ios
+        features:
+          - name: lldp
+            category: management
+            title: Link Layer Discovery Protocol
+            support: supported

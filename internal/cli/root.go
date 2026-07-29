@@ -10,6 +10,7 @@ import (
 	"annet-oil/internal/annet"
 	"annet-oil/internal/config"
 	"annet-oil/internal/container"
+	"annet-oil/internal/featureset"
 	"annet-oil/internal/inventory"
 	"annet-oil/internal/logging"
 	"annet-oil/internal/router"
@@ -90,6 +91,19 @@ func loadInventory() {
 	}
 }
 
+// loadFeatureSets loads the feature-set knowledge base if one is configured. As
+// with the inventory, a missing or unreadable file is a warning, not fatal.
+func loadFeatureSets() {
+	if cfg.Storage.FeatureSetFile == "" {
+		return
+	}
+	if _, err := featureset.Load(cfg.Storage.FeatureSetFile); err != nil {
+		logging.Warn("Failed to load feature-set knowledge base", "path", cfg.Storage.FeatureSetFile, "error", err)
+	} else {
+		logging.Info("Loaded feature-set knowledge base", "path", cfg.Storage.FeatureSetFile)
+	}
+}
+
 func initializeServices() error {
 	var err error
 
@@ -104,6 +118,7 @@ func initializeServices() error {
 	}
 
 	loadInventory()
+	loadFeatureSets()
 
 	annetService = annet.New(cfg, containerMgr, routerInstance)
 

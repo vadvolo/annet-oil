@@ -111,6 +111,48 @@ export interface CheckRequest {
   timeout?: number;
 }
 
+export interface FeatureMode {
+  name: string;
+  support: string; // "supported" | "unsupported" | "partial" | "unknown"
+  notes?: string;
+}
+
+export interface FeatureInfo {
+  name: string;
+  category?: string;
+  title?: string;
+  support: string;
+  notes?: string;
+  modes?: FeatureMode[];
+  refs?: string[];
+}
+
+export interface FeatureSetResult {
+  vendor: string;
+  model: string;
+  version?: string;
+  family?: string;
+  platform?: string;
+  matched: boolean;
+  features: FeatureInfo[];
+  warnings?: string[];
+}
+
+export interface FeatureSetRequest {
+  vendor?: string;
+  model?: string;
+  version?: string;
+  feature?: string;
+  host?: string;
+}
+
+export interface OpStateRequest {
+  host: string;
+  vendor?: string;
+  states?: string[];
+  force?: boolean;
+}
+
 export interface CreateRFCRequest {
   summary: string;
   description?: string;
@@ -252,6 +294,24 @@ export class AnnetOilClient {
   async check(request: CheckRequest): Promise<CheckResult> {
     try {
       const response = await this.client.post('/check', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async featureSet(request: FeatureSetRequest): Promise<FeatureSetResult> {
+    try {
+      const response = await this.client.post('/featureset', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async state(request: OpStateRequest): Promise<Record<string, unknown>> {
+    try {
+      const response = await this.client.post('/state', request);
       return response.data;
     } catch (error) {
       throw this.handleError(error);

@@ -8,7 +8,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import dotenv from 'dotenv';
-import { AnnetOilClient, CommandRequest, CommandResponse, CheckResult } from './client.js';
+import { AnnetOilClient, CommandRequest, CommandResponse, CheckResult, FeatureSetResult } from './client.js';
 import { CommandValidator } from './command-whitelist.js';
 import { logger, createRequestLogger } from './logger.js';
 
@@ -225,6 +225,63 @@ const tools: Tool[] = [
     },
   },
   {
+    name: 'annet_state',
+    description: 'Collect NORMALIZED operational state from a device as compact JSON (facts, interfaces, LLDP neighbors, and optionally MAC/ARP/route tables). Prefer this over annet_execute for state you will reason about: it returns a small vendor-neutral schema instead of verbose raw "show" output, saving tokens. Juniper is read via native "| display json", Cisco via text parsing. Default sections are facts, interfaces, lldp; request mac/arp/routes explicitly. Results are cached; pass force=true to refresh.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        host: {
+          type: 'string',
+          description: 'Device hostname or IP address',
+        },
+        vendor: {
+          type: 'string',
+          description: 'Override the vendor from inventory (juniper, cisco)',
+        },
+        states: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Sections to collect: facts, interfaces, lldp, mac, arp, routes, or "all". Default: facts, interfaces, lldp',
+        },
+        force: {
+          type: 'boolean',
+          description: 'Bypass the cache and re-query the device (use for volatile tables like mac/arp/routes)',
+        },
+      },
+      required: ['host'],
+    },
+  },
+  {
+    name: 'annet_featureset',
+    description: 'Report which features (and feature modes) a device platform supports, based on vendor + model + software version, from a curated knowledge base. Use this BEFORE proposing configuration to confirm the hardware can run it — e.g. check whether a switch supports PTP Boundary Clock or only Transparent Clock. Returns per-feature support (supported/unsupported/partial) with per-mode breakdown and notes.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        vendor: {
+          type: 'string',
+          description: 'Device vendor, e.g. juniper, arista, cisco (or provide host to resolve it from inventory)',
+        },
+        model: {
+          type: 'string',
+          description: 'Device model, e.g. EX4100-48MP',
+        },
+        version: {
+          type: 'string',
+          description: 'Software version, e.g. 24.4R2.23. Enables version gating (features/modes unavailable on that version are reported unsupported)',
+        },
+        feature: {
+          type: 'string',
+          description: 'Report only this feature by name, e.g. ptp',
+        },
+        host: {
+          type: 'string',
+          description: 'Inventory hostname/IP used to resolve vendor when vendor is not given (model still required)',
+        },
+      },
+      required: ['model'],
+    },
+  },
+  {
     name: 'annet_rfc_create',
     description: 'Create a new RFC (Request for Change) ticket in Jira for network configuration changes',
     inputSchema: {
@@ -380,6 +437,55 @@ function formatCheckResult(result: CheckResult): string {
 
   if (result.error) {
     output += `\nError [${result.error.type}]: ${result.error.message}\n`;
+  }
+
+  return output;
+}
+
+function formatFeatureSet(result: FeatureSetResult): string {
+  let header = `Feature set: ${result.vendor} / ${result.model}`;
+  if (result.version) {
+    header += ` / ${result.version}`;
+  }
+  let output = header + '\n';
+  if (result.family) {
+    output += `Family: ${result.family}\n`;
+  }
+  if (result.platform) {
+    output += `Platform: ${result.platform}\n`;
+  }
+  output += '\n';
+
+  if (result.warnings && result.warnings.length > 0) {
+    for (const w of result.warnings) {
+      output += `⚠ ${w}\n`;
+    }
+    output += '\n';
+  }
+
+  if (result.features.length === 0) {
+    output += '(no features)\n';
+    return output;
+  }
+
+  for (const f of result.features) {
+    output += `${f.name} [${f.support}]`;
+    if (f.title) {
+      output += ` — ${f.title}`;
+    }
+    output += '\n';
+    if (f.modes && f.modes.length > 0) {
+      for (const m of f.modes) {
+        output += `  - ${m.name}: ${m.support}`;
+        if (m.notes) {
+          output += ` (${m.notes})`;
+        }
+        output += '\n';
+      }
+    }
+    if (f.notes) {
+      output += `  note: ${f.notes}\n`;
+    }
   }
 
   return output;
@@ -673,6 +779,47 @@ async function main() {
               } as TextContent,
             ],
             isError: !result.reachable || result.login === 'failed',
+          };
+        }
+
+        case 'annet_state': {
+          const { host, vendor, states, force } = args as {
+            host: string;
+            vendor?: string;
+            states?: string[];
+            force?: boolean;
+          };
+
+          const result = await annetClient.state({ host, vendor, states, force });
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(result, null, 2),
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_featureset': {
+          const { vendor, model, version, feature, host } = args as {
+            vendor?: string;
+            model?: string;
+            version?: string;
+            feature?: string;
+            host?: string;
+          };
+
+          const result = await annetClient.featureSet({ vendor, model, version, feature, host });
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: formatFeatureSet(result),
+              } as TextContent,
+            ],
           };
         }
 
