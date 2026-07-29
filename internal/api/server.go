@@ -61,10 +61,22 @@ func (s *Server) Router() chi.Router {
 		r.Mount("/inventory", handlers.NewInventoryHandler(s.config.Storage.InventoryFile))
 		r.Mount("/check", handlers.NewCheckHandler())
 		r.Mount("/featureset", handlers.NewFeatureSetHandler())
+		r.Mount("/state", handlers.NewStateHandler(s.gnetcliClient, stateCacheTTL(s.config)))
 		r.Mount("/rfc", handlers.NewRFCHandler(s.config.Integrations))
 		r.Get("/health", handlers.HealthHandler)
 		r.Get("/health/extended", handlers.ExtendedHealthHandler)
 	})
 
 	return r
+}
+
+// stateCacheTTL derives the operational-state cache TTL from the cache config,
+// defaulting to 60s when unset or unparseable.
+func stateCacheTTL(cfg *config.Config) time.Duration {
+	if cfg != nil && cfg.Cache.TTL != "" {
+		if d, err := time.ParseDuration(cfg.Cache.TTL); err == nil {
+			return d
+		}
+	}
+	return 60 * time.Second
 }

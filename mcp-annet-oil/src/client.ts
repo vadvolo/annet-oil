@@ -146,6 +146,13 @@ export interface FeatureSetRequest {
   host?: string;
 }
 
+export interface OpStateRequest {
+  host: string;
+  vendor?: string;
+  states?: string[];
+  force?: boolean;
+}
+
 export interface CreateRFCRequest {
   summary: string;
   description?: string;
@@ -296,6 +303,15 @@ export class AnnetOilClient {
   async featureSet(request: FeatureSetRequest): Promise<FeatureSetResult> {
     try {
       const response = await this.client.post('/featureset', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async state(request: OpStateRequest): Promise<Record<string, unknown>> {
+    try {
+      const response = await this.client.post('/state', request);
       return response.data;
     } catch (error) {
       throw this.handleError(error);

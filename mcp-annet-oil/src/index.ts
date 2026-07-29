@@ -225,6 +225,33 @@ const tools: Tool[] = [
     },
   },
   {
+    name: 'annet_state',
+    description: 'Collect NORMALIZED operational state from a device as compact JSON (facts, interfaces, LLDP neighbors, and optionally MAC/ARP/route tables). Prefer this over annet_execute for state you will reason about: it returns a small vendor-neutral schema instead of verbose raw "show" output, saving tokens. Juniper is read via native "| display json", Cisco via text parsing. Default sections are facts, interfaces, lldp; request mac/arp/routes explicitly. Results are cached; pass force=true to refresh.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        host: {
+          type: 'string',
+          description: 'Device hostname or IP address',
+        },
+        vendor: {
+          type: 'string',
+          description: 'Override the vendor from inventory (juniper, cisco)',
+        },
+        states: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Sections to collect: facts, interfaces, lldp, mac, arp, routes, or "all". Default: facts, interfaces, lldp',
+        },
+        force: {
+          type: 'boolean',
+          description: 'Bypass the cache and re-query the device (use for volatile tables like mac/arp/routes)',
+        },
+      },
+      required: ['host'],
+    },
+  },
+  {
     name: 'annet_featureset',
     description: 'Report which features (and feature modes) a device platform supports, based on vendor + model + software version, from a curated knowledge base. Use this BEFORE proposing configuration to confirm the hardware can run it — e.g. check whether a switch supports PTP Boundary Clock or only Transparent Clock. Returns per-feature support (supported/unsupported/partial) with per-mode breakdown and notes.',
     inputSchema: {
@@ -752,6 +779,26 @@ async function main() {
               } as TextContent,
             ],
             isError: !result.reachable || result.login === 'failed',
+          };
+        }
+
+        case 'annet_state': {
+          const { host, vendor, states, force } = args as {
+            host: string;
+            vendor?: string;
+            states?: string[];
+            force?: boolean;
+          };
+
+          const result = await annetClient.state({ host, vendor, states, force });
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(result, null, 2),
+              } as TextContent,
+            ],
           };
         }
 
