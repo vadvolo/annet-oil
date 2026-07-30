@@ -170,7 +170,7 @@ const tools: Tool[] = [
   },
   {
     name: 'annet_inventory',
-    description: 'List network devices from inventory with optional filtering',
+    description: 'List network devices from inventory with optional filtering. Each device includes any aliases (alternative human-friendly names, e.g. a customer/site label); a device can be addressed by an alias anywhere a host is accepted.',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -731,6 +731,9 @@ async function main() {
             output += `  Platform: ${device.platform}\n`;
             if (device.description) {
               output += `  Description: ${device.description}\n`;
+            }
+            if (device.aliases && device.aliases.length > 0) {
+              output += `  Aliases: ${device.aliases.join(', ')}\n`;
             }
             output += '\n';
           }

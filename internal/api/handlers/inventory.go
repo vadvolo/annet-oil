@@ -22,12 +22,13 @@ type InventoryResponse struct {
 }
 
 type DeviceInfo struct {
-	Hostname    string `json:"hostname"`
-	IP          string `json:"ip"`
-	Port        int    `json:"port"`
-	Vendor      string `json:"vendor"`
-	Platform    string `json:"platform"`
-	Description string `json:"description,omitempty"`
+	Hostname    string   `json:"hostname"`
+	IP          string   `json:"ip"`
+	Port        int      `json:"port"`
+	Vendor      string   `json:"vendor"`
+	Platform    string   `json:"platform"`
+	Description string   `json:"description,omitempty"`
+	Aliases     []string `json:"aliases,omitempty"`
 }
 
 // ReloadResponse is returned by the inventory reload endpoint.
@@ -93,6 +94,7 @@ func listInventory(w http.ResponseWriter, r *http.Request) {
 			Vendor:      d.Vendor,
 			Platform:    d.Platform,
 			Description: d.Description,
+			Aliases:     d.Aliases,
 		})
 	}
 

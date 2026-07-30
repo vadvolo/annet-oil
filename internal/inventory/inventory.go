@@ -35,6 +35,10 @@ type Device struct {
 	// are tried first (an explicit per-device override).
 	Credentials DeviceCredentials `yaml:"credentials,omitempty"`
 	Description string            `yaml:"description,omitempty"`
+	// Aliases are alternative human-friendly names for the device (e.g. a
+	// customer or site label). They are informational and also matched by
+	// GetDevice when resolving a device by name.
+	Aliases []string `yaml:"aliases,omitempty"`
 }
 
 const DefaultSSHPort = 22
@@ -150,6 +154,15 @@ func GetDevice(hostname string) (*Device, error) {
 	// Try IP match
 	for _, device := range inventory.Devices {
 		if device.IP == hostname {
+			return &device, nil
+		}
+	}
+
+	// Try alias match (aliases are human-friendly labels; match case-insensitively).
+	for _, device := range inventory.Devices {
+		if slices.ContainsFunc(device.Aliases, func(a string) bool {
+			return strings.EqualFold(a, hostname)
+		}) {
 			return &device, nil
 		}
 	}

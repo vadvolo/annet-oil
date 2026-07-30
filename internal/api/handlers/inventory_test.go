@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"annet-oil/internal/inventory"
@@ -72,6 +73,55 @@ devices:
 	// The in-memory inventory should now resolve the newly added device.
 	if _, err := inventory.GetDevice("r2"); err != nil {
 		t.Errorf("expected r2 to be resolvable after reload: %v", err)
+	}
+}
+
+func TestListInventoryIncludesAliases(t *testing.T) {
+	dir := t.TempDir()
+	path := writeInventoryFile(t, dir, "inv.yaml", `
+devices:
+  - hostname: rb750
+    ip: 10.0.0.5
+    vendor: ros
+    platform: routeros
+    aliases:
+      - "Client: Pijaca-Karaburma-RB750"
+      - "pijaca"
+  - hostname: r2
+    ip: 10.0.0.2
+    vendor: cisco
+    platform: ios
+`)
+	if _, err := inventory.Load(path); err != nil {
+		t.Fatalf("load: %v", err)
+	}
+
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
+	rec := httptest.NewRecorder()
+	listInventory(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d: %s", rec.Code, rec.Body.String())
+	}
+
+	var resp InventoryResponse
+	if err := json.Unmarshal(rec.Body.Bytes(), &resp); err != nil {
+		t.Fatalf("decode: %v", err)
+	}
+
+	byHost := map[string]DeviceInfo{}
+	for _, d := range resp.Devices {
+		byHost[d.Hostname] = d
+	}
+	if got := byHost["rb750"].Aliases; len(got) != 2 || got[0] != "Client: Pijaca-Karaburma-RB750" || got[1] != "pijaca" {
+		t.Errorf("rb750 aliases=%v", got)
+	}
+	// A device without aliases should omit the field entirely in JSON.
+	if len(byHost["r2"].Aliases) != 0 {
+		t.Errorf("r2 should have no aliases, got %v", byHost["r2"].Aliases)
+	}
+	if strings.Contains(rec.Body.String(), `"aliases":[]`) {
+		t.Errorf("empty aliases should be omitted, body=%s", rec.Body.String())
 	}
 }
 
