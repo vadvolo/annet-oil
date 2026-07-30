@@ -68,6 +68,7 @@ export interface DeviceInfo {
   vendor: string;
   platform: string;
   description?: string;
+  aliases?: string[];
 }
 
 export interface InventoryResponse {

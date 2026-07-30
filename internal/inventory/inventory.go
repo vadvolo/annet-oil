@@ -41,6 +41,10 @@ type Device struct {
 	// are tried first (an explicit per-device override).
 	Credentials DeviceCredentials `yaml:"credentials,omitempty"`
 	Description string            `yaml:"description,omitempty"`
+	// Aliases are alternative human-friendly names for the device (e.g. a
+	// customer or site label). They are informational and also matched by
+	// GetDevice when resolving a device by name.
+	Aliases []string `yaml:"aliases,omitempty"`
 }
 
 const DefaultSSHPort = 22
@@ -168,10 +172,17 @@ func GetDevice(hostname string) (*Device, error) {
 		return &cp, nil
 	}
 
-	// Substring match is the last-resort fallback (still linear, but only for
-	// inputs that didn't match exactly).
-	for i := range inventory.Devices {
-		device := &inventory.Devices[i]
+	// Try alias match (aliases are human-friendly labels; match case-insensitively).
+	for _, device := range inventory.Devices {
+		if slices.ContainsFunc(device.Aliases, func(a string) bool {
+			return strings.EqualFold(a, hostname)
+		}) {
+			return &device, nil
+		}
+	}
+
+	// Try partial match
+	for _, device := range inventory.Devices {
 		if strings.Contains(device.Hostname, hostname) || strings.Contains(hostname, device.Hostname) {
 			cp := *device
 			return &cp, nil
@@ -217,12 +228,26 @@ func FilterDevices(vendor, platform, pattern string) []Device {
 		if platform != "" && device.Platform != strings.ToLower(platform) {
 			continue
 		}
-		if pattern != "" && !matchPattern(pattern, device.Hostname) {
+		if pattern != "" && !deviceMatchesPattern(pattern, &device) {
 			continue
 		}
 		result = append(result, device)
 	}
 	return result
+}
+
+// deviceMatchesPattern reports whether pattern matches the device's hostname or
+// any of its aliases, using the same wildcard/substring rules as matchPattern.
+func deviceMatchesPattern(pattern string, d *Device) bool {
+	if matchPattern(pattern, d.Hostname) {
+		return true
+	}
+	for _, a := range d.Aliases {
+		if matchPattern(pattern, a) {
+			return true
+		}
+	}
+	return false
 }
 
 func matchPattern(pattern, hostname string) bool {
