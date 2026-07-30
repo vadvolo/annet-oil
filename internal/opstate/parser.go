@@ -34,22 +34,44 @@ type Parser interface {
 	Parse(t StateType, raw string, dst *State) error
 }
 
+// versionAware is an optional interface a Parser implements when its parsing
+// depends on the device OS major version (e.g. RouterOS 6 vs 7, whose route
+// flags differ). The collector derives the version from the facts it collects
+// and calls SetMajorVersion before parsing any section. A parser that does not
+// implement this is treated as version-independent.
+type versionAware interface {
+	// MajorVersionFromFacts extracts the OS major version from collected facts,
+	// or 0 when it cannot be determined.
+	MajorVersionFromFacts(f *DeviceFacts) int
+	// SetMajorVersion configures the parser for subsequent Parse calls. major 0
+	// means unknown; the parser should fall back to lenient behaviour.
+	SetMajorVersion(major int)
+}
+
 // registry maps canonical vendor -> parser factory.
 var registry = map[string]func() Parser{
-	"juniper": func() Parser { return &juniperParser{} },
-	"cisco":   func() Parser { return &ciscoParser{} },
+	"juniper":  func() Parser { return &juniperParser{} },
+	"cisco":    func() Parser { return &ciscoParser{} },
+	"mikrotik": func() Parser { return &mikrotikParser{} },
+	"eltex":    func() Parser { return &eltexParser{} },
 }
 
 // vendorAliases maps common vendor/platform spellings to a canonical vendor.
+// RouterOS is registered under gnetcli's "ros" device name, so that spelling is
+// aliased here too — the same string reaches both the parser and gnetcli.
 var vendorAliases = map[string]string{
-	"juniper": "juniper",
-	"junos":   "juniper",
-	"cisco":   "cisco",
-	"ios":     "cisco",
-	"ios-xe":  "cisco",
-	"iosxe":   "cisco",
-	"ios-xr":  "cisco",
-	"iosxr":   "cisco",
+	"juniper":  "juniper",
+	"junos":    "juniper",
+	"cisco":    "cisco",
+	"ios":      "cisco",
+	"ios-xe":   "cisco",
+	"iosxe":    "cisco",
+	"ios-xr":   "cisco",
+	"iosxr":    "cisco",
+	"mikrotik": "mikrotik",
+	"routeros": "mikrotik",
+	"ros":      "mikrotik",
+	"eltex":    "eltex",
 }
 
 // CanonicalVendor maps a vendor or platform string to the canonical vendor key,

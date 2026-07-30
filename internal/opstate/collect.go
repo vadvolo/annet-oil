@@ -66,42 +66,56 @@ func (c *Collector) Collect(ctx context.Context, host, vendor, platform string, 
 		CollectedAt: time.Now(),
 	}
 
+	// Version-aware parsers (e.g. RouterOS 6 vs 7) must know the device OS major
+	// version before parsing version-sensitive sections. Resolve it up front from
+	// the facts output; that output is cached, so when facts is also a requested
+	// section the loop below reuses it rather than re-hitting the device.
+	if va, ok := parser.(versionAware); ok {
+		if facts, _, err := c.section(ctx, host, parser, Facts, opts.Force); err == nil {
+			va.SetMajorVersion(va.MajorVersionFromFacts(facts.Facts))
+		}
+	}
+
 	for _, t := range states {
-		cmd, ok := parser.Command(t)
-		if !ok {
-			dst.Errors = append(dst.Errors, SectionError{Type: t, Message: fmt.Sprintf("state %q not supported for vendor %s", t, parser.Vendor())})
+		section, cached, err := c.section(ctx, host, parser, t, opts.Force)
+		if err != nil {
+			dst.Errors = append(dst.Errors, SectionError{Type: t, Message: err.Error()})
 			continue
 		}
-
-		key := host + "|" + parser.Vendor() + "|" + string(t)
-
-		// Serve from cache unless forced.
-		if !opts.Force {
-			if cached, hit := c.cache.get(key); hit {
-				setSection(dst, t, cached)
-				dst.Sections = append(dst.Sections, SectionMeta{Type: t, Cached: true})
-				continue
-			}
-		}
-
-		raw, execErr := c.exec.Exec(ctx, host, cmd)
-		if execErr != nil {
-			dst.Errors = append(dst.Errors, SectionError{Type: t, Message: fmt.Sprintf("exec %q: %v", cmd, execErr)})
-			continue
-		}
-
-		scratch := &State{}
-		if perr := parser.Parse(t, raw, scratch); perr != nil {
-			dst.Errors = append(dst.Errors, SectionError{Type: t, Message: fmt.Sprintf("parse %s: %v", t, perr)})
-			continue
-		}
-
-		setSection(dst, t, scratch)
-		dst.Sections = append(dst.Sections, SectionMeta{Type: t, Cached: false})
-
-		// Cache just this parsed section for reuse by later requests.
-		c.cache.set(key, scratch)
+		setSection(dst, t, section)
+		dst.Sections = append(dst.Sections, SectionMeta{Type: t, Cached: cached})
 	}
 
 	return dst, nil
+}
+
+// section produces one parsed state section, serving it from the cache unless
+// forced and caching fresh results. It reports whether the result came from the
+// cache. It does not mutate a destination State or record section metadata, so
+// it can also be used to resolve the OS version before the main collection loop.
+func (c *Collector) section(ctx context.Context, host string, parser Parser, t StateType, force bool) (*State, bool, error) {
+	cmd, ok := parser.Command(t)
+	if !ok {
+		return nil, false, fmt.Errorf("state %q not supported for vendor %s", t, parser.Vendor())
+	}
+
+	key := host + "|" + parser.Vendor() + "|" + string(t)
+	if !force {
+		if cached, hit := c.cache.get(key); hit {
+			return cached, true, nil
+		}
+	}
+
+	raw, execErr := c.exec.Exec(ctx, host, cmd)
+	if execErr != nil {
+		return nil, false, fmt.Errorf("exec %q: %v", cmd, execErr)
+	}
+
+	scratch := &State{}
+	if perr := parser.Parse(t, raw, scratch); perr != nil {
+		return nil, false, fmt.Errorf("parse %s: %v", t, perr)
+	}
+
+	c.cache.set(key, scratch)
+	return scratch, false, nil
 }

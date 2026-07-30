@@ -226,7 +226,7 @@ const tools: Tool[] = [
   },
   {
     name: 'annet_state',
-    description: 'Collect NORMALIZED operational state from a device as compact JSON (facts, interfaces, LLDP neighbors, and optionally MAC/ARP/route tables). Prefer this over annet_execute for state you will reason about: it returns a small vendor-neutral schema instead of verbose raw "show" output, saving tokens. Juniper is read via native "| display json", Cisco via text parsing. Default sections are facts, interfaces, lldp; request mac/arp/routes explicitly. Results are cached; pass force=true to refresh.',
+    description: 'Collect NORMALIZED operational state from a device as compact JSON (facts, interfaces, LLDP neighbors, and optionally MAC/ARP/route tables). Prefer this over annet_execute for state you will reason about: it returns a small vendor-neutral schema instead of verbose raw "show" output, saving tokens. Supported vendors: juniper (native "| display json"), cisco, mikrotik (RouterOS "print terse"), eltex (text parsing). Default sections are facts, interfaces, lldp; request mac/arp/routes explicitly. Results are cached; pass force=true to refresh.',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -236,7 +236,7 @@ const tools: Tool[] = [
         },
         vendor: {
           type: 'string',
-          description: 'Override the vendor from inventory (juniper, cisco)',
+          description: 'Override the vendor from inventory (juniper, cisco, mikrotik, eltex)',
         },
         states: {
           type: 'array',

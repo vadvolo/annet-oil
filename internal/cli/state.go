@@ -23,7 +23,8 @@ vendor-neutral JSON document.
 
 Raw "show" output is verbose and vendor-specific; this normalizes it so an AI
 agent spends fewer tokens and does not re-parse free text. Juniper is collected
-via native "| display json"; Cisco via text parsing.
+via native "| display json"; Cisco and Eltex via text parsing; MikroTik via
+RouterOS "print terse".
 
 Examples:
   annet-oil state leaf-01

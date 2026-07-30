@@ -84,6 +84,54 @@ func TestCollectCacheAndForce(t *testing.T) {
 	}
 }
 
+func TestCollectMikrotikVersionReusesFacts(t *testing.T) {
+	fx := &fakeExec{responses: map[string]string{
+		"resource": "  version: 7.15.3 (stable)\n  board-name: CCR2004\n  uptime: 1d\n",
+		"route":    " 0 Dac dst-address=10.0.0.0/24 gateway=ether1 immediate-gw=ether1\n",
+	}}
+	c := NewCollector(fx, NewCache(time.Minute))
+
+	st, err := c.Collect(context.Background(), "mk1", "ros", "", CollectOptions{States: []StateType{Facts, Routes}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if st.Vendor != "mikrotik" {
+		t.Fatalf("vendor=%q", st.Vendor)
+	}
+	// v7 encodes connect as lowercase 'c'; a version-unaware parse would miss it.
+	if len(st.Routes) != 1 || st.Routes[0].Protocol != "connected" || st.Routes[0].Interface != "ether1" {
+		t.Fatalf("routes=%+v want v7 connected via ether1", st.Routes)
+	}
+	// Version is resolved from the cached facts section, so facts is fetched once
+	// and reused: resource print + route print = 2 execs, not 3.
+	if fx.calls != 2 {
+		t.Errorf("exec calls=%d want 2 (facts reused for version)", fx.calls)
+	}
+}
+
+func TestCollectMikrotikVersionProbeWhenFactsUnrequested(t *testing.T) {
+	fx := &fakeExec{responses: map[string]string{
+		"resource": "  version: 7.15.3 (stable)\n",
+		"route":    " 0 As dst-address=0.0.0.0/0 gateway=10.0.0.254 immediate-gw=10.0.0.254%ether1\n",
+	}}
+	c := NewCollector(fx, nil) // caching disabled
+
+	st, err := c.Collect(context.Background(), "mk1", "ros", "", CollectOptions{States: []StateType{Routes}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(st.Routes) != 1 || st.Routes[0].Protocol != "static" || st.Routes[0].NextHop != "10.0.0.254" {
+		t.Fatalf("routes=%+v want v7 static via 10.0.0.254", st.Routes)
+	}
+	// Facts was probed only to resolve the version; it must not appear in output.
+	if st.Facts != nil {
+		t.Errorf("facts should not be reported when unrequested: %+v", st.Facts)
+	}
+	if len(st.Sections) != 1 || st.Sections[0].Type != Routes {
+		t.Errorf("sections=%+v want only routes", st.Sections)
+	}
+}
+
 func TestCollectUnsupportedVendor(t *testing.T) {
 	c := NewCollector(&fakeExec{}, nil)
 	if _, err := c.Collect(context.Background(), "h", "nokia", "sros", CollectOptions{}); err == nil {
