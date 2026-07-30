@@ -1,6 +1,7 @@
 package container
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
@@ -176,6 +177,10 @@ func (m *Manager) ValidateContainerAccess(ctx context.Context, containerName str
 func (m *Manager) GetAllConfiguredContainers(ctx context.Context) (map[string]*ContainerStatus, error) {
 	result := make(map[string]*ContainerStatus)
 
+	// List containers once and index by name instead of calling
+	// IsContainerRunning (a full ContainerList) per configured container.
+	byName, listErr := m.listContainersByName(ctx, true)
+
 	for _, annetContainer := range m.config.AnnetContainers {
 		status := &ContainerStatus{
 			Name:          annetContainer.Name,
@@ -184,11 +189,11 @@ func (m *Manager) GetAllConfiguredContainers(ctx context.Context) (map[string]*C
 			Default:       annetContainer.Default,
 		}
 
-		isRunning, err := m.IsContainerRunning(ctx, annetContainer.ContainerName)
-		if err != nil {
+		switch {
+		case listErr != nil:
 			status.Status = "error"
-			status.Error = err.Error()
-		} else if isRunning {
+			status.Error = listErr.Error()
+		case isRunningState(byName, annetContainer.ContainerName):
 			status.Status = "running"
 			if err := m.ValidateContainerAccess(ctx, annetContainer.ContainerName); err != nil {
 				status.Status = "unhealthy"
@@ -196,7 +201,7 @@ func (m *Manager) GetAllConfiguredContainers(ctx context.Context) (map[string]*C
 			} else {
 				status.Status = "healthy"
 			}
-		} else {
+		default:
 			status.Status = "stopped"
 		}
 
@@ -206,39 +211,61 @@ func (m *Manager) GetAllConfiguredContainers(ctx context.Context) (map[string]*C
 	return result, nil
 }
 
+// listContainersByName returns all containers indexed by their name (leading
+// slash stripped) in a single ContainerList call.
+func (m *Manager) listContainersByName(ctx context.Context, all bool) (map[string]types.Container, error) {
+	containers, err := m.client.ContainerList(ctx, container.ListOptions{All: all})
+	if err != nil {
+		return nil, fmt.Errorf("failed to list containers: %w", err)
+	}
+	byName := make(map[string]types.Container, len(containers))
+	for _, c := range containers {
+		for _, name := range c.Names {
+			byName[strings.TrimPrefix(name, "/")] = c
+		}
+	}
+	return byName, nil
+}
+
+func isRunningState(byName map[string]types.Container, name string) bool {
+	c, ok := byName[name]
+	return ok && c.State == "running"
+}
+
 func (m *Manager) readExecOutput(reader io.Reader) (string, string, error) {
 	var stdout, stderr strings.Builder
 
-	buf := make([]byte, 8)
+	// Buffer the raw connection so we don't issue a syscall per 8-byte header on
+	// large outputs, and use io.ReadFull so a short read of the header is not
+	// silently dropped (which previously desynchronized the stream).
+	br := bufio.NewReader(reader)
+	header := make([]byte, 8)
 	for {
-		n, err := reader.Read(buf)
-		if err != nil {
-			if err == io.EOF {
+		if _, err := io.ReadFull(br, header); err != nil {
+			// Clean end of stream (EOF) or a trailing partial header
+			// (ErrUnexpectedEOF): stop reading.
+			if err == io.EOF || err == io.ErrUnexpectedEOF {
 				break
 			}
 			return "", "", err
 		}
 
-		if n < 8 {
+		streamType := header[0]
+		payloadSize := int(header[4])<<24 | int(header[5])<<16 | int(header[6])<<8 | int(header[7])
+		if payloadSize == 0 {
 			continue
 		}
 
-		streamType := buf[0]
-		payloadSize := int(buf[4])<<24 | int(buf[5])<<16 | int(buf[6])<<8 | int(buf[7])
+		payload := make([]byte, payloadSize)
+		if _, err := io.ReadFull(br, payload); err != nil {
+			return "", "", err
+		}
 
-		if payloadSize > 0 {
-			payload := make([]byte, payloadSize)
-			_, err = io.ReadFull(reader, payload)
-			if err != nil {
-				return "", "", err
-			}
-
-			switch streamType {
-			case 1:
-				stdout.Write(payload)
-			case 2:
-				stderr.Write(payload)
-			}
+		switch streamType {
+		case 1:
+			stdout.Write(payload)
+		case 2:
+			stderr.Write(payload)
 		}
 	}
 

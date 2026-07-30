@@ -1,7 +1,6 @@
 package opstate
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"regexp"
@@ -233,7 +232,7 @@ var junosMACRe = regexp.MustCompile(`(?i)^\s*(\S+)\s+([0-9a-f:]{17})\s+(\S+)\s+.
 // VLAN identifiers are names, so numeric VLANs are extracted when present).
 func parseJunosMACTable(raw string) []MACEntry {
 	var out []MACEntry
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := sc.Text()
 		m := junosMACRe.FindStringSubmatch(line)
@@ -257,7 +256,7 @@ var junosARPRe = regexp.MustCompile(`(?i)^([0-9a-f:]{17})\s+(\d+\.\d+\.\d+\.\d+)
 
 func parseJunosARP(raw string) []ARPEntry {
 	var out []ARPEntry
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		m := junosARPRe.FindStringSubmatch(sc.Text())
 		if m == nil {
@@ -286,7 +285,7 @@ var (
 //   - ? 10.1.0.0/24        O  10        2                 >10.0.0.2
 func parseJunosRoutesTerse(raw string) []Route {
 	var out []Route
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := sc.Text()
 		dest := junosRouteDestRe.FindString(line)

@@ -20,6 +20,12 @@ type Inventory struct {
 	// "default" entry of Credentials. Kept for backward compatibility and
 	// merged into Credentials["default"] on load.
 	DefaultCredentials DeviceCredentials `yaml:"default_credentials"`
+
+	// byHostname / byIP index Devices for O(1) exact lookups, built in Load.
+	// They point at elements of Devices; GetDevice returns copies so callers can
+	// mutate the result without touching the shared inventory.
+	byHostname map[string]*Device `yaml:"-"`
+	byIP       map[string]*Device `yaml:"-"`
 }
 
 type Device struct {
@@ -81,10 +87,20 @@ func Load(path string) (*Inventory, error) {
 		inv.Credentials["default"] = inv.DefaultCredentials
 	}
 
-	// Credentials are resolved lazily per device (see CredentialsFor); we only
-	// normalize vendor names here.
+	// Credentials are resolved lazily per device (see CredentialsFor); here we
+	// normalize vendor names and build the hostname/IP lookup indexes in a
+	// single pass.
+	inv.byHostname = make(map[string]*Device, len(inv.Devices))
+	inv.byIP = make(map[string]*Device, len(inv.Devices))
 	for i := range inv.Devices {
 		inv.Devices[i].Vendor = strings.ToLower(inv.Devices[i].Vendor)
+		d := &inv.Devices[i]
+		if d.Hostname != "" {
+			inv.byHostname[d.Hostname] = d
+		}
+		if d.IP != "" {
+			inv.byIP[d.IP] = d
+		}
 	}
 
 	inventory = &inv
@@ -144,18 +160,16 @@ func GetDevice(hostname string) (*Device, error) {
 		return nil, fmt.Errorf("inventory not loaded")
 	}
 
-	// Try exact match first
-	for _, device := range inventory.Devices {
-		if device.Hostname == hostname {
-			return &device, nil
-		}
+	// Exact hostname, then exact IP: O(1) via the indexes built in Load. Return
+	// a copy so callers can mutate the result without touching the shared
+	// inventory (several handlers override device.Vendor).
+	if d, ok := inventory.byHostname[hostname]; ok {
+		cp := *d
+		return &cp, nil
 	}
-
-	// Try IP match
-	for _, device := range inventory.Devices {
-		if device.IP == hostname {
-			return &device, nil
-		}
+	if d, ok := inventory.byIP[hostname]; ok {
+		cp := *d
+		return &cp, nil
 	}
 
 	// Try alias match (aliases are human-friendly labels; match case-insensitively).
@@ -170,7 +184,8 @@ func GetDevice(hostname string) (*Device, error) {
 	// Try partial match
 	for _, device := range inventory.Devices {
 		if strings.Contains(device.Hostname, hostname) || strings.Contains(hostname, device.Hostname) {
-			return &device, nil
+			cp := *device
+			return &cp, nil
 		}
 	}
 

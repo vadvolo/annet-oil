@@ -1,7 +1,6 @@
 package opstate
 
 import (
-	"bufio"
 	"regexp"
 	"strconv"
 	"strings"
@@ -60,7 +59,7 @@ var (
 
 func parseCiscoVersion(raw string) *DeviceFacts {
 	f := &DeviceFacts{Vendor: "cisco"}
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := sc.Text()
 		if m := ciscoVersionRe.FindStringSubmatch(line); m != nil && f.OSVersion == "" {
@@ -85,7 +84,7 @@ func parseCiscoVersion(raw string) *DeviceFacts {
 // from both ends rather than with a fixed-width regex.
 func parseCiscoIPIntBrief(raw string) []Interface {
 	var out []Interface
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := strings.TrimRight(sc.Text(), "\r")
 		fields := strings.Fields(line)
@@ -126,7 +125,7 @@ func parseCiscoLLDPDetail(raw string) []LLDPNeighbor {
 			out = append(out, *cur)
 		}
 	}
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := strings.TrimSpace(sc.Text())
 		if line == "" {
@@ -161,7 +160,7 @@ var ciscoMACRe = regexp.MustCompile(`^\s*(?:\*\s+)?(\d+)\s+([0-9a-fA-F.:]{4,})\s
 
 func parseCiscoMACTable(raw string) []MACEntry {
 	var out []MACEntry
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		m := ciscoMACRe.FindStringSubmatch(sc.Text())
 		if m == nil {
@@ -182,7 +181,7 @@ var ciscoARPRe = regexp.MustCompile(`^Internet\s+(\S+)\s+\S+\s+([0-9a-fA-F.:]+)\
 
 func parseCiscoARP(raw string) []ARPEntry {
 	var out []ARPEntry
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		m := ciscoARPRe.FindStringSubmatch(sc.Text())
 		if m == nil {
@@ -210,7 +209,7 @@ var (
 // next-hop routes; the leading code letter maps to a protocol name).
 func parseCiscoRoutes(raw string) []Route {
 	var out []Route
-	sc := bufio.NewScanner(strings.NewReader(raw))
+	sc := lineScanner(raw)
 	for sc.Scan() {
 		line := sc.Text()
 		if m := ciscoRouteConnRe.FindStringSubmatch(line); m != nil {
