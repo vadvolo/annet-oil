@@ -213,12 +213,26 @@ func FilterDevices(vendor, platform, pattern string) []Device {
 		if platform != "" && device.Platform != strings.ToLower(platform) {
 			continue
 		}
-		if pattern != "" && !matchPattern(pattern, device.Hostname) {
+		if pattern != "" && !deviceMatchesPattern(pattern, &device) {
 			continue
 		}
 		result = append(result, device)
 	}
 	return result
+}
+
+// deviceMatchesPattern reports whether pattern matches the device's hostname or
+// any of its aliases, using the same wildcard/substring rules as matchPattern.
+func deviceMatchesPattern(pattern string, d *Device) bool {
+	if matchPattern(pattern, d.Hostname) {
+		return true
+	}
+	for _, a := range d.Aliases {
+		if matchPattern(pattern, a) {
+			return true
+		}
+	}
+	return false
 }
 
 func matchPattern(pattern, hostname string) bool {

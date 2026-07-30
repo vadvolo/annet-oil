@@ -184,7 +184,7 @@ const tools: Tool[] = [
         },
         pattern: {
           type: 'string',
-          description: 'Filter by hostname pattern (supports wildcards like lab-*)',
+          description: 'Filter by hostname or alias pattern (supports wildcards like lab-*)',
         },
       },
     },

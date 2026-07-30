@@ -30,3 +30,40 @@ devices:
 		t.Errorf("resolve by short alias failed: dev=%v err=%v", got, err)
 	}
 }
+
+func TestFilterDevicesByAlias(t *testing.T) {
+	loadInv(t, `
+devices:
+  - hostname: rb750
+    ip: 10.0.0.5
+    vendor: ros
+    platform: routeros
+    aliases:
+      - "Client: Pijaca-Karaburma-RB750"
+  - hostname: r2
+    ip: 10.0.0.2
+    vendor: cisco
+    platform: ios
+`)
+
+	// Substring pattern matching an alias resolves the device by alias.
+	got := FilterDevices("", "", "Pijaca")
+	if len(got) != 1 || got[0].Hostname != "rb750" {
+		t.Fatalf("filter by alias substring=%v", got)
+	}
+
+	// Wildcard pattern against an alias.
+	if got := FilterDevices("", "", "Client:*"); len(got) != 1 || got[0].Hostname != "rb750" {
+		t.Errorf("filter by alias wildcard=%v", got)
+	}
+
+	// Hostname matching still works and does not spuriously match the alias device.
+	if got := FilterDevices("", "", "r2"); len(got) != 1 || got[0].Hostname != "r2" {
+		t.Errorf("filter by hostname=%v", got)
+	}
+
+	// Vendor filter still composes with the alias match.
+	if got := FilterDevices("cisco", "", "Pijaca"); len(got) != 0 {
+		t.Errorf("vendor filter should exclude alias match=%v", got)
+	}
+}
