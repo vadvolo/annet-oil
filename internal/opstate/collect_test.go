@@ -2,10 +2,27 @@ package opstate
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"testing"
 	"time"
 )
+
+// flakyExec fails the first failFirst calls with a transient error, then
+// returns out. It counts total invocations.
+type flakyExec struct {
+	out       string
+	failFirst int
+	calls     int
+}
+
+func (f *flakyExec) Exec(_ context.Context, _ string, _ string) (string, error) {
+	f.calls++
+	if f.calls <= f.failFirst {
+		return "", fmt.Errorf("generic_error")
+	}
+	return f.out, nil
+}
 
 // fakeExec returns canned output per command and counts invocations.
 type fakeExec struct {
@@ -129,6 +146,44 @@ func TestCollectMikrotikVersionProbeWhenFactsUnrequested(t *testing.T) {
 	}
 	if len(st.Sections) != 1 || st.Sections[0].Type != Routes {
 		t.Errorf("sections=%+v want only routes", st.Sections)
+	}
+}
+
+func TestCollectRetriesTransientExec(t *testing.T) {
+	fx := &flakyExec{
+		out:       "cisco IOS Software, Version 15.2(4)E\nrtr1 uptime is 5 days\n",
+		failFirst: 1, // first attempt fails, retry succeeds
+	}
+	c := NewCollector(fx, nil)
+
+	st, err := c.Collect(context.Background(), "rtr1", "cisco", "", CollectOptions{States: []StateType{Facts}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(st.Errors) != 0 {
+		t.Fatalf("expected no section errors after retry, got %+v", st.Errors)
+	}
+	if st.Facts == nil || st.Facts.OSVersion != "15.2(4)E" {
+		t.Errorf("facts=%+v", st.Facts)
+	}
+	if fx.calls != 2 {
+		t.Errorf("exec calls=%d want 2 (1 fail + 1 retry)", fx.calls)
+	}
+}
+
+func TestCollectExecFailsAfterRetries(t *testing.T) {
+	fx := &flakyExec{failFirst: 1000} // always fails
+	c := NewCollector(fx, nil)
+
+	st, err := c.Collect(context.Background(), "rtr1", "cisco", "", CollectOptions{States: []StateType{Facts}})
+	if err != nil {
+		t.Fatal(err) // per-section failures are soft; Collect itself succeeds
+	}
+	if len(st.Errors) != 1 {
+		t.Fatalf("expected 1 section error, got %+v", st.Errors)
+	}
+	if fx.calls != execAttempts {
+		t.Errorf("exec calls=%d want %d (bounded retries)", fx.calls, execAttempts)
 	}
 }
 
