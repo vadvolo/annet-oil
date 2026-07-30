@@ -38,20 +38,31 @@ func (p *mikrotikParser) MajorVersionFromFacts(f *DeviceFacts) int {
 
 func (p *mikrotikParser) SetMajorVersion(major int) { p.major = major }
 
+// Command returns the RouterOS command for a state type.
+//
+// The commands are deliberately kept short and do NOT pass "without-paging":
+// RouterOS echoes a typed command character-by-character over the interactive
+// shell, redrawing the whole prompt line each time, and gnetcli must match that
+// noisy echo against the command it sent. Longer commands mean more redraws and
+// a higher chance a network read splits mid-redraw, which gnetcli surfaces as an
+// intermittent "generic_error" (an EchoReadException). Paging is unnecessary
+// anyway — gnetcli's ros driver registers a pager matcher and auto-answers it,
+// so full output is still collected.
+
 func (p *mikrotikParser) Command(t StateType) (string, bool) {
 	switch t {
 	case Facts:
 		return "/system resource print", true
 	case Interfaces:
-		return "/interface print terse without-paging", true
+		return "/interface print terse", true
 	case LLDP:
-		return "/ip neighbor print terse without-paging", true
+		return "/ip neighbor print terse", true
 	case MAC:
-		return "/interface bridge host print terse without-paging", true
+		return "/interface bridge host print terse", true
 	case ARP:
-		return "/ip arp print terse without-paging", true
+		return "/ip arp print terse", true
 	case Routes:
-		return "/ip route print terse without-paging", true
+		return "/ip route print terse", true
 	default:
 		return "", false
 	}

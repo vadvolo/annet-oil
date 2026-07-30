@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+// execAttempts is how many times a section's device command is tried before
+// giving up. Read-only "show" commands that fail are often a transient
+// session/echo race, so one retry markedly improves reliability; a value of 1
+// disables retrying.
+const execAttempts = 2
+
 // Executor runs a read-only command on a device and returns its stdout. It
 // decouples the collector from gnetcli so parsers can be exercised with a fake
 // executor over fixtures.
@@ -106,7 +112,21 @@ func (c *Collector) section(ctx context.Context, host string, parser Parser, t S
 		}
 	}
 
-	raw, execErr := c.exec.Exec(ctx, host, cmd)
+	// Read-only device commands occasionally fail on a transient session/echo
+	// race rather than a real problem (see the RouterOS note in mikrotik.go), so
+	// retry the exec a bounded number of times. Parse failures below are
+	// deterministic and are not retried.
+	var raw string
+	var execErr error
+	for attempt := 1; attempt <= execAttempts; attempt++ {
+		raw, execErr = c.exec.Exec(ctx, host, cmd)
+		if execErr == nil {
+			break
+		}
+		if ctx.Err() != nil {
+			break // caller cancelled or timed out; further attempts are pointless
+		}
+	}
 	if execErr != nil {
 		return nil, false, fmt.Errorf("exec %q: %v", cmd, execErr)
 	}
