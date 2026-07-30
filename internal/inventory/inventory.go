@@ -184,8 +184,7 @@ func GetDevice(hostname string) (*Device, error) {
 	// Try partial match
 	for _, device := range inventory.Devices {
 		if strings.Contains(device.Hostname, hostname) || strings.Contains(hostname, device.Hostname) {
-			cp := *device
-			return &cp, nil
+			return &device, nil
 		}
 	}
 
