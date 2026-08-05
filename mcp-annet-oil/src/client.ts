@@ -319,6 +319,32 @@ export class AnnetOilClient {
     }
   }
 
+  async topologyGraph(host?: string, depth?: number): Promise<Record<string, unknown>> {
+    try {
+      const params: Record<string, unknown> = {};
+      if (host) params.host = host;
+      if (depth !== undefined) params.depth = depth;
+      const response = await this.client.get('/topology', { params });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async topologyCollect(request: {
+    hosts: string[];
+    sources?: string[];
+    vendor?: string;
+    force?: boolean;
+  }): Promise<Record<string, unknown>> {
+    try {
+      const response = await this.client.post('/topology/collect', request);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
   async createRFC(request: CreateRFCRequest): Promise<CreateRFCResponse> {
     try {
       const response = await this.client.post('/rfc/create', request);

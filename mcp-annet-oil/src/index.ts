@@ -252,6 +252,46 @@ const tools: Tool[] = [
     },
   },
   {
+    name: 'annet_topology',
+    description: 'Build and query the network topology graph (nodes + links) discovered from device neighbor data (LLDP and IP/ARP). action="graph" (default) returns the stored graph, or the subgraph within `depth` hops of `host`. action="collect" polls the given `hosts`, records their links, and marks reachable devices (and their links) up / unreachable devices (and their links) down WITHOUT deleting anything — so a device that goes offline is dimmed, not dropped. Nodes and edges carry status up/down/unknown (unknown = seen only as a neighbor, never polled directly). Sources: lldp, ip (default both). Supported vendors for collection: juniper, cisco, mikrotik, eltex.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        action: {
+          type: 'string',
+          enum: ['graph', 'collect'],
+          description: 'graph = query the stored topology (default); collect = poll devices and update it',
+        },
+        host: {
+          type: 'string',
+          description: 'graph: center the subgraph on this host/IP (omit to return the whole graph)',
+        },
+        depth: {
+          type: 'number',
+          description: 'graph: number of hops from host to include (default 1; 0 = host only)',
+        },
+        hosts: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'collect: hostnames/IPs to poll (required for collect)',
+        },
+        sources: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'collect: which sources to use — lldp, ip (default: both)',
+        },
+        vendor: {
+          type: 'string',
+          description: 'collect: override the vendor from inventory (juniper, cisco, mikrotik, eltex)',
+        },
+        force: {
+          type: 'boolean',
+          description: 'collect: bypass the state cache and re-query the device',
+        },
+      },
+    },
+  },
+  {
     name: 'annet_featureset',
     description: 'Report which features (and feature modes) a device platform supports, based on vendor + model + software version, from a curated knowledge base. Use this BEFORE proposing configuration to confirm the hardware can run it — e.g. check whether a switch supports PTP Boundary Clock or only Transparent Clock. Returns per-feature support (supported/unsupported/partial) with per-mode breakdown and notes.',
     inputSchema: {
@@ -790,6 +830,32 @@ async function main() {
           };
 
           const result = await annetClient.state({ host, vendor, states, force });
+
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(result, null, 2),
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_topology': {
+          const { action, host, depth, hosts, sources, vendor, force } = args as {
+            action?: string;
+            host?: string;
+            depth?: number;
+            hosts?: string[];
+            sources?: string[];
+            vendor?: string;
+            force?: boolean;
+          };
+
+          const result =
+            action === 'collect'
+              ? await annetClient.topologyCollect({ hosts: hosts ?? [], sources, vendor, force })
+              : await annetClient.topologyGraph(host, depth);
 
           return {
             content: [
