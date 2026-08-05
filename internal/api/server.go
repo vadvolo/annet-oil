@@ -62,6 +62,7 @@ func (s *Server) Router() chi.Router {
 		r.Mount("/check", handlers.NewCheckHandler())
 		r.Mount("/featureset", handlers.NewFeatureSetHandler())
 		r.Mount("/state", handlers.NewStateHandler(s.gnetcliClient, stateCacheTTL(s.config)))
+		r.Mount("/topology", handlers.NewTopologyHandler(s.gnetcliClient, "data/topology.json"))
 		r.Mount("/rfc", handlers.NewRFCHandler(s.config.Integrations))
 		r.Get("/health", handlers.HealthHandler)
 		r.Get("/health/extended", handlers.ExtendedHealthHandler)
