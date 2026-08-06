@@ -34,6 +34,11 @@ type Device struct {
 	Port     int    `yaml:"port,omitempty"`
 	Vendor   string `yaml:"vendor"`
 	Platform string `yaml:"platform"`
+	// Protocol selects the transport gnetcli uses to reach the device:
+	// "telnet" or "ssh". When empty it is inferred from the port (23 => telnet,
+	// anything else => ssh). Old gear (Cisco 4948/2960, etc.) speaks telnet
+	// only; without this gnetcli defaults to SSH and the connect times out.
+	Protocol string `yaml:"protocol,omitempty"`
 	// Role names a credential group (see Inventory.Credentials) tried before the
 	// default group at login time.
 	Role string `yaml:"role,omitempty"`
@@ -54,6 +59,23 @@ func (d *Device) GetPort() int {
 		return DefaultSSHPort
 	}
 	return d.Port
+}
+
+// TelnetPort is the standard telnet port; devices on it default to the telnet
+// streamer unless Protocol says otherwise.
+const TelnetPort = 23
+
+// UsesTelnet reports whether gnetcli should use the telnet streamer for this
+// device. An explicit Protocol wins; otherwise port 23 implies telnet.
+func (d *Device) UsesTelnet() bool {
+	switch strings.ToLower(d.Protocol) {
+	case "telnet":
+		return true
+	case "ssh":
+		return false
+	default:
+		return d.GetPort() == TelnetPort
+	}
 }
 
 type DeviceCredentials struct {

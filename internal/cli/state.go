@@ -112,7 +112,7 @@ func newCLIExecutor(client *gnetcli.Client, device *inventory.Device) opstate.Ex
 			target = device.Hostname
 		}
 		creds := inventory.PrimaryCredentials(device)
-		res, err := client.ExecWithDevice(ctx, target, command, device.Vendor, creds.Login, creds.Password, device.GetPort())
+		res, err := client.ExecWithDevice(ctx, target, command, device.Vendor, creds.Login, creds.Password, device.GetPort(), device.UsesTelnet())
 		if err != nil {
 			return "", err
 		}

@@ -268,6 +268,7 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		creds.Login,
 		creds.Password,
 		device.GetPort(),
+		device.UsesTelnet(),
 	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

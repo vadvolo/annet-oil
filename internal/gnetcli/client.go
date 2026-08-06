@@ -100,8 +100,12 @@ func (c *Client) Exec(ctx context.Context, host, cmd string) (*ExecResult, error
 }
 
 // ExecWithDevice executes command with device-specific parameters
-func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string, port int) (*ExecResult, error) {
-	log.Printf("[gnetcli] Executing command with device params: host=%s, port=%d, cmd=%s, vendor=%s", host, port, cmd, vendor)
+func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string, port int, telnet bool) (*ExecResult, error) {
+	streamer := "ssh"
+	if telnet {
+		streamer = "telnet"
+	}
+	log.Printf("[gnetcli] Executing command with device params: host=%s, port=%d, cmd=%s, vendor=%s, streamer=%s", host, port, cmd, vendor, streamer)
 
 	ctx = metadata.AppendToOutgoingContext(ctx, "authorization", c.getAuthHeader())
 
@@ -111,6 +115,12 @@ func (c *Client) ExecWithDevice(ctx context.Context, host, cmd, vendor, login, p
 			Login:    login,
 			Password: password,
 		},
+	}
+
+	// Select the telnet streamer for telnet-only devices; otherwise gnetcli
+	// defaults to SSH and the connect times out (~20s) on telnet gear.
+	if telnet {
+		hostParams.StreamerType = proto.StreamerType_StreamerType_telnet
 	}
 
 	if port > 0 && port != 22 {

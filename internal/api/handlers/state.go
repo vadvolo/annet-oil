@@ -129,7 +129,7 @@ func execViaGnetcli(ctx context.Context, client *gnetcli.Client, device *invento
 	}
 	creds := inventory.PrimaryCredentials(device)
 
-	res, err := client.ExecWithDevice(ctx, target, cmd, device.Vendor, creds.Login, creds.Password, device.GetPort())
+	res, err := client.ExecWithDevice(ctx, target, cmd, device.Vendor, creds.Login, creds.Password, device.GetPort(), device.UsesTelnet())
 	if err != nil {
 		return "", err
 	}
