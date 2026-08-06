@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -15,6 +16,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"annet-oil/internal/check"
+	"annet-oil/internal/gnetcli"
 	"annet-oil/internal/inventory"
 )
 
@@ -60,6 +62,10 @@ var (
 	checkOutputFormat string
 	checkFormat       string
 	checkFailuresOnly bool
+	checkCollectCmds  bool
+	checkCommand      string
+	checkCommandTO    int
+	checkOutputDir    string
 )
 
 func init() {
@@ -75,6 +81,10 @@ func init() {
 	checkCmd.Flags().StringVar(&checkOutputFormat, "output-format", "", "Report file format (json|csv); default inferred from --output extension")
 	checkCmd.Flags().StringVar(&checkFormat, "format", "table", "Console output format (table|json|csv|summary)")
 	checkCmd.Flags().BoolVar(&checkFailuresOnly, "failures-only", false, "Only print unreachable / login-failed devices to console")
+	checkCmd.Flags().BoolVar(&checkCollectCmds, "collect-commands", false, "Run a read-only command via gnetcli (ssh/telnet) as a third stage and record success")
+	checkCmd.Flags().StringVar(&checkCommand, "command", "", "Command for the collection stage (default: 'show version', or '/system resource print' for RouterOS)")
+	checkCmd.Flags().IntVar(&checkCommandTO, "command-timeout", 30, "Per-device command-collection timeout in seconds")
+	checkCmd.Flags().StringVar(&checkOutputDir, "output-dir", "", "Directory to write each device's raw command output to (<hostname>.txt)")
 
 	rootCmd.AddCommand(checkCmd)
 }
@@ -95,6 +105,26 @@ func runCheckCommand(cmd *cobra.Command, args []string) error {
 		CheckLogin:   !checkNoLogin,
 	}
 
+	// Command-collection stage: wire a gnetcli-backed runner (ssh/telnet aware).
+	if checkCollectCmds {
+		client, err := gnetcli.New(&cfg.Gnetcli)
+		if err != nil {
+			return fmt.Errorf("failed to connect to gnetcli: %w", err)
+		}
+		defer client.Close()
+
+		if checkOutputDir != "" {
+			if err := os.MkdirAll(checkOutputDir, 0o755); err != nil {
+				return fmt.Errorf("failed to create --output-dir: %w", err)
+			}
+		}
+
+		opts.CollectCommands = true
+		opts.Command = checkCommand
+		opts.CommandTimeout = time.Duration(checkCommandTO) * time.Second
+		opts.CommandRunner = makeCommandRunner(client, checkOutputDir)
+	}
+
 	fmt.Fprintf(os.Stderr, "Checking %d device(s) with concurrency %d...\n", len(devices), checkConcurrency)
 	report := check.Devices(cmd.Context(), devices, opts, checkConcurrency)
 
@@ -106,6 +136,52 @@ func runCheckCommand(cmd *cobra.Command, args []string) error {
 	}
 
 	return printCheckReport(report, checkFormat)
+}
+
+// makeCommandRunner returns a check.CommandRunner backed by the gnetcli client.
+// It selects ssh vs telnet from the device (UsesTelnet), and when outputDir is
+// set writes each device's raw command output to <outputDir>/<hostname>.txt.
+func makeCommandRunner(client *gnetcli.Client, outputDir string) check.CommandRunner {
+	return func(ctx context.Context, dev *inventory.Device, command string) (string, error) {
+		target := dev.IP
+		if target == "" {
+			target = dev.Hostname
+		}
+		creds := inventory.PrimaryCredentials(dev)
+
+		res, err := client.ExecWithDevice(ctx, target, command, dev.Vendor, creds.Login, creds.Password, dev.GetPort(), dev.UsesTelnet())
+		if err != nil {
+			return "", err
+		}
+
+		out := res.Output
+		if outputDir != "" {
+			name := sanitizeFilename(dev.Hostname)
+			if name == "" {
+				name = sanitizeFilename(target)
+			}
+			path := filepath.Join(outputDir, name+".txt")
+			header := fmt.Sprintf("# %s (%s) [status=%d] $ %s\n", dev.Hostname, target, res.Status, command)
+			_ = os.WriteFile(path, []byte(header+out), 0o644)
+		}
+
+		if res.Status != 0 && strings.TrimSpace(res.Error) != "" {
+			return out, fmt.Errorf("command status %d: %s", res.Status, res.Error)
+		}
+		return out, nil
+	}
+}
+
+// sanitizeFilename makes a device name safe to use as a file name.
+func sanitizeFilename(name string) string {
+	repl := func(r rune) rune {
+		switch r {
+		case '/', '\\', ':', ' ', '\t', '*', '?', '"', '<', '>', '|':
+			return '_'
+		}
+		return r
+	}
+	return strings.Map(repl, strings.TrimSpace(name))
 }
 
 // resolveCheckDevices returns the devices to check: the explicit args (resolved
@@ -295,4 +371,9 @@ func printCheckSummary(report *check.BatchReport) {
 	fmt.Printf("  Login OK:      %d\n", report.LoginOK)
 	fmt.Printf("  Login failed:  %d\n", report.LoginFailed)
 	fmt.Printf("  Login skipped: %d\n", report.LoginSkipped)
+	if report.CommandsOK+report.CommandsFailed+report.CommandsSkipped > 0 {
+		fmt.Printf("  Commands OK:      %d\n", report.CommandsOK)
+		fmt.Printf("  Commands failed:  %d\n", report.CommandsFailed)
+		fmt.Printf("  Commands skipped: %d\n", report.CommandsSkipped)
+	}
 }

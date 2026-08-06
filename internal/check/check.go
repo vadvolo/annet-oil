@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net"
 	"sort"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/ssh"
@@ -33,6 +34,28 @@ const (
 
 // telnetPort is probed for reachability but never used for SSH login.
 const telnetPort = 23
+
+// Command collection states reported in CommandResult.Status.
+const (
+	CommandsOK      = "ok"
+	CommandsFailed  = "failed"
+	CommandsSkipped = "skipped"
+)
+
+// CommandRunner runs a single read-only command against a device and returns its
+// raw output. It is injected by the caller (the CLI wires it to the gnetcli
+// client, which handles ssh vs telnet transport). Kept as an interface point so
+// the check package stays free of a gnetcli dependency.
+type CommandRunner func(ctx context.Context, dev *inventory.Device, command string) (output string, err error)
+
+// CommandResult is the outcome of the command-collection stage.
+type CommandResult struct {
+	Status      string `json:"status"` // ok | failed | skipped
+	Command     string `json:"command,omitempty"`
+	OutputBytes int    `json:"output_bytes,omitempty"`
+	DurationMs  int64  `json:"duration_ms,omitempty"`
+	Error       string `json:"error,omitempty"`
+}
 
 // PortResult is the outcome of probing a single TCP port.
 type PortResult struct {
@@ -66,10 +89,12 @@ type Result struct {
 	Vendor     string       `json:"vendor,omitempty"`
 	Timestamp  time.Time    `json:"timestamp"`
 	DurationMs int64        `json:"duration_ms"`
+	Protocol   string       `json:"protocol,omitempty"` // ssh | telnet (transport for commands)
 	Reachable  bool         `json:"reachable"`
 	Login      string       `json:"login"`
 	LoginUser  string       `json:"login_user,omitempty"` // login of the credential that succeeded
 	Ports      []PortResult `json:"ports"`
+	Commands   *CommandResult `json:"commands,omitempty"`
 	Error      *CheckError  `json:"error,omitempty"`
 }
 
@@ -90,6 +115,37 @@ type Options struct {
 	LoginTimeout time.Duration
 	// CheckLogin enables the SSH login attempt. When false, Login is "skipped".
 	CheckLogin bool
+	// CollectCommands enables the command-collection stage: when the device is
+	// reachable and a CommandRunner is set, a read-only command is executed via
+	// gnetcli (ssh or telnet, per the device). Independent of the SSH login
+	// stage, so it also validates telnet-only devices.
+	CollectCommands bool
+	// Command overrides the command run in the collection stage. When empty,
+	// DefaultCommand(dev) is used.
+	Command string
+	// CommandTimeout bounds the command-collection stage. Default 30s.
+	CommandTimeout time.Duration
+	// CommandRunner executes the command. Required when CollectCommands is set.
+	CommandRunner CommandRunner
+}
+
+func (o Options) commandTimeout() time.Duration {
+	if o.CommandTimeout <= 0 {
+		return 30 * time.Second
+	}
+	return o.CommandTimeout
+}
+
+// DefaultCommand returns a benign, read-only command suitable for the device's
+// platform, used to validate command collection.
+func DefaultCommand(dev *inventory.Device) string {
+	switch strings.ToLower(dev.Platform) {
+	case "routeros", "mikrotik":
+		return "/system resource print"
+	default:
+		// Cisco IOS/NX, Eltex, Juniper, FSOS, Huawei, etc. all accept this.
+		return "show version"
+	}
 }
 
 func (o Options) dialTimeout() time.Duration {
@@ -115,10 +171,15 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 		target = dev.Hostname
 	}
 
+	protocol := "ssh"
+	if dev.UsesTelnet() {
+		protocol = "telnet"
+	}
 	res := &Result{
 		Hostname:  dev.Hostname,
 		IP:        dev.IP,
 		Vendor:    dev.Vendor,
+		Protocol:  protocol,
 		Timestamp: start,
 		Login:     LoginSkipped,
 	}
@@ -165,8 +226,45 @@ func Device(ctx context.Context, dev *inventory.Device, opts Options) *Result {
 		res.Login = attemptLogin(ctx, target, dev, openPorts, opts.dialTimeout(), opts.loginTimeout(), res)
 	}
 
+	// Command-collection stage (optional). Runs whenever the device is reachable
+	// and a runner is set; independent of the SSH login stage so it also covers
+	// telnet-only devices (whose SSH login is skipped).
+	if opts.CollectCommands && opts.CommandRunner != nil {
+		res.Commands = collectCommands(ctx, dev, opts)
+	}
+
 	res.DurationMs = time.Since(start).Milliseconds()
 	return res
+}
+
+// collectCommands runs the read-only command via the injected runner and
+// classifies the outcome.
+func collectCommands(ctx context.Context, dev *inventory.Device, opts Options) *CommandResult {
+	command := opts.Command
+	if command == "" {
+		command = DefaultCommand(dev)
+	}
+	cr := &CommandResult{Status: CommandsSkipped, Command: command}
+
+	cmdCtx, cancel := context.WithTimeout(ctx, opts.commandTimeout())
+	defer cancel()
+
+	start := time.Now()
+	out, err := opts.CommandRunner(cmdCtx, dev, command)
+	cr.DurationMs = time.Since(start).Milliseconds()
+	cr.OutputBytes = len(out)
+	if err != nil {
+		cr.Status = CommandsFailed
+		cr.Error = err.Error()
+		return cr
+	}
+	if strings.TrimSpace(out) == "" {
+		cr.Status = CommandsFailed
+		cr.Error = "empty output"
+		return cr
+	}
+	cr.Status = CommandsOK
+	return cr
 }
 
 // attemptLogin tries an SSH login on the best available open port, trying each

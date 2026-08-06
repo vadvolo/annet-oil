@@ -1,0 +1,18 @@
+[Unit]
+Description=annet-oil health report web service (result.json dashboard)
+Documentation=https://github.com/vadvolo/annet-oil
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/root/annet-oil
+StateDirectory=annet-oil
+ExecStart=/root/annet-oil/bin/annet-oil-report \
+  --result /var/lib/annet-oil/result.json \
+  --output-dir /var/lib/annet-oil/raw \
+  --addr :8182
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

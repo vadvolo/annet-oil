@@ -24,6 +24,9 @@ type BatchReport struct {
 	LoginOK      int       `json:"login_ok"`
 	LoginFailed  int       `json:"login_failed"`
 	LoginSkipped int       `json:"login_skipped"`
+	CommandsOK      int    `json:"commands_ok"`
+	CommandsFailed  int    `json:"commands_failed"`
+	CommandsSkipped int    `json:"commands_skipped"`
 	Results      []*Result `json:"results"`
 }
 
@@ -83,6 +86,16 @@ func Devices(ctx context.Context, devices []inventory.Device, opts Options, conc
 			report.LoginFailed++
 		case LoginSkipped:
 			report.LoginSkipped++
+		}
+		if r.Commands != nil {
+			switch r.Commands.Status {
+			case CommandsOK:
+				report.CommandsOK++
+			case CommandsFailed:
+				report.CommandsFailed++
+			case CommandsSkipped:
+				report.CommandsSkipped++
+			}
 		}
 	}
 	report.Results = results

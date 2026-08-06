@@ -1,0 +1,21 @@
+[Unit]
+Description=annet-oil device health sweep (network + login + commands collection)
+Documentation=https://github.com/vadvolo/annet-oil
+After=network-online.target gnetcli.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/annet-oil
+EnvironmentFile=/root/annet-oil/configs/systemd/annet-oil.env
+# StateDirectory creates/owns /var/lib/annet-oil for result.json + raw outputs.
+StateDirectory=annet-oil
+ExecStart=/root/annet-oil/annet-oil-server check \
+  --collect-commands \
+  --concurrency 50 \
+  --command-timeout 30 \
+  --output /var/lib/annet-oil/result.json \
+  --output-dir /var/lib/annet-oil/raw \
+  --format summary
+# A full sweep over all devices can take a while; don't let systemd kill it.
+TimeoutStartSec=3h
