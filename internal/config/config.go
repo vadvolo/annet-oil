@@ -19,6 +19,78 @@ type Config struct {
 	Cache           CacheConfig        `yaml:"cache,omitempty"`
 	Auth            AuthConfig         `yaml:"auth,omitempty"`
 	Integrations    IntegrationsConfig `yaml:"integrations,omitempty"`
+	Checkeast       CheckeastConfig    `yaml:"checkeast,omitempty"`
+	Audit           AuditConfig        `yaml:"audit,omitempty"`
+}
+
+// S3StoreConfig configures an S3-compatible object store for archiving diffs.
+// Credentials come from the standard AWS environment (AWS_ACCESS_KEY_ID / …),
+// not from YAML. Set Endpoint to target MinIO or another S3-compatible service.
+type S3StoreConfig struct {
+	Enabled  bool   `yaml:"enabled,omitempty"`
+	Bucket   string `yaml:"bucket,omitempty"`
+	Prefix   string `yaml:"prefix,omitempty"` // e.g. "diffs/annet-oil/"
+	Region   string `yaml:"region,omitempty"`
+	Endpoint string `yaml:"endpoint,omitempty"` // optional: MinIO / S3-compatible
+	// RetentionDays is how long archived diffs are kept before expiring, applied
+	// as a bucket lifecycle rule scoped to Prefix. 0 uses the default (3 days);
+	// a negative value disables lifecycle management entirely.
+	RetentionDays int `yaml:"retention_days,omitempty"`
+}
+
+// CheckeastConfig configures the checkeast feature (run a diff, archive it to S3).
+type CheckeastConfig struct {
+	S3       S3StoreConfig  `yaml:"s3,omitempty"`
+	Schedule ScheduleConfig `yaml:"schedule,omitempty"`
+}
+
+// ScheduleConfig drives cron-based checkeast runs over a scope of devices.
+type ScheduleConfig struct {
+	Enabled bool          `yaml:"enabled,omitempty"`
+	Jobs    []ScheduleJob `yaml:"jobs,omitempty"`
+}
+
+// ScheduleJob is one cron entry: a schedule plus an inventory scope to diff.
+type ScheduleJob struct {
+	Name        string   `yaml:"name"`
+	Cron        string   `yaml:"cron"`               // standard 5-field cron or @descriptor (e.g. "0 2 * * *", "@daily")
+	Vendor      string   `yaml:"vendor,omitempty"`   // inventory filter (e.g. "cisco")
+	Platform    string   `yaml:"platform,omitempty"` // inventory filter (e.g. "ios")
+	Pattern     string   `yaml:"pattern,omitempty"`  // hostname/alias wildcard or substring
+	ByAlias     bool     `yaml:"by_alias,omitempty"` // diff against the device IP/alias instead of hostname
+	Concurrency int      `yaml:"concurrency,omitempty"`
+	Timeout     int      `yaml:"timeout,omitempty"` // per-device diff timeout, seconds
+	Generators  []string `yaml:"generators,omitempty"`
+}
+
+// AuditConfig configures the audit trail. When Enabled is false (the default)
+// a no-op recorder is used and no database is required.
+type AuditConfig struct {
+	Enabled    bool   `yaml:"enabled,omitempty"`
+	DSN        string `yaml:"dsn,omitempty"` // postgres://user:pass@host:port/db?sslmode=…
+	Host       string `yaml:"host,omitempty"`
+	Port       int    `yaml:"port,omitempty"`
+	User       string `yaml:"user,omitempty"`
+	Password   string `yaml:"password,omitempty"`
+	Database   string `yaml:"database,omitempty"`
+	SSLMode    string `yaml:"ssl_mode,omitempty"`
+	BufferSize int    `yaml:"buffer_size,omitempty"` // async queue size (default 1024)
+}
+
+// DefaultRetentionDays is the retention applied to archived diffs when
+// S3StoreConfig.RetentionDays is left at its zero value.
+const DefaultRetentionDays = 3
+
+// EffectiveRetentionDays resolves the configured retention: 0 → default (3),
+// negative → 0 (lifecycle disabled), positive → as-is.
+func (c S3StoreConfig) EffectiveRetentionDays() int {
+	if c.RetentionDays == 0 {
+		return DefaultRetentionDays
+	}
+	if c.RetentionDays < 0 {
+		return 0
+	}
+	return c.RetentionDays
 }
 
 type IntegrationsConfig struct {
@@ -112,7 +184,18 @@ type APIConfig struct {
 	Port      int    `yaml:"port"`
 	Bind      string `yaml:"bind"`
 	AuthToken string `yaml:"auth_token"`
+	// RequestTimeoutSec is the hard wall-clock cap the HTTP layer places on a
+	// single request (chi Timeout middleware). It bounds the whole request
+	// including slow device commands, so it must be >= gnetcli.max_timeout_sec
+	// for large diagnostic outputs (e.g. Eltex MES "show logging") to return.
+	// 0 falls back to DefaultRequestTimeoutSec.
+	RequestTimeoutSec int `yaml:"request_timeout_sec,omitempty"`
 }
+
+// DefaultRequestTimeoutSec is used when APIConfig.RequestTimeoutSec is unset.
+// Aligned with the example gnetcli.max_timeout_sec (120) so a per-request
+// timeout_s override up to that cap can actually complete through the HTTP layer.
+const DefaultRequestTimeoutSec = 120
 
 type StorageConfig struct {
 	RoutingFile   string `yaml:"routing_file"`
@@ -137,6 +220,16 @@ type GnetcliConfig struct {
 	Login     string `yaml:"login"`
 	Password  string `yaml:"password"`
 	TLS       bool   `yaml:"tls,omitempty"`
+
+	// Timeouts for a single device command, in seconds. These translate to the
+	// gnetcli proto CMD read_timeout / cmd_timeout fields. read_timeout is the
+	// gap allowed *between* reads (a stalled pager or slowly-streamed large
+	// table trips this); cmd_timeout bounds the whole command. Zero means "do
+	// not set" and inherit the gnetcli server default.
+	ReadTimeoutSec float64 `yaml:"read_timeout_sec,omitempty"`
+	CmdTimeoutSec  float64 `yaml:"cmd_timeout_sec,omitempty"`
+	// MaxTimeoutSec caps a per-request timeout_s override. Zero disables the cap.
+	MaxTimeoutSec float64 `yaml:"max_timeout_sec,omitempty"`
 }
 
 func Load() (*Config, error) {

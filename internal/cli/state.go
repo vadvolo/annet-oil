@@ -85,7 +85,7 @@ func runStateCommand(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("vendor unknown for %s; set it in inventory or pass --vendor", args[0])
 	}
 
-	client, err := gnetcli.New(&cfg.Gnetcli)
+	client, err := gnetcli.NewWithRecorder(&cfg.Gnetcli, auditRecorder)
 	if err != nil {
 		return fmt.Errorf("failed to connect to gnetcli: %w", err)
 	}
@@ -112,7 +112,7 @@ func newCLIExecutor(client *gnetcli.Client, device *inventory.Device) opstate.Ex
 			target = device.Hostname
 		}
 		creds := inventory.PrimaryCredentials(device)
-		res, err := client.ExecWithDevice(ctx, target, command, device.Vendor, creds.Login, creds.Password, device.GetPort())
+		res, err := client.ExecWithDevice(ctx, target, command, device.Vendor, creds.Login, creds.Password, device.GetPort(), 0)
 		if err != nil {
 			return "", err
 		}

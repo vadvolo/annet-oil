@@ -3,9 +3,12 @@ package annet
 import (
 	"context"
 	"fmt"
+	"time"
 
+	"annet-oil/internal/audit"
 	"annet-oil/internal/config"
 	"annet-oil/internal/container"
+	"annet-oil/internal/logging"
 	"annet-oil/internal/router"
 )
 
@@ -13,6 +16,7 @@ type Service struct {
 	config           *config.Config
 	containerManager *container.Manager
 	router           *router.Router
+	recorder         audit.Recorder
 }
 
 type CommandRequest struct {
@@ -47,28 +51,37 @@ type CommandResult struct {
 	Duration  string `json:"duration,omitempty"`
 }
 
-func New(cfg *config.Config, containerMgr *container.Manager, router *router.Router) *Service {
+// New builds the annet Service. recorder may be nil, in which case auditing is
+// skipped; pass a NopRecorder to disable auditing without nil checks.
+func New(cfg *config.Config, containerMgr *container.Manager, router *router.Router, recorder audit.Recorder) *Service {
 	return &Service{
 		config:           cfg,
 		containerManager: containerMgr,
 		router:           router,
+		recorder:         recorder,
 	}
 }
 
 func (s *Service) ExecuteCommand(ctx context.Context, req *CommandRequest) (*CommandResponse, error) {
+	start := time.Now()
+
 	if err := s.validateCommand(req); err != nil {
-		return &CommandResponse{
+		resp := &CommandResponse{
 			Success: false,
 			Error:   fmt.Sprintf("command validation failed: %v", err),
-		}, nil
+		}
+		s.recordEvent(ctx, req, resp, start)
+		return resp, nil
 	}
 
 	containerRoutes := s.determineContainerRoutes(req)
 	if len(containerRoutes) == 0 {
-		return &CommandResponse{
+		resp := &CommandResponse{
 			Success: false,
 			Error:   "no valid containers found for the specified filters",
-		}, nil
+		}
+		s.recordEvent(ctx, req, resp, start)
+		return resp, nil
 	}
 
 	results := make(map[string]*CommandResult)
@@ -120,13 +133,63 @@ func (s *Service) ExecuteCommand(ctx context.Context, req *CommandRequest) (*Com
 		}
 	}
 
-	return &CommandResponse{
+	resp := &CommandResponse{
 		Success:      failedHosts == 0,
 		Results:      results,
 		TotalHosts:   totalHosts,
 		SuccessHosts: successHosts,
 		FailedHosts:  failedHosts,
-	}, nil
+	}
+	s.recordEvent(ctx, req, resp, start)
+	return resp, nil
+}
+
+// recordEvent emits an audit event for a completed command. It is best-effort
+// and never affects the command result.
+func (s *Service) recordEvent(ctx context.Context, req *CommandRequest, resp *CommandResponse, start time.Time) {
+	if s.recorder == nil {
+		return
+	}
+
+	params := map[string]any{}
+	if len(req.Generators) > 0 {
+		params["generators"] = req.Generators
+	}
+	if len(req.ExcludeGenerators) > 0 {
+		params["exclude_generators"] = req.ExcludeGenerators
+	}
+	if req.Container != "" {
+		params["container"] = req.Container
+	}
+	if req.DryRun {
+		params["dry_run"] = true
+	}
+	if req.Parallel {
+		params["parallel"] = true
+	}
+	if len(params) == 0 {
+		params = nil
+	}
+
+	e := audit.Event{
+		Action:     req.Command,
+		Devices:    req.Filters,
+		Params:     params,
+		Success:    resp.Success,
+		DurationMs: time.Since(start).Milliseconds(),
+	}
+	if reqID, ok := ctx.Value(logging.RequestIDKey).(string); ok {
+		e.RequestID = reqID
+	}
+	if !resp.Success {
+		msg := resp.Error
+		if msg == "" {
+			msg = fmt.Sprintf("%d/%d hosts failed", resp.FailedHosts, resp.TotalHosts)
+		}
+		e.Error = &audit.Error{Type: "command_failed", Message: msg}
+	}
+
+	s.recorder.Record(ctx, e)
 }
 
 func (s *Service) validateCommand(req *CommandRequest) error {

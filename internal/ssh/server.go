@@ -100,17 +100,18 @@ func (s *Server) handleConnection(conn net.Conn, config *ssh.ServerConfig) {
 
 	go ssh.DiscardRequests(requests)
 
+	remoteAddr := sshConn.RemoteAddr().String()
 	for channel := range channels {
 		if channel.ChannelType() != "session" {
 			channel.Reject(ssh.UnknownChannelType, "unknown channel type")
 			continue
 		}
 
-		go s.handleSession(channel)
+		go s.handleSession(channel, remoteAddr)
 	}
 }
 
-func (s *Server) handleSession(newChannel ssh.NewChannel) {
+func (s *Server) handleSession(newChannel ssh.NewChannel, remoteAddr string) {
 	channel, requests, err := newChannel.Accept()
 	if err != nil {
 		log.Printf("Failed to accept channel: %v", err)
@@ -135,7 +136,7 @@ func (s *Server) handleSession(newChannel ssh.NewChannel) {
 			command := string(req.Payload[4 : 4+commandLen])
 			req.Reply(true, nil)
 
-			exitCode := s.executeCommand(channel, command)
+			exitCode := s.executeCommand(channel, command, remoteAddr)
 
 			if exitCode == 0 {
 				channel.SendRequest("exit-status", false, []byte{0, 0, 0, 0})
@@ -145,7 +146,7 @@ func (s *Server) handleSession(newChannel ssh.NewChannel) {
 
 		case "shell":
 			req.Reply(true, nil)
-			s.handleShell(channel)
+			s.handleShell(channel, remoteAddr)
 
 		default:
 			req.Reply(false, nil)
@@ -153,7 +154,7 @@ func (s *Server) handleSession(newChannel ssh.NewChannel) {
 	}
 }
 
-func (s *Server) executeCommand(channel ssh.Channel, command string) int {
+func (s *Server) executeCommand(channel ssh.Channel, command, remoteAddr string) int {
 	parts := strings.Fields(command)
 	if len(parts) == 0 {
 		fmt.Fprintln(channel, "No command specified")
@@ -161,7 +162,7 @@ func (s *Server) executeCommand(channel ssh.Channel, command string) int {
 	}
 
 	if parts[0] == "annet-oil" {
-		return s.executeAnnetOilCommand(channel, parts[1:])
+		return s.executeAnnetOilCommand(channel, parts[1:], remoteAddr)
 	}
 
 	fmt.Fprintf(channel, "Command not supported: %s\n", parts[0])
@@ -169,7 +170,7 @@ func (s *Server) executeCommand(channel ssh.Channel, command string) int {
 	return 1
 }
 
-func (s *Server) executeAnnetOilCommand(channel ssh.Channel, args []string) int {
+func (s *Server) executeAnnetOilCommand(channel ssh.Channel, args []string, remoteAddr string) int {
 	if len(args) == 0 {
 		fmt.Fprintln(channel, "Usage: annet-oil <command> [options]")
 		fmt.Fprintln(channel, "Available commands: gen, diff, patch, deploy, containers, routing")
@@ -181,6 +182,12 @@ func (s *Server) executeAnnetOilCommand(channel ssh.Channel, args []string) int 
 
 	ctx := context.Background()
 	cmd := exec.CommandContext(ctx, cmdArgs[0], cmdArgs[1:]...)
+	// Propagate the SSH peer identity to the subprocess so audit events are
+	// attributed to the remote user with source=ssh.
+	cmd.Env = append(os.Environ(),
+		"ANNET_OIL_AUDIT_ACTOR="+remoteAddr,
+		"ANNET_OIL_AUDIT_SOURCE=ssh",
+	)
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
@@ -224,7 +231,7 @@ func (s *Server) executeAnnetOilCommand(channel ssh.Channel, args []string) int 
 	return 0
 }
 
-func (s *Server) handleShell(channel ssh.Channel) {
+func (s *Server) handleShell(channel ssh.Channel, remoteAddr string) {
 	fmt.Fprintln(channel, "Annet Oil SSH Shell")
 	fmt.Fprintln(channel, "Available commands: annet-oil")
 	fmt.Fprintln(channel, "Type 'exit' to close the connection")
@@ -251,7 +258,7 @@ func (s *Server) handleShell(channel ssh.Channel) {
 			continue
 		}
 
-		s.executeCommand(channel, command)
+		s.executeCommand(channel, command, remoteAddr)
 	}
 }
 

@@ -4,7 +4,7 @@ import { AnnetOilClient } from './dist/client.js';
 
 const client = new AnnetOilClient({
   apiUrl: 'http://192.168.52.235:8181',
-  authToken: 'rYdddlPWkrYdddlPWk',
+  authToken: 'YOUR_API_TOKEN',
   timeout: 30000,
 });
 

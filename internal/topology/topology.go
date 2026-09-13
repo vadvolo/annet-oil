@@ -42,7 +42,7 @@ type Node struct {
 	Host     string    `json:"host"`
 	Status   Status    `json:"status"`
 	MgmtIP   string    `json:"mgmt_ip,omitempty"`
-	LastSeen time.Time `json:"last_seen,omitempty"`
+	LastSeen time.Time `json:"last_seen"`
 }
 
 // Edge is one discovered link from LocalHost to RemoteHost.
@@ -54,7 +54,7 @@ type Edge struct {
 	RemoteMgmtIP string    `json:"remote_mgmt_ip,omitempty"`
 	Source       Source    `json:"source"`
 	Status       Status    `json:"status"`
-	LastSeen     time.Time `json:"last_seen,omitempty"`
+	LastSeen     time.Time `json:"last_seen"`
 }
 
 func (e Edge) key() string {

@@ -19,7 +19,7 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 GNETCLI_CONFIG_DIR="/etc/gnetcli"
 SYSTEMD_SERVICE_FILE="/etc/systemd/system/gnetcli.service"
 GO_BIN_PATH="/root/go/bin"
-SOURCE_ENV_FILE="$PROJECT_ROOT/configs/systemd/gnetcli.env"
+SOURCE_ENV_FILE="$PROJECT_ROOT/configs/systemd/gnetcli.env.example"
 SOURCE_SERVICE_FILE="$PROJECT_ROOT/configs/systemd/gnetcli.service"
 
 # Function to print colored output

@@ -9,6 +9,7 @@ import (
 	"sync"
 	"time"
 
+	"annet-oil/internal/audit"
 	"annet-oil/internal/inventory"
 )
 
@@ -29,8 +30,9 @@ type BatchReport struct {
 
 // Devices checks a set of devices concurrently in batches of `concurrency`
 // workers and returns an aggregated report. Results are sorted by hostname for
-// stable output. A concurrency <= 0 defaults to 50.
-func Devices(ctx context.Context, devices []inventory.Device, opts Options, concurrency int) *BatchReport {
+// stable output. A concurrency <= 0 defaults to 50. A non-nil rec records one
+// summary audit event covering the whole batch.
+func Devices(ctx context.Context, devices []inventory.Device, opts Options, concurrency int, rec audit.Recorder) *BatchReport {
 	if concurrency <= 0 {
 		concurrency = 50
 	}
@@ -92,7 +94,41 @@ func Devices(ctx context.Context, devices []inventory.Device, opts Options, conc
 	})
 
 	report.DurationMs = time.Since(start).Milliseconds()
+
+	recordBatch(ctx, rec, report, start)
 	return report
+}
+
+// recordBatch emits a single best-effort audit event summarizing the batch.
+func recordBatch(ctx context.Context, rec audit.Recorder, report *BatchReport, start time.Time) {
+	if rec == nil {
+		return
+	}
+	hosts := make([]string, 0, len(report.Results))
+	for _, r := range report.Results {
+		hosts = append(hosts, r.Hostname)
+	}
+	success := report.Unreachable == 0 && report.Canceled == 0 && report.LoginFailed == 0
+	e := audit.Event{
+		Action:     audit.ActionCheck,
+		Devices:    hosts,
+		Success:    success,
+		DurationMs: time.Since(start).Milliseconds(),
+		Params: map[string]any{
+			"total":        report.Total,
+			"reachable":    report.Reachable,
+			"unreachable":  report.Unreachable,
+			"login_ok":     report.LoginOK,
+			"login_failed": report.LoginFailed,
+		},
+	}
+	if !success {
+		e.Error = &audit.Error{
+			Type:    "check_failed",
+			Message: "one or more devices unreachable or failed login",
+		}
+	}
+	rec.Record(ctx, e)
 }
 
 // classifyLoginError maps an SSH login error to a Result error type:

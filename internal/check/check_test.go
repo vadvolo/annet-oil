@@ -126,7 +126,7 @@ func TestDevices_Batch(t *testing.T) {
 		{Hostname: "b", IP: "127.0.0.1", Port: port},
 		{Hostname: "z-dead", IP: "127.0.0.1", Port: 1},
 	}
-	report := Devices(context.Background(), devices, Options{DialTimeout: 500 * time.Millisecond}, 2)
+	report := Devices(context.Background(), devices, Options{DialTimeout: 500 * time.Millisecond}, 2, nil)
 
 	if report.Total != 3 {
 		t.Errorf("expected total 3, got %d", report.Total)

@@ -104,13 +104,13 @@ func runSSHServerCommand(cmd *cobra.Command, args []string) error {
 }
 
 func startAPIServer(ctx context.Context) error {
-	gnetcliClient, err := gnetcli.New(&cfg.Gnetcli)
+	gnetcliClient, err := gnetcli.NewWithRecorder(&cfg.Gnetcli, auditRecorder)
 	if err != nil {
 		return fmt.Errorf("failed to create gnetcli client: %w", err)
 	}
 	defer gnetcliClient.Close()
 
-	server, err := api.NewServer(cfg, annetService, routerInstance, gnetcliClient)
+	server, err := api.NewServer(cfg, annetService, routerInstance, gnetcliClient, checkeastStore, auditRecorder)
 	if err != nil {
 		return fmt.Errorf("failed to create API server: %w", err)
 	}

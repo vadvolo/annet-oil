@@ -1,0 +1,31 @@
+curl -X GET http://localhost:8181/api/v0/health \
+    -H "Authorization: Bearer YOUR_API_TOKEN"
+
+###
+curl -X POST http://192.168.52.235:8181/api/v0/execute \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_API_TOKEN" \
+    -d '{
+      "host": "ZR_F002-CentaDVD.otk.rs",
+      "command": "show version"
+    }'
+
+### 3. Получение diff
+  curl -X POST http://192.168.52.235:8181/api/v0/diff \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_API_TOKEN" \
+    -d '{
+      "filters": ["ZR_F002-CentaDVD.otk.rs"]
+    }'
+
+### 4. Получение статуса контейнеров
+  curl -X GET http://localhost:8181/api/v0/containers \
+    -H "Authorization: Bearer YOUR_API_TOKEN"
+
+### 5. Генерация конфигурации
+curl -X POST 'http://localhost:8181/api/v0/gen' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_API_TOKEN" \
+    -d '{
+      "filters": ["ZR_F002-CentaDVD.otk.rs"]
+    }'

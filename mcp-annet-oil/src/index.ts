@@ -8,7 +8,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import dotenv from 'dotenv';
-import { AnnetOilClient, CommandRequest, CommandResponse, CheckResult, FeatureSetResult } from './client.js';
+import { AnnetOilClient, CommandRequest, CommandResponse, CheckResult, FeatureSetResult, CheckeastResponse, AuditListResponse, AuditFilter } from './client.js';
 import { CommandValidator } from './command-whitelist.js';
 import { logger, createRequestLogger } from './logger.js';
 
@@ -91,6 +91,14 @@ const tools: Tool[] = [
     inputSchema: commandInputSchema,
   },
   {
+    name: 'annet_checkeast',
+    description:
+      'Calculate a configuration diff and archive it to S3 (combined JSON + per-host .diff). ' +
+      'Keeps an auditable, timestamped record of every diff; archives expire after the ' +
+      'configured retention (default 3 days). Returns the diff plus the S3 locations.',
+    inputSchema: commandInputSchema,
+  },
+  {
     name: 'annet_patch',
     description: 'Apply configuration patches to network devices',
     inputSchema: commandInputSchema,
@@ -154,7 +162,11 @@ const tools: Tool[] = [
         },
         timeout: {
           type: 'number',
-          description: 'Command timeout in seconds',
+          description: 'Per-command timeout in seconds for large-output diagnostics (e.g. "show interfaces" on a device with many ports). Raises both the read and command timeout; clamped to a server-side maximum. On timeout the response still returns any partial output plus error_code (e.g. READ_TIMEOUT).',
+        },
+        vendor: {
+          type: 'string',
+          description: 'Optional vendor/profile (cisco, eltex, huawei, juniper, ...) selecting the gnetcli device profile, which decides how pagination is disabled. Send it for devices not in the inventory so the correct profile is picked (otherwise the pager may stay on and large output times out).',
         },
       },
       required: ['command'],
@@ -249,6 +261,27 @@ const tools: Tool[] = [
         },
       },
       required: ['host'],
+    },
+  },
+  {
+    name: 'annet_audit',
+    description:
+      'Query the audit trail: who ran which command (gen/diff/patch/deploy/execute/check/rfc_*) ' +
+      'on which devices, from where (api/cli/ssh/mcp), and whether it succeeded. Supports filtering ' +
+      'by actor, device, action, source, time range, and success. Requires audit to be enabled on the server.',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        actor: { type: 'string', description: 'Filter by actor (user name / os-user / remote addr)' },
+        device: { type: 'string', description: 'Filter by device hostname' },
+        action: { type: 'string', description: 'Filter by action (gen|diff|patch|deploy|execute|check|state|rfc_*)' },
+        source: { type: 'string', description: 'Filter by origin (api|cli|ssh|mcp)' },
+        from: { type: 'string', description: 'Start time (RFC3339 or YYYY-MM-DD)' },
+        to: { type: 'string', description: 'End time (RFC3339 or YYYY-MM-DD)' },
+        success: { type: 'boolean', description: 'Filter by success (true) or failure (false)' },
+        limit: { type: 'number', description: 'Max events to return (default 50)' },
+        offset: { type: 'number', description: 'Pagination offset' },
+      },
     },
   },
   {
@@ -444,10 +477,68 @@ function formatCommandResponse(response: CommandResponse): string {
         output += `\nError: ${result.error}\n`;
       }
 
+      if (result.error_code) {
+        output += `Error code: ${result.error_code}\n`;
+      }
+
       output += '\n';
     }
   }
 
+  return output;
+}
+
+function formatCheckeastResponse(response: CheckeastResponse): string {
+  let output = formatCommandResponse(response.diff);
+
+  const archive = response.archive;
+  output += '--- S3 Archive ---\n';
+  if (!archive || !archive.success) {
+    const err = archive?.error;
+    if (err && err.type === 'store_disabled') {
+      output += 'Archival disabled (checkeast.s3.enabled=false)\n';
+    } else if (err) {
+      output += `Archive failed: ${err.type}: ${err.message}\n`;
+    } else {
+      output += 'Archive incomplete (some uploads failed)\n';
+    }
+  }
+
+  if (archive) {
+    output += `Bucket: ${archive.bucket}, Run: ${archive.run_id}\n`;
+    output += `Stored: ${archive.stored_hosts}, Failed: ${archive.failed_hosts}\n`;
+    if (archive.combined?.location) {
+      output += `Combined: ${archive.combined.location}\n`;
+    }
+    if (archive.per_host) {
+      for (const [host, art] of Object.entries(archive.per_host)) {
+        const note = art.error ? ` (${art.error.type})` : '';
+        output += `  ${host}: ${art.location}${note}\n`;
+      }
+    }
+  }
+
+  return output;
+}
+
+function formatAuditResponse(response: AuditListResponse): string {
+  const events = response.events || [];
+  let output = `Audit events (showing ${events.length} of ${response.total}):\n\n`;
+  if (events.length === 0) {
+    output += 'No events matched the filter.\n';
+    return output;
+  }
+  for (const e of events) {
+    const ok = e.success ? 'ok' : 'FAIL';
+    const devices = e.devices && e.devices.length > 0 ? ` [${e.devices.join(', ')}]` : '';
+    output += `${e.timestamp}  ${e.actor}@${e.source}  ${e.action}  (${ok})${devices}\n`;
+    if (e.command) {
+      output += `    cmd: ${e.command}\n`;
+    }
+    if (e.error) {
+      output += `    error: ${e.error.type}: ${e.error.message}\n`;
+    }
+  }
   return output;
 }
 
@@ -580,6 +671,31 @@ async function main() {
           };
         }
 
+        case 'annet_checkeast': {
+          const params = CommandRequestSchema.parse(args);
+          const response = await annetClient.checkeast(params as CommandRequest);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: formatCheckeastResponse(response),
+              } as TextContent,
+            ],
+          };
+        }
+
+        case 'annet_audit': {
+          const response = await annetClient.audit((args ?? {}) as AuditFilter);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: formatAuditResponse(response),
+              } as TextContent,
+            ],
+          };
+        }
+
         case 'annet_patch': {
           const params = CommandRequestSchema.parse(args);
           const response = await annetClient.patch(params as CommandRequest);
@@ -684,12 +800,13 @@ async function main() {
         }
 
         case 'annet_execute': {
-          const { command, host, filters, container, timeout } = args as {
+          const { command, host, filters, container, timeout, vendor } = args as {
             command: string;
             host?: string;
             filters?: string[];
             container?: string;
             timeout?: number;
+            vendor?: string;
           };
 
           // Validate the command against whitelist
@@ -713,6 +830,7 @@ async function main() {
             filters: effectiveFilters,
             container,
             timeout,
+            vendor,
           };
 
           const response = await annetClient.executeCommand(request);

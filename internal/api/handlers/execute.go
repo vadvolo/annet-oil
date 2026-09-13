@@ -23,13 +23,25 @@ type ExecuteHandler struct {
 type ExecuteRequest struct {
 	Host    string `json:"host"`
 	Command string `json:"command"`
-	Device  string `json:"device,omitempty"` // Optional device/vendor type (cisco, juniper, etc)
+	// Vendor selects the gnetcli device profile (cisco, eltex, huawei, ...),
+	// which decides how pagination is disabled on session open. Send it when
+	// the device is not in the inventory so the correct profile is picked
+	// without any inventory change. "device" is a backward-compatible alias.
+	Vendor string `json:"vendor,omitempty"`
+	Device string `json:"device,omitempty"` // Deprecated alias for vendor.
+	// TimeoutS is an optional per-command timeout in seconds for diagnostics
+	// with large output. 0 uses the server default; the value is clamped to a
+	// server-side maximum (gnetcli.max_timeout_sec).
+	TimeoutS float64 `json:"timeout_s,omitempty"`
 }
 
 type ExecuteResponse struct {
 	Output string `json:"output"`
 	Error  string `json:"error,omitempty"`
-	Status int32  `json:"status"`
+	// ErrorCode is a stable, machine-readable classification of Error, e.g.
+	// "READ_TIMEOUT", "CMD_TIMEOUT", "EOF", "UNKNOWN_DEVICE". Empty on success.
+	ErrorCode string `json:"error_code,omitempty"`
+	Status    int32  `json:"status"`
 }
 
 var CommandWhitelist = []*regexp.Regexp{
@@ -220,10 +232,17 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Default vendor/device type
+	// Explicit vendor override, with "device" kept as a backward-compatible
+	// alias. Sending it lets callers pick the right gnetcli profile (and thus
+	// the correct pagination-off commands) even for devices absent from the
+	// inventory. Falls back to "cisco" only when nothing is provided.
+	vendorOverride := req.Vendor
+	if vendorOverride == "" {
+		vendorOverride = req.Device
+	}
 	vendor := "cisco"
-	if req.Device != "" {
-		vendor = strings.ToLower(req.Device)
+	if vendorOverride != "" {
+		vendor = strings.ToLower(vendorOverride)
 	}
 
 	// Try to get device from inventory
@@ -241,8 +260,8 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 	} else {
-		// If device from request is provided, override inventory vendor
-		if req.Device != "" {
+		// An explicit vendor from the request overrides the inventory value.
+		if vendorOverride != "" {
 			device.Vendor = vendor
 		}
 	}
@@ -259,7 +278,9 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[execute] Executing command on device: host=%s, ip=%s, port=%d, vendor=%s, login=%s",
 		device.Hostname, targetHost, device.GetPort(), device.Vendor, creds.Login)
 
-	// Execute command with device parameters
+	// Execute command with device parameters. Device-level failures (timeouts,
+	// unknown device) come back in result with a non-zero Status, a partial
+	// Output, and an ErrorCode; only transport failures return err.
 	result, err := h.client.ExecWithDevice(
 		r.Context(),
 		targetHost,
@@ -268,6 +289,7 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 		creds.Login,
 		creds.Password,
 		device.GetPort(),
+		req.TimeoutS,
 	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -276,9 +298,10 @@ func (h *ExecuteHandler) HandleExecute(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(ExecuteResponse{
-		Output: result.Output,
-		Error:  result.Error,
-		Status: result.Status,
+		Output:    result.Output,
+		Error:     result.Error,
+		ErrorCode: result.ErrorCode,
+		Status:    result.Status,
 	})
 }
 

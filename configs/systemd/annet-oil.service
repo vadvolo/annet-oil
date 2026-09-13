@@ -12,6 +12,11 @@ WorkingDirectory=/opt/annet-oil
 Environment="PATH=/usr/local/bin:/usr/bin:/bin"
 Environment="ANNET_OIL_CONFIG=/opt/annet-oil/configs/config.yaml"
 
+ # Device credentials and other runtime env (DEVICE_USERNAME/PASSWORD,
+# CLIENT_ROUTER_*, INFRA_ROUTER_*, ...). Without this the inventory's ${VAR}
+# credential placeholders expand to empty. "-" makes the file optional.
+EnvironmentFile=-/etc/annet-oil/annet-oil.env
+
 # Start command for both API and SSH servers
 ExecStart=/opt/annet-oil/bin/annet-oil server start
 

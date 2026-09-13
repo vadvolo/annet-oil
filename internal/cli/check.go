@@ -96,7 +96,7 @@ func runCheckCommand(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Fprintf(os.Stderr, "Checking %d device(s) with concurrency %d...\n", len(devices), checkConcurrency)
-	report := check.Devices(cmd.Context(), devices, opts, checkConcurrency)
+	report := check.Devices(cmd.Context(), devices, opts, checkConcurrency, auditRecorder)
 
 	if checkOutput != "" {
 		if err := writeCheckReport(checkOutput, report); err != nil {

@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
+	"annet-oil/internal/audit"
 	"annet-oil/internal/config"
 	"annet-oil/internal/logging"
 	"annet-oil/pkg/jira"
@@ -16,13 +17,15 @@ import (
 type RFCHandler struct {
 	jiraClient *jira.Client
 	enabled    bool
+	recorder   audit.Recorder
 }
 
-func NewRFCHandler(cfg config.IntegrationsConfig) http.Handler {
+func NewRFCHandler(cfg config.IntegrationsConfig, recorder audit.Recorder) http.Handler {
 	r := chi.NewRouter()
 
 	handler := &RFCHandler{
-		enabled: cfg.Jira.Enabled,
+		enabled:  cfg.Jira.Enabled,
+		recorder: recorder,
 	}
 
 	if cfg.Jira.Enabled && cfg.Jira.URL != "" {
@@ -94,6 +97,8 @@ func (h *RFCHandler) createRFC(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	h.record(r, "rfc_create", req.Devices, issue.Key)
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(CreateRFCResponse{
 		TicketKey: issue.Key,
@@ -131,6 +136,8 @@ func (h *RFCHandler) postComment(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to post comment: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	h.record(r, "rfc_comment", nil, req.TicketKey)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
@@ -214,6 +221,8 @@ func (h *RFCHandler) submitForReview(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	h.record(r, "rfc_submit", nil, ticketKey)
+
 	json.NewEncoder(w).Encode(map[string]string{"status": "submitted"})
 }
 
@@ -238,6 +247,8 @@ func (h *RFCHandler) closeRFC(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	h.record(r, "rfc_close", nil, ticketKey)
+
 	json.NewEncoder(w).Encode(map[string]string{"status": "closed"})
 }
 
@@ -273,4 +284,22 @@ func (h *RFCHandler) addDeployComment(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+}
+
+// record emits a best-effort audit event for an RFC mutation. The actor/source
+// are read from the request context (set by AuditContextMiddleware).
+func (h *RFCHandler) record(r *http.Request, action string, devices []string, ticketKey string) {
+	if h.recorder == nil {
+		return
+	}
+	var params map[string]any
+	if ticketKey != "" {
+		params = map[string]any{"ticket": ticketKey}
+	}
+	h.recorder.Record(r.Context(), audit.Event{
+		Action:  action,
+		Devices: devices,
+		Params:  params,
+		Success: true,
+	})
 }

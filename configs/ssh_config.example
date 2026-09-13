@@ -1,0 +1,65 @@
+# SSH Configuration Example for Gnetcli with SSH Key Authentication
+# Place this file at ~/.ssh/config or specify in SSH_CONFIG environment variable
+# Gnetcli reads ~/.ssh/config by default
+
+# Example configuration for network devices with SSH key authentication
+
+# Cisco device with SSH key
+Host cisco-router-1
+    HostName 192.168.1.1
+    User admin
+    Port 22
+    IdentityFile ~/.ssh/network_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Juniper device with SSH key
+Host juniper-switch-1
+    HostName 192.168.1.2
+    User root
+    Port 22
+    IdentityFile ~/.ssh/juniper_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Huawei device with SSH key
+Host huawei-router-1
+    HostName 192.168.1.3
+    User admin
+    Port 22
+    IdentityFile ~/.ssh/huawei_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Default settings for all network devices in subnet
+Host 192.168.1.*
+    User admin
+    Port 22
+    IdentityFile ~/.ssh/network_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# Jump host configuration (bastion)
+Host bastion
+    HostName bastion.example.com
+    User jumpuser
+    Port 22
+    IdentityFile ~/.ssh/bastion_rsa
+
+# Device accessed through bastion
+Host device-via-bastion
+    HostName 10.0.0.1
+    User admin
+    Port 22
+    ProxyJump bastion
+    IdentityFile ~/.ssh/network_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Notes:
+# 1. StrictHostKeyChecking no - disables host key verification (use with caution)
+# 2. UserKnownHostsFile /dev/null - prevents saving host keys
+# 3. IdentityFile - path to the private SSH key
+# 4. ProxyJump - for accessing devices through a jump host

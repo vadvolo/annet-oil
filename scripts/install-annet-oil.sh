@@ -23,7 +23,7 @@ SYSTEMD_DIR="/etc/systemd/system"
 ENV_DIR="/etc/annet-oil"
 
 # Source files from project
-SOURCE_ENV_FILE="$PROJECT_ROOT/configs/systemd/annet-oil.env"
+SOURCE_ENV_FILE="$PROJECT_ROOT/configs/systemd/annet-oil.env.example"
 SOURCE_SERVICE_FILE="$PROJECT_ROOT/configs/systemd/annet-oil.service"
 SOURCE_MCP_SERVICE_FILE="$PROJECT_ROOT/configs/systemd/mcp-annet-oil.service"
 

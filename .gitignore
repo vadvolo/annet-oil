@@ -35,6 +35,13 @@ go.work
 ehthumbs.db
 Thumbs.db
 
+# Runtime secrets — never commit real values. Use the .example templates:
+#   configs/systemd/annet-oil.env.example, configs/systemd/gnetcli.env.example
+.env
+configs/systemd/annet-oil.env
+configs/systemd/gnetcli.env
+configs/config.yaml
+
 # Log files
 *.log
 

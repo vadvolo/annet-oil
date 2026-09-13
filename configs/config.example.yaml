@@ -31,6 +31,11 @@ server:
     # Legacy auth token (grants admin access)
     # For production, use RBAC users instead
     auth_token: "${ANNET_OIL_AUTH_TOKEN}"
+    # Hard wall-clock cap the HTTP layer puts on a single request. Must be
+    # >= gnetcli.max_timeout_sec so large diagnostic outputs (e.g. Eltex MES
+    # "show logging"/"show interfaces" on high-port switches) can finish.
+    # 0 or omitted -> 120s default.
+    request_timeout_sec: 120
 
 # Storage paths
 storage:
@@ -45,6 +50,15 @@ gnetcli:
   login: "${DEVICE_USERNAME}"
   password: "${DEVICE_PASSWORD}"
   tls: false
+  # Per-command timeouts in seconds. read_timeout_sec is the gap allowed between
+  # reads (a stalled pager or a slowly-streamed large table trips this);
+  # cmd_timeout_sec bounds the whole command. 0 = inherit the gnetcli server
+  # default. Raise these so large-output diagnostics ("show interfaces" on a
+  # switch with many ports) complete instead of failing with READ_TIMEOUT.
+  read_timeout_sec: 30
+  cmd_timeout_sec: 60
+  # Upper bound for a per-request timeout_s override on /api/v0/execute. 0 = no cap.
+  max_timeout_sec: 120
 
 # Docker configuration
 docker:
@@ -72,6 +86,37 @@ logging:
     bucket: ""
     prefix: "logs/annet-oil/"
     region: "us-east-1"
+
+# Checkeast: run a diff and archive it to S3-compatible storage.
+# Independent of the log-archival S3 config above; supports a custom endpoint
+# (MinIO). AWS credentials come from the environment (AWS_ACCESS_KEY_ID / …),
+# not this file.
+checkeast:
+  s3:
+    enabled: false
+    bucket: "network-diffs"
+    prefix: "diffs/annet-oil/"
+    region: "us-east-1"
+    endpoint: ""          # leave empty for AWS; e.g. http://localhost:9000 for MinIO
+    # How long archived diffs are kept before expiring (bucket lifecycle rule
+    # scoped to the prefix). 0 = default (3 days); negative = disable lifecycle.
+    retention_days: 3
+
+# Audit trail: who ran which command on which devices, queryable via
+# GET /api/v0/audit. Disabled by default (no database required). When enabled,
+# requires PostgreSQL.
+audit:
+  enabled: false
+  # Either a full DSN…
+  dsn: ""               # postgres://user:pass@host:5432/annet_oil?sslmode=disable
+  # …or discrete fields (used when dsn is empty):
+  host: "localhost"
+  port: 5432
+  user: "annet"
+  password: "${AUDIT_DB_PASSWORD}"
+  database: "annet_oil"
+  ssl_mode: "disable"
+  buffer_size: 1024     # async write queue size
 
 # Request caching
 cache:
