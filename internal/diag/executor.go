@@ -4,14 +4,23 @@ import (
 	"context"
 	"regexp"
 	"strings"
-
-	"annet-oil/internal/gnetcli"
 )
 
-// DeviceExecutor runs a single command against a device. *gnetcli.Client
-// satisfies this directly; tests use a fake.
+// ExecOutcome is the result of running one command on a device. It mirrors the
+// fields diag needs without coupling to any specific gnetcli client signature.
+type ExecOutcome struct {
+	Output    string
+	Error     string
+	ErrorCode string
+	Status    int32
+}
+
+// DeviceExecutor runs a single read-only command against a target. The handler
+// provides a gnetcli-backed adapter; tests use a fake. Decoupling here keeps the
+// diag package independent of gnetcli's evolving ExecWithDevice signature
+// (ssh/telnet selection, timeouts, etc. live in the adapter).
 type DeviceExecutor interface {
-	ExecWithDevice(ctx context.Context, host, cmd, vendor, login, password string, port int, timeoutSec float64) (*gnetcli.ExecResult, error)
+	Exec(ctx context.Context, target Target, cmd string) (ExecOutcome, error)
 }
 
 // readOnlyGuard is a defense-in-depth allowlist. Every command in the registry is

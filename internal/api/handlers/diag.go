@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -16,6 +17,21 @@ import (
 	"annet-oil/internal/gnetcli"
 	"annet-oil/internal/inventory"
 )
+
+// gnetcliDiagExec adapts *gnetcli.Client to diag.DeviceExecutor, keeping the
+// gnetcli-specific ExecWithDevice signature out of the diag package.
+type gnetcliDiagExec struct {
+	client     *gnetcli.Client
+	timeoutSec float64
+}
+
+func (a gnetcliDiagExec) Exec(ctx context.Context, t diag.Target, cmd string) (diag.ExecOutcome, error) {
+	r, err := a.client.ExecWithDevice(ctx, t.Host(), cmd, t.Vendor, t.Login, t.Password, t.Port, a.timeoutSec)
+	if err != nil {
+		return diag.ExecOutcome{}, err
+	}
+	return diag.ExecOutcome{Output: r.Output, Error: r.Error, ErrorCode: r.ErrorCode, Status: r.Status}, nil
+}
 
 // DiagConfig tunes the diagnostic handler. Zero values fall back to catalog
 // defaults (two MikroTik probes, two core anchors, a 90s step budget).
@@ -49,7 +65,7 @@ func NewDiagHandler(client *gnetcli.Client, cfg DiagConfig) chi.Router {
 	h := &DiagHandler{
 		client: client,
 		cfg:    cfg,
-		engine: diag.NewEngine(client, diag.Config{
+		engine: diag.NewEngine(gnetcliDiagExec{client: client}, diag.Config{
 			StepBudget: cfg.StepBudget,
 			PingCount:  cfg.PingCount,
 		}),
@@ -116,10 +132,9 @@ func (h *DiagHandler) handleRun(w http.ResponseWriter, r *http.Request) {
 	// Per-request timeout override flows to the engine via a fresh engine copy.
 	eng := h.engine
 	if req.TimeoutS > 0 {
-		eng = diag.NewEngine(h.client, diag.Config{
-			StepBudget:        h.cfg.StepBudget,
-			PingCount:         h.cfg.PingCount,
-			DefaultTimeoutSec: req.TimeoutS,
+		eng = diag.NewEngine(gnetcliDiagExec{client: h.client, timeoutSec: req.TimeoutS}, diag.Config{
+			StepBudget: h.cfg.StepBudget,
+			PingCount:  h.cfg.PingCount,
 		})
 	}
 

@@ -19,9 +19,11 @@ type Target struct {
 	Login    string
 	Password string
 	Port     int
+	Telnet   bool // use the telnet streamer instead of ssh
 }
 
-func (t Target) host() string {
+// Host returns the address to dial (IP preferred, else hostname).
+func (t Target) Host() string {
 	if t.IP != "" {
 		return t.IP
 	}
@@ -164,12 +166,12 @@ func (e *Engine) runStep(ctx context.Context, dev Target, cmd string, family dia
 }
 
 // execWithRetry retries once on transport error (transient session/echo races).
-func (e *Engine) execWithRetry(ctx context.Context, dev Target, cmd string) (*execResult, error) {
+func (e *Engine) execWithRetry(ctx context.Context, dev Target, cmd string) (*ExecOutcome, error) {
 	var lastErr error
 	for attempt := 1; attempt <= 2; attempt++ {
-		r, err := e.exec.ExecWithDevice(ctx, dev.host(), cmd, dev.Vendor, dev.Login, dev.Password, dev.Port, e.cfg.DefaultTimeoutSec)
+		r, err := e.exec.Exec(ctx, dev, cmd)
 		if err == nil {
-			return &execResult{Output: r.Output, Error: r.Error, ErrorCode: r.ErrorCode, Status: r.Status}, nil
+			return &r, nil
 		}
 		lastErr = err
 		if ctx.Err() != nil {
@@ -179,17 +181,10 @@ func (e *Engine) execWithRetry(ctx context.Context, dev Target, cmd string) (*ex
 	return nil, lastErr
 }
 
-type execResult struct {
-	Output    string
-	Error     string
-	ErrorCode string
-	Status    int32
-}
-
 // probeSteps runs ping+traceroute from each probe to the device/last-hop/anchors.
 func (e *Engine) probeSteps(ctx context.Context, req RunRequest, over *func() bool) []*diagpb.Step {
 	var out []*diagpb.Step
-	targets := []string{req.Device.host()}
+	targets := []string{req.Device.Host()}
 	if req.LastHop != "" {
 		targets = append(targets, req.LastHop)
 	}
@@ -216,7 +211,7 @@ func (e *Engine) probeSteps(ctx context.Context, req RunRequest, over *func() bo
 }
 
 func (e *Engine) probeOne(ctx context.Context, probe Target, cmd, category, tgt string) *diagpb.Step {
-	step := &diagpb.Step{Command: cmd, Category: category, ProbeHost: probe.host()}
+	step := &diagpb.Step{Command: cmd, Category: category, ProbeHost: probe.Host()}
 	if !isReadOnly(cmd) {
 		step.Status = diagpb.StepStatus_STEP_SKIPPED
 		step.Error = "command rejected by read-only guard"
