@@ -1,0 +1,345 @@
+syntax = "proto3";
+
+// Package annetoil.diag.v1 is the schema for structured, read-only diagnostic
+// "playbook" runs against network devices via Annet/gnetcli. Bots and agents
+// consume this schema + data instead of raw CLI text.
+package annetoil.diag.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "annet-oil/internal/diag/diagpb;diagpb";
+
+// Family is the diagnostic device family. Derived from inventory vendor+platform;
+// it selects the per-alarm command playbook.
+enum Family {
+  FAMILY_UNSPECIFIED = 0;
+  FAMILY_IOSXR = 1;        // vendor cisco, platform iosxr
+  FAMILY_IOS = 2;          // vendor cisco, platform ios/iosxe/nxos
+  FAMILY_ELTEX = 3;        // vendor eltex (MES)
+  FAMILY_ROUTEROS = 4;     // vendor ros (MikroTik RouterOS)
+  FAMILY_FS = 5;           // vendor fsos (FS S5810, FSOS)
+  FAMILY_UPS = 6;          // no SSH; data from LibreNMS API
+  FAMILY_GENERIC_CORE = 7; // fallback / unmatched alarm
+}
+
+// AlarmType is the diagnostic category (maps 1:1 to the playbook catalog).
+enum AlarmType {
+  ALARM_UNSPECIFIED = 0;
+  ALARM_AVAILABILITY = 1;    // Device Down / up-down
+  ALARM_PORT_OPTICS = 2;     // port / optics / load / errors / speed
+  ALARM_STP = 3;             // STP / L2 loop
+  ALARM_OSPF = 4;
+  ALARM_BGP = 5;
+  ALARM_BFD = 6;
+  ALARM_ISIS = 7;
+  ALARM_REDUNDANCY = 8;      // VRRP / HSRP
+  ALARM_MPLS_LDP = 9;
+  ALARM_L2VPN = 10;          // L2VPN / pseudowire
+  ALARM_CPU_MEM = 11;
+  ALARM_HARDWARE_ENV = 12;   // temperature / power / fans
+  ALARM_RESTART_UPTIME = 13;
+  ALARM_MONITORING_GAP = 14; // poller / SNMP timeout / discovery (LibreNMS)
+}
+
+// StepStatus classifies the outcome of one command step.
+enum StepStatus {
+  STEP_STATUS_UNSPECIFIED = 0;
+  STEP_OK = 1;              // ran, device returned success
+  STEP_DEVICE_ERROR = 2;   // ran, device returned non-zero / error code
+  STEP_TRANSPORT_ERROR = 3;// gnetcli/transport failure
+  STEP_SKIPPED = 4;        // conditional step whose precondition was not met
+  STEP_NOT_SUPPORTED = 5;  // no playbook for this family/alarm (documented gap)
+}
+
+// DiagnosticRun is the top-level result of running one alarm's playbook.
+message DiagnosticRun {
+  DeviceRef device = 1;
+  AlarmContext alarm = 2;
+  Family family = 3;
+  string family_name = 4;               // human string, e.g. "iosxr"
+  repeated Step steps = 5;
+  google.protobuf.Timestamp started_at = 6;
+  int64 total_duration_ms = 7;
+  bool budget_exceeded = 8;             // step budget (e.g. 90s) was hit
+  // gaps documents known missing playbooks / manual steps for this family+alarm
+  // (e.g. "STP has no playbook on IOS-XR").
+  repeated string gaps = 9;
+  string note = 10;
+}
+
+message DeviceRef {
+  string hostname = 1;
+  string ip = 2;
+  string vendor = 3;    // raw inventory vendor (gnetcli profile)
+  string platform = 4;
+}
+
+message AlarmContext {
+  AlarmType type = 1;
+  string type_name = 2;
+  string port = 3;      // <PORT>
+  string peer = 4;      // <PEER>
+  string target = 5;    // <CILJ>
+  string location = 6;  // <lok> (e.g. optics port location)
+  map<string, string> extra = 7;
+}
+
+// Step is one executed command and its parsed result. raw_output is always
+// present so nothing is lost even when no parser matched.
+message Step {
+  string command = 1;
+  string category = 2;      // logical role, e.g. "facts", "bgp", "optics", "log"
+  StepStatus status = 3;
+  int32 device_status = 4;  // gnetcli device exit status
+  string error_code = 5;    // READ_TIMEOUT | CMD_TIMEOUT | EOF | UNKNOWN_DEVICE | ...
+  string error = 6;
+  int64 duration_ms = 7;
+  string raw_output = 8;
+  Parsed parsed = 9;        // typed payload when a parser matched
+  string probe_host = 10;   // set when run from a probe (ping/traceroute source)
+}
+
+// Parsed is the typed payload for a step. Exactly one field is set.
+message Parsed {
+  oneof payload {
+    DeviceFacts facts = 1;
+    InterfaceList interfaces = 2;
+    NeighborList neighbors = 3;
+    OpticsList optics = 4;
+    RouteInfo routes = 5;
+    ArpList arp = 6;
+    MacList mac = 7;
+    StpInfo stp = 8;
+    EnvSensors env = 9;
+    ResourceUsage resources = 10;
+    LogEntries logs = 11;
+    PingResult ping = 12;
+    RedundancyInfo redundancy = 13;
+    InventoryList inventory = 14;
+    PlatformList platform = 15;
+    TracerouteResult traceroute = 16;
+  }
+}
+
+message DeviceFacts {
+  string hostname = 1;
+  string vendor = 2;
+  string model = 3;
+  string serial = 4;
+  string os_version = 5;
+  string image = 6;
+  string uptime = 7;          // raw uptime string
+  int64 uptime_seconds = 8;   // parsed, best-effort
+  string reload_reason = 9;
+  string restarted_at = 10;
+  string board_name = 11;
+  string architecture = 12;
+}
+
+message InterfaceList { repeated Interface items = 1; }
+message Interface {
+  string name = 1;
+  string admin_status = 2;  // up|down
+  string oper_status = 3;   // up|down
+  string description = 4;
+  string mac = 5;
+  int32 mtu = 6;
+  int64 speed_mbps = 7;
+  string duplex = 8;
+  repeated string ipv4 = 9; // CIDR or address
+  repeated string ipv6 = 10;
+  string vrf = 11;
+  int64 in_errors = 12;
+  int64 out_errors = 13;
+  int64 in_discards = 14;
+  int64 out_discards = 15;
+  int64 in_bytes = 16;
+  int64 out_bytes = 17;
+  string last_flap = 18;
+  int64 link_downs = 19;
+  int32 vlan = 20;          // access vlan (switch ports)
+}
+
+message NeighborList {
+  string protocol = 1;      // bgp|ospf|isis|bfd|lldp|cdp
+  repeated Neighbor items = 2;
+  string router_id = 3;
+  int64 local_as = 4;
+}
+message Neighbor {
+  string protocol = 1;
+  string peer = 2;            // neighbor id / address
+  string local_address = 3;
+  string state = 4;           // FULL|Established|Idle|UP|DOWN|...
+  string uptime = 5;
+  int64 remote_as = 6;
+  int64 prefixes_received = 7;
+  string interface = 8;
+  // LLDP/CDP specifics
+  string local_port = 9;
+  string remote_system = 10;
+  string remote_port = 11;
+  string remote_chassis = 12;
+  string remote_mgmt_ip = 13;
+  string remote_platform = 14;
+  map<string, string> extra = 15;
+}
+
+message OpticsList { repeated Optics items = 1; }
+message Optics {
+  string port = 1;
+  int32 lane = 2;
+  double rx_power_dbm = 3;
+  double tx_power_dbm = 4;
+  double temperature_c = 5;
+  double voltage_v = 6;
+  double bias_ma = 7;
+  string vendor = 8;
+  string part_number = 9;
+  string serial = 10;
+  double wavelength_nm = 11;
+  repeated string alarms = 12;
+  repeated string warnings = 13;
+}
+
+message RouteInfo {
+  repeated Route items = 1;
+  int32 total_count = 2;   // when only a summary/count is available
+  string target = 3;       // <CILJ> the lookup was for
+}
+message Route {
+  string prefix = 1;
+  string next_hop = 2;
+  string interface = 3;
+  string protocol = 4;
+  int32 distance = 5;
+  int64 metric = 6;
+  bool active = 7;
+  string uptime = 8;
+}
+
+message ArpList { repeated ArpEntry items = 1; }
+message ArpEntry {
+  string ip = 1;
+  string mac = 2;
+  string interface = 3;
+  string age = 4;
+  string state = 5;
+}
+
+message MacList { repeated MacEntry items = 1; }
+message MacEntry {
+  string mac = 1;
+  int32 vlan = 2;
+  string interface = 3;
+  string type = 4; // dynamic|static
+}
+
+message StpInfo {
+  repeated StpInstance instances = 1;
+  repeated string blocked_ports = 2;
+  repeated string inconsistent_ports = 3;
+}
+message StpInstance {
+  string id = 1;         // vlan / instance / bridge domain
+  string protocol = 2;   // rstp|mstp|pvst|...
+  bool is_root = 3;
+  string root_id = 4;
+  string bridge_id = 5;
+  string root_port = 6;
+  repeated StpPort ports = 7;
+}
+message StpPort {
+  string name = 1;
+  string role = 2;   // root|designated|alternate|backup
+  string state = 3;  // forwarding|blocking|learning|listening
+  int64 cost = 4;
+}
+
+message EnvSensors { repeated EnvSensor items = 1; }
+message EnvSensor {
+  string name = 1;
+  string type = 2;       // temperature|fan|psu|voltage|power|current
+  double value = 3;
+  string value_text = 4; // when non-numeric (e.g. "ok")
+  string unit = 5;       // C|RPM|V|W|A
+  string status = 6;     // ok|warning|critical|...
+}
+
+message ResourceUsage {
+  double cpu_5s = 1;
+  double cpu_1m = 2;
+  double cpu_5m = 3;
+  double cpu_load_pct = 4;   // RouterOS single cpu-load
+  int64 mem_total_bytes = 5;
+  int64 mem_used_bytes = 6;
+  int64 mem_free_bytes = 7;
+  string mem_total_text = 8;
+  string mem_free_text = 9;
+  repeated ProcessCpu top_processes = 10;
+}
+message ProcessCpu {
+  string name = 1;
+  int64 pid = 2;
+  double cpu_pct = 3;
+}
+
+message LogEntries {
+  repeated LogEntry items = 1;
+  int32 shown = 2;
+}
+message LogEntry {
+  string timestamp = 1;
+  string severity = 2;
+  string facility = 3;
+  string message = 4;
+}
+
+message PingResult {
+  string target = 1;
+  int32 packets_sent = 2;
+  int32 packets_received = 3;
+  double loss_pct = 4;
+  double rtt_min_ms = 5;
+  double rtt_avg_ms = 6;
+  double rtt_max_ms = 7;
+  bool success = 8;
+}
+
+message TracerouteResult {
+  string target = 1;
+  repeated TracerouteHop hops = 2;
+}
+message TracerouteHop {
+  int32 index = 1;
+  string address = 2;
+  double rtt_ms = 3;
+}
+
+message RedundancyInfo { repeated RedundancyGroup groups = 1; }
+message RedundancyGroup {
+  string protocol = 1;   // vrrp|hsrp
+  string group_id = 2;
+  string interface = 3;
+  string state = 4;      // master|backup|active|standby|init
+  string virtual_ip = 5;
+  int32 priority = 6;
+  string peer = 7;
+}
+
+message InventoryList { repeated InventoryItem items = 1; }
+message InventoryItem {
+  string name = 1;
+  string description = 2;
+  string pid = 3;
+  string vid = 4;
+  string serial = 5;
+}
+
+message PlatformList { repeated PlatformCard items = 1; }
+message PlatformCard {
+  string node = 1;
+  string type = 2;
+  string state = 3;
+  string config_state = 4;
+}

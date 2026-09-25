@@ -1,0 +1,22 @@
+### CMD: show ospf neighbor
+### status: 0 errcode: None err: 
+
+* Indicates MADJ interface
+# Indicates Neighbor awaiting BFD session up
+
+Neighbors for OSPF 9125
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+178.253.194.225 1     FULL/BDR        00:00:39    10.254.255.161  Bundle-Ether50
+    Neighbor is up for 49w4d
+91.150.76.82    1     FULL/BDR        00:00:39    10.134.1.246    GigabitEthernet0/4/0/2.202
+    Neighbor is up for 1w0d
+178.253.194.232 1     FULL/BDR        00:00:39    10.254.255.165  FortyGigE0/4/1/0
+    Neighbor is up for 2y09w
+10.135.32.134   128   FULL/BDR        00:00:39    10.135.32.134   GigabitEthernet0/4/0/4
+    Neighbor is up for 19w2d
+178.253.211.252 1     FULL/BDR        00:00:34    10.254.255.2    TenGigE0/0/0/9
+    Neighbor is up for 6w1d
+
+Total neighbor count: 5
+

@@ -69,6 +69,14 @@ deps: ## Download and install dependencies
 	$(GOMOD) verify
 	$(GOMOD) tidy
 
+.PHONY: proto
+proto: ## Regenerate diag protobuf Go code from proto/diag/v1/diag.proto
+	@echo "Generating diag protobuf..."
+	@command -v protoc-gen-go >/dev/null || go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.11
+	PATH="$$(go env GOPATH)/bin:$$PATH" protoc --proto_path=proto --go_out=. --go_opt=module=annet-oil proto/diag/v1/diag.proto
+	@cp proto/diag/v1/diag.proto internal/diag/diag.proto
+	@echo "diag protobuf regenerated (internal/diag/diagpb + embedded schema copy)."
+
 # Build targets
 build: build-api build-mcp ## Build everything (API + MCP)
 	@echo "Build complete!"

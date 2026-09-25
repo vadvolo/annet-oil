@@ -1,0 +1,4 @@
+### CMD: /ip route print count-only
+3
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

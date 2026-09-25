@@ -1,0 +1,1004 @@
+### CMD: /log print
+2026-08-03 06:13:23 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 08:41:10 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-03 08:41:13 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-03 10:58:43 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-03 10:58:48 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 11:01:55 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-03 11:01:55 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-03 11:01:57 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-03 11:01:58 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-03 11:02:00 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-03 11:02:00 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-03 15:19:37 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-03 15:19:37 system,info user admin changed by ssh:admin+cte999w255h@192.168.52.235/action:44 ()
+2026-08-03 15:19:37 system,info user admin changed by ssh:admin+cte999w255h@192.168.52.235/action:45 (/user set admin comment=1d53a59)
+2026-08-03 15:21:49 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 16:50:10 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-03 16:50:10 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-03 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-03 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-03 18:15:23 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-03 18:15:24 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 21:04:30 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-03 21:04:31 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-03 21:36:27 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-08-03 21:36:27 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-08-03 21:36:34 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-08-03 21:37:09 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-08-04 08:41:11 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-04 08:41:13 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-04 10:58:16 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-04 10:58:21 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-04 12:56:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-04 12:56:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-04 12:56:43 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-04 12:56:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-04 12:56:46 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-04 12:56:46 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-04 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-04 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-04 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-05 08:39:56 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-05 08:39:59 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-05 10:55:54 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-05 10:55:59 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-05 13:03:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-05 13:03:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-05 13:03:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-05 13:03:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-05 13:03:31 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-05 13:03:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-05 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-05 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-05 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-06 08:38:24 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-06 08:38:26 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-06 10:58:00 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-06 10:58:05 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-06 13:05:45 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-06 13:05:45 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-06 13:05:47 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-06 13:05:48 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-06 13:05:50 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-06 13:05:50 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-06 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-06 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-06 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-06 18:11:00 script,info Please wait...!!!
+2026-08-06 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-08-06 18:11:06 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-06 18:11:07 script,info Finished Backup Script...!!!!
+2026-08-06 18:11:12 script,info Please wait...!!!
+2026-08-06 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+2026-08-06 18:11:17 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-06 18:11:19 script,info Finished RSC Script...!!!!
+2026-08-06 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-08-06 18:11:19 script,error,debug no such item (/file/remove; line 20)
+2026-08-07 00:29:42 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-07 00:29:42 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-07 08:39:13 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-07 08:39:13 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-07 08:39:16 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-07 10:56:40 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-07 10:56:45 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-07 13:10:43 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-07 13:10:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-07 13:10:45 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-07 13:10:46 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-07 13:10:48 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-07 13:10:48 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-07 15:52:06 system,info,account user sanja.cem logged in from 192.168.225.31 via winbox
+2026-08-07 15:52:06 system,info,account user sanja.cem logged out from 192.168.225.31 via winbox
+2026-08-07 15:52:32 system,info,account user sanja.cem logged in from 192.168.225.31 via winbox
+2026-08-07 15:52:32 system,info,account user sanja.cem logged out from 192.168.225.31 via winbox
+2026-08-07 15:52:38 system,info,account user sanja.cem logged in from 192.168.225.31 via winbox
+2026-08-07 15:52:38 system,info,account user sanja.cem logged out from 192.168.225.31 via winbox
+2026-08-07 15:52:39 system,info,account user sanja.cem logged in from 192.168.225.31 via winbox
+2026-08-07 15:52:39 system,info,account user sanja.cem logged out from 192.168.225.31 via winbox
+2026-08-07 15:52:48 system,info,account user sanja.cem logged in from 192.168.225.31 via winbox
+2026-08-07 16:08:30 system,info,account user sanja.cem logged out from 192.168.225.31 via winbox
+2026-08-07 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-07 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-07 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-07 18:15:31 system,info,account user bojan.mil logged in from 192.168.225.50 via winbox
+2026-08-07 21:38:47 system,info,account user bojan.mil logged out from 192.168.225.50 via winbox
+2026-08-07 21:39:12 system,info,account user bojan.mil logged in from 192.168.225.50 via winbox
+2026-08-07 21:48:52 system,info,account user bojan.mil logged out from 192.168.225.50 via winbox
+2026-08-08 01:13:16 system,info,account user bojan.mil logged in from 192.168.225.50 via winbox
+2026-08-08 01:24:43 system,info,account user bojan.mil logged in from 192.168.225.50 via winbox
+2026-08-08 01:24:43 system,info,account user bojan.mil logged out from 192.168.225.50 via winbox
+2026-08-08 01:45:47 system,info,account user bojan.mil logged out from 192.168.225.50 via winbox
+2026-08-08 08:37:26 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-08 08:37:29 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-08 10:58:36 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-08 10:58:41 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-08 13:17:09 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-08 13:17:09 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-08 13:17:11 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-08 13:17:12 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-08 13:17:14 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-08 13:17:15 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-08 13:23:36 system,info,account user bojan.mil logged in from 192.168.225.50 via winbox
+2026-08-08 13:25:38 system,info,account user bojan.mil logged out from 192.168.225.50 via winbox
+2026-08-08 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-08 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-08 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-09 08:38:53 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-09 08:38:56 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-09 10:56:17 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-09 10:56:22 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-09 13:20:27 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-09 13:20:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-09 13:20:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-09 13:20:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-09 13:20:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-09 13:20:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-09 15:20:30 system,info,account user boza logged in from 192.168.225.43 via winbox
+2026-08-09 15:20:42 system,info system identity changed by tcp-msg(winbox):boza@192.168.225.43 (/system identity set name="Access: SU_W002-SuboticaNovaOpstina SW")
+2026-08-09 15:20:43 system,info,account user boza logged out from 192.168.225.43 via winbox
+2026-08-09 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-09 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-09 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-10 08:35:42 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-10 08:35:44 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-10 10:58:44 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-10 10:58:49 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-10 13:12:14 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-10 13:12:15 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-10 13:12:16 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-10 13:12:17 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-10 13:12:19 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-10 13:12:20 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-10 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-10 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-10 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-11 08:36:32 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-11 08:36:35 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-11 10:58:08 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-11 10:58:18 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-11 13:14:58 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-11 13:14:58 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-11 13:15:00 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-11 13:15:01 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-11 13:15:03 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-11 13:15:03 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-11 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-11 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-11 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-12 08:38:46 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-12 08:38:49 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-12 10:58:57 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-12 10:59:02 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-12 13:27:27 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-12 13:27:28 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-12 13:27:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-12 13:27:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-12 13:27:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-12 13:27:33 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-12 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-12 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-12 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-13 08:38:54 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-13 08:38:57 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-13 10:56:35 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-13 10:56:40 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-13 13:23:56 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-13 13:23:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-13 13:23:59 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-13 13:24:00 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-13 13:24:01 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-13 13:24:02 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-13 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-13 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-13 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-13 18:11:00 script,info Please wait...!!!
+2026-08-13 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-08-13 18:11:05 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-13 18:11:07 script,info Finished Backup Script...!!!!
+2026-08-13 18:11:15 script,info Please wait...!!!
+2026-08-13 18:11:20 script,info Sending RSC Mikrotik to FTP Server.............
+2026-08-13 18:11:20 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-13 18:11:22 script,info Finished RSC Script...!!!!
+2026-08-13 18:11:22 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-08-13 18:11:22 script,error,debug no such item (/file/remove; line 20)
+2026-08-14 08:37:02 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-14 08:37:05 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-14 10:55:56 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-14 10:56:01 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-14 13:12:57 system,error,critical login failure for user root from 192.168.52.235 via ssh
+2026-08-14 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-14 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-14 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-14 19:04:21 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-14 19:04:22 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-14 19:04:23 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-14 19:04:24 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-15 08:38:49 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-15 08:38:52 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-15 10:57:21 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-15 10:57:26 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-15 13:16:50 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-15 13:16:50 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-15 13:16:52 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-15 13:16:53 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-15 13:16:55 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-15 13:16:55 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-15 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-15 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-15 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-16 08:35:36 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 08:35:36 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 08:35:37 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 08:35:38 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 10:56:24 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-16 10:56:29 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-16 13:21:30 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 13:21:31 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 13:21:33 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 13:21:34 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 13:21:36 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 13:21:36 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 15:10:01 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 15:10:01 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 15:10:03 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-16 15:10:03 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-16 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-16 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-16 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-17 08:39:53 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-17 08:39:55 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-17 08:39:59 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-17 08:40:02 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-17 10:58:26 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-17 10:58:31 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-17 13:16:36 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-17 13:16:37 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-17 13:16:38 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-17 13:16:39 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-17 13:16:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-17 13:16:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-17 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-17 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-17 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-18 08:39:15 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-18 08:39:15 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-18 08:39:17 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-18 08:39:17 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-18 10:56:19 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-18 10:56:24 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-18 13:27:23 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-18 13:27:23 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-18 13:27:25 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-18 13:27:26 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-18 13:27:28 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-18 13:27:28 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-18 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-18 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-18 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-19 08:40:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-19 08:40:06 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-19 08:40:07 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-19 08:40:08 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-19 10:59:53 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-19 10:59:58 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-19 13:25:39 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-19 13:25:40 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-19 13:25:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-19 13:25:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-19 13:25:44 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-19 13:25:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-19 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-19 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-19 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-20 08:37:02 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-20 08:37:02 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-20 08:37:03 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-20 08:37:04 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-20 10:56:59 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-20 10:57:04 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-20 13:29:38 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-20 13:29:39 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-20 13:29:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-20 13:29:41 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-20 13:29:43 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-20 13:29:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-20 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-20 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-20 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-20 18:11:00 script,info Please wait...!!!
+2026-08-20 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-08-20 18:11:05 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-20 18:11:07 script,info Finished Backup Script...!!!!
+2026-08-20 18:11:12 script,info Please wait...!!!
+2026-08-20 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+2026-08-20 18:11:18 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-20 18:11:19 script,info Finished RSC Script...!!!!
+2026-08-20 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-08-20 18:11:19 script,error,debug no such item (/file/remove; line 20)
+2026-08-21 08:38:40 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-21 08:38:43 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-21 08:38:47 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-21 08:38:50 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-21 10:56:41 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-21 10:56:46 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-21 13:31:53 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-21 13:31:54 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-21 13:31:55 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-21 13:31:56 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-21 13:31:58 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-21 13:31:58 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-21 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-21 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-21 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-22 08:37:11 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-22 08:37:14 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-22 08:37:17 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-22 08:37:21 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-22 10:59:16 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-22 10:59:21 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-22 13:34:28 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-22 13:34:28 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-22 13:34:30 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-22 13:34:31 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-22 13:34:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-22 13:34:33 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-22 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-22 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-22 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-23 08:39:28 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-23 08:39:29 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-23 08:39:30 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-23 08:39:31 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-23 10:56:00 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-23 10:56:06 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-23 13:28:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-23 13:28:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-23 13:28:31 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-23 13:28:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-23 13:28:34 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-23 13:28:35 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-23 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-23 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-23 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-24 08:39:30 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-24 08:39:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-24 08:39:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-24 08:39:33 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-24 10:56:01 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-24 10:56:06 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-24 13:24:47 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-24 13:24:48 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-24 13:24:50 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-24 13:24:50 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-24 13:24:52 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-24 13:24:53 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-24 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-24 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-24 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-25 08:38:36 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-25 08:38:39 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-25 08:38:42 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-25 08:38:46 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-25 10:58:36 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-25 10:58:41 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-25 13:25:16 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-25 13:25:17 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-25 13:25:18 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-25 13:25:19 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-25 13:25:21 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-25 13:25:22 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-25 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-25 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-25 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-26 08:37:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-26 08:37:29 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-26 08:37:31 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-26 08:37:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-26 10:57:26 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-26 10:57:31 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-26 13:22:17 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-26 13:22:18 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-26 13:22:20 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-26 13:22:20 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-26 13:22:22 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-26 13:22:23 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-26 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-26 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-26 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-27 08:37:21 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-27 08:37:24 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-27 08:37:27 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-27 08:37:31 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-27 10:57:40 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-27 10:57:45 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-27 13:28:52 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-27 13:28:52 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-27 13:28:54 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-27 13:28:55 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-27 13:28:56 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-27 13:28:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-27 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-27 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-27 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-27 18:11:00 script,info Please wait...!!!
+2026-08-27 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-08-27 18:11:05 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-27 18:11:07 script,info Finished Backup Script...!!!!
+2026-08-27 18:11:12 script,info Please wait...!!!
+2026-08-27 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+2026-08-27 18:11:17 fetch,info Upload to 192.168.52.97 FINISHED
+2026-08-27 18:11:19 script,info Finished RSC Script...!!!!
+2026-08-27 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-08-27 18:11:19 script,error,debug no such item (/file/remove; line 20)
+2026-08-28 08:36:50 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-28 08:36:50 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-28 08:36:52 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-28 08:36:52 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-28 10:59:01 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-28 10:59:06 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-28 13:24:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-28 13:24:06 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-28 13:24:08 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-28 13:24:09 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-28 13:24:11 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-28 13:24:11 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-28 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-28 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-28 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-29 08:37:26 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-29 08:37:29 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-29 08:37:32 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-29 08:37:36 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-29 10:56:15 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-29 10:56:20 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-29 13:30:57 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-29 13:30:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-29 13:30:59 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-29 13:31:00 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-29 13:31:02 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-29 13:31:02 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-29 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-29 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-29 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-30 08:40:53 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-30 08:40:56 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-30 08:40:59 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-30 08:41:03 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-08-30 10:59:05 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-30 10:59:10 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-30 13:35:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-30 13:35:07 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-30 13:35:08 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-30 13:35:09 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-30 13:35:11 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-30 13:35:12 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-30 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-30 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-30 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-08-30 21:15:50 interface,info ether18-PtP AIK Nasa 17-Subotica link down
+2026-08-30 21:16:24 interface,info ether18-PtP AIK Nasa 17-Subotica link up (speed 100M, full duplex)
+2026-08-30 21:16:45 interface,warning ether18-PtP AIK Nasa 17-Subotica excessive broadcasts/multicasts, probably a loop
+2026-08-31 08:40:24 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-31 08:40:24 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-31 08:40:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-31 08:40:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-31 10:58:41 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-08-31 10:58:46 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-08-31 13:36:53 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-31 13:36:53 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-31 13:36:55 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-31 13:36:56 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-31 13:36:58 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-08-31 13:36:58 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-08-31 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-08-31 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-08-31 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-01 08:40:41 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-01 08:40:44 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-01 08:40:47 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-01 08:40:50 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-01 10:55:31 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-01 10:55:36 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-01 13:24:48 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-01 13:24:49 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-01 13:24:50 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-01 13:24:51 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-01 13:24:53 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-01 13:24:54 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-01 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-01 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-01 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-02 08:36:43 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-02 08:36:46 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-02 08:36:49 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-02 08:36:53 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-02 10:55:24 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-02 10:55:29 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-02 13:22:58 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-02 13:22:59 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-02 13:23:00 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-02 13:23:01 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-02 13:23:03 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-02 13:23:04 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-02 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-02 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-02 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-03 08:39:35 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-03 08:39:37 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-03 08:39:41 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-03 08:39:44 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-03 10:59:24 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-03 10:59:29 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-03 13:35:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-03 13:35:07 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-03 13:35:09 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-03 13:35:09 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-03 13:35:11 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-03 13:35:12 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-03 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-03 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-03 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-03 18:11:00 script,info Please wait...!!!
+2026-09-03 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-09-03 18:11:06 fetch,info Upload to 192.168.52.97 FINISHED
+2026-09-03 18:11:07 script,info Finished Backup Script...!!!!
+2026-09-03 18:11:12 script,info Please wait...!!!
+2026-09-03 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+2026-09-03 18:11:17 fetch,info Upload to 192.168.52.97 FINISHED
+2026-09-03 18:11:19 script,info Finished RSC Script...!!!!
+2026-09-03 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-09-03 18:11:19 script,error,debug no such item (/file/remove; line 20)
+2026-09-04 08:39:25 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-04 08:39:25 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-04 08:39:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-04 08:39:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-04 10:58:41 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-04 10:58:46 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-04 13:27:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-04 13:27:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-04 13:27:44 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-04 13:27:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-04 13:27:46 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-04 13:27:47 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-04 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-04 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-04 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-05 08:37:38 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-05 08:37:40 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-05 08:37:44 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-05 08:37:47 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-05 10:59:22 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-05 10:59:27 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-05 12:42:40 interface,info ether12-prekrsajni-sud-subotica link down
+2026-09-05 12:42:44 interface,info ether12-prekrsajni-sud-subotica link up (speed 1G, full duplex)
+2026-09-05 12:43:08 interface,info ether12-prekrsajni-sud-subotica link down
+2026-09-05 12:43:15 interface,info ether12-prekrsajni-sud-subotica link up (speed 1G, full duplex)
+2026-09-05 13:31:39 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-05 13:31:39 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-05 13:31:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-05 13:31:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-05 13:31:43 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-05 13:31:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-05 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-05 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-05 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-06 08:36:11 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-06 08:36:14 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-06 08:36:17 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-06 08:36:20 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-06 10:57:01 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-06 10:57:06 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-06 13:35:44 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-06 13:35:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-06 13:35:46 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-06 13:35:47 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-06 13:35:49 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-06 13:35:49 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-06 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-06 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-06 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-07 06:11:44 interface,info ether34-RB 433AH link down
+2026-09-07 06:11:49 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:12:14 interface,info ether34-RB 433AH link down
+2026-09-07 06:12:25 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:12:47 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-07 06:17:45 interface,info ether34-RB 433AH link down
+2026-09-07 06:17:48 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:18:15 interface,info ether34-RB 433AH link down
+2026-09-07 06:18:26 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:18:47 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-07 06:23:45 interface,info ether34-RB 433AH link down
+2026-09-07 06:23:49 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:24:15 interface,info ether34-RB 433AH link down
+2026-09-07 06:24:24 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-07 06:24:47 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-07 08:36:33 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-07 08:36:35 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-07 08:36:39 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-07 08:36:42 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-07 10:57:40 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-07 10:57:45 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-07 13:37:01 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-07 13:37:02 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-07 13:37:03 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-07 13:37:04 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-07 13:37:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-07 13:37:07 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-07 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-07 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-07 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-08 08:39:43 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-08 08:39:44 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-08 08:39:45 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-08 08:39:46 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-08 10:57:24 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-08 10:57:29 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-08 13:28:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-08 13:28:07 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-08 13:28:09 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-08 13:28:10 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-08 13:28:11 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-08 13:28:12 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-08 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-08 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-08 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-09 08:37:55 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-09 08:37:55 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-09 08:37:57 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-09 08:37:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-09 10:57:11 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-09 10:57:19 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-09 13:24:21 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-09 13:24:22 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-09 13:24:23 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-09 13:24:24 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-09 13:24:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-09 13:24:26 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-09 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-09 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-09 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-10 08:37:21 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-10 08:37:21 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-10 08:37:23 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-10 08:37:24 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-10 10:55:53 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-10 10:55:59 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-10 13:31:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-10 13:31:26 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-10 13:31:28 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-10 13:31:29 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-10 13:31:30 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-10 13:31:31 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-10 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-10 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-10 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-10 18:11:00 script,info Please wait...!!!
+2026-09-10 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+2026-09-10 18:11:05 fetch,info Upload to 192.168.52.97 FINISHED
+2026-09-10 18:11:07 script,info Finished Backup Script...!!!!
+2026-09-10 18:11:12 script,info Please wait...!!!
+2026-09-10 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+2026-09-10 18:11:17 fetch,info Upload to 192.168.52.97 FINISHED
+2026-09-10 18:11:19 script,info Finished RSC Script...!!!!
+2026-09-10 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+2026-09-10 18:11:19 script,error,debug no such item (/file/remove; line 20)
+2026-09-11 08:40:06 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-11 08:40:08 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-11 08:40:12 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-11 08:40:15 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-11 11:00:03 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-11 11:00:09 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-11 13:29:12 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-11 13:29:12 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-11 13:29:14 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-11 13:29:15 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-11 13:29:17 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-11 13:29:17 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-11 16:22:47 interface,info ether9-UPS link down
+2026-09-11 16:22:49 interface,info ether9-UPS link up (speed 10M, half duplex)
+2026-09-11 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-11 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-11 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-12 08:38:42 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-12 08:38:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-12 08:38:45 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-12 08:38:48 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-12 08:38:52 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-12 11:00:09 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-12 11:00:14 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-12 13:34:45 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-12 13:34:46 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-12 13:34:48 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-12 13:34:49 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-12 13:34:51 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-12 13:34:51 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-12 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-12 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-12 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-13 08:38:11 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-13 08:38:13 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-13 08:38:17 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-13 08:38:20 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+2026-09-13 10:59:50 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-13 10:59:55 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-13 13:34:01 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-13 13:34:02 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-13 13:34:04 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-13 13:34:05 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-13 13:34:06 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-13 13:34:07 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-13 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+2026-09-13 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+2026-09-13 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+2026-09-14 06:51:38 interface,info ether2-S1 link down
+2026-09-14 06:51:39 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 06:51:45 interface,info ether2-S1 link down
+2026-09-14 06:51:46 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:09:13 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:09:13 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:09:21 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:10:07 interface,info ether2-S1 link down
+2026-09-14 07:10:08 system,info device changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface set ether2-S1 disabled=yes l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes combo-mode=auto disabled=yes fec-mode=off l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=auto-on poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off sfp-rate-select=low tx-flow-control=off)
+2026-09-14 07:10:09 system,info device changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes combo-mode=auto disabled=no fec-mode=off l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=auto-on poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off sfp-rate-select=low tx-flow-control=off)
+2026-09-14 07:10:11 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:13:45 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:13:45 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:13:55 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:14:01 system,info bridge port changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface bridge port set *1 auto-isolate=no bpdu-guard=no bridge=bridge1 broadcast-flood=yes disabled=yes edge=auto fast-leave=no frame-types=admit-all horizon=none hw=yes ingress-filtering=yes interface=ether2-S1 learn=auto multicast-router=temporary-query mvrp-applicant-state=normal-participant mvrp-registrar-state=normal point-to-point=auto priority=0x80 pvid=100 restricted-role=no restricted-tcn=no tag-stacking=no trusted=no trusted-ra=no unknown-multicast-flood=yes unknown-unicast-flood=yes)
+2026-09-14 07:15:17 bridge,info hardware offloading activated on bridge "bridge1" ports: ether2-S1
+2026-09-14 07:15:17 system,info bridge port changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface bridge port set *1 auto-isolate=no bpdu-guard=no bridge=bridge1 broadcast-flood=yes disabled=no edge=auto fast-leave=no frame-types=admit-all horizon=none hw=yes ingress-filtering=yes interface=ether2-S1 learn=auto multicast-router=temporary-query mvrp-applicant-state=normal-participant mvrp-registrar-state=normal point-to-point=auto priority=0x80 pvid=100 restricted-role=no restricted-tcn=no tag-stacking=no trusted=no trusted-ra=no unknown-multicast-flood=yes unknown-unicast-flood=yes)
+2026-09-14 07:15:29 interface,info ether2-S1 link down
+2026-09-14 07:15:29 system,info device changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes combo-mode=auto disabled=no fec-mode=off l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=off poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off sfp-rate-select=low tx-flow-control=off)
+2026-09-14 07:15:31 poe-out,info ether2-S1 detected poe-out status: disabled
+2026-09-14 07:15:33 system,info device changed by winbox-3.43/tcp-msg(winbox):predrag.stijovic@192.168.225.59 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes combo-mode=auto disabled=no fec-mode=off l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=auto-on poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off sfp-rate-select=low tx-flow-control=off)
+2026-09-14 07:15:35 poe-out,info ether2-S1 detected poe-out status: wait_for_load
+2026-09-14 07:15:36 poe-out,info ether2-S1 detected poe-out status: on
+2026-09-14 07:15:38 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:15:42 interface,info ether2-S1 link down
+2026-09-14 07:15:43 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:16:03 interface,info ether2-S1 link down
+2026-09-14 07:16:05 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:16:28 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:16:28 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:17:47 system,info,account user predrag.stijovic logged in from 192.168.225.59 via winbox
+2026-09-14 07:17:47 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:28:46 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:28:46 system,info,account user predrag.stijovic logged out from 192.168.225.59 via winbox
+2026-09-14 07:29:12 interface,info ether34-RB 433AH link down
+2026-09-14 07:29:15 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 07:29:18 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 07:29:41 interface,info ether34-RB 433AH link down
+2026-09-14 07:29:52 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 07:30:18 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 07:45:28 interface,info ether2-S1 link down
+2026-09-14 07:45:29 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 07:45:35 interface,info ether2-S1 link down
+2026-09-14 07:45:36 interface,info ether2-S1 link up (speed 100M, full duplex)
+2026-09-14 08:37:25 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-14 08:37:25 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-14 08:37:27 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+2026-09-14 08:37:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+2026-09-14 08:46:23 interface,info ether34-RB 433AH link down
+2026-09-14 08:46:27 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 08:46:49 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 08:46:52 interface,info ether34-RB 433AH link down
+2026-09-14 08:47:03 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 08:47:19 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 08:55:13 interface,info ether34-RB 433AH link down
+2026-09-14 08:55:17 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 08:55:19 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 08:55:42 interface,info ether34-RB 433AH link down
+2026-09-14 08:55:55 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+2026-09-14 08:56:19 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+2026-09-14 10:55:59 system,info,account user admin logged in from 192.168.52.235 via ssh
+2026-09-14 10:56:04 system,info,account user admin logged out from 192.168.52.235 via ssh
+2026-09-14 11:52:00 system,info,account user boza logged in from 192.168.225.43 via winbox
+2026-09-14 11:52:09 system,info device changed by tcp-msg(winbox):boza@192.168.225.43 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes disabled=no l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=off poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off tx-flow-control=off)
+2026-09-14 11:52:10 interface,info ether2-S1 link down
+2026-09-14 11:52:11 poe-out,info ether2-S1 detected poe-out status: disabled
+2026-09-14 11:52:13 system,info device changed by tcp-msg(winbox):boza@192.168.225.43 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes disabled=no l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=auto-on poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off tx-flow-control=off)
+2026-09-14 11:52:15 poe-out,info ether2-S1 detected poe-out status: wait_for_load
+2026-09-14 11:52:16 poe-out,info ether2-S1 detected poe-out status: on
+ 2026-09-14 11:52:17 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 11:52:22 interface,info ether2-S1 link down
+ 2026-09-14 11:52:23 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 11:52:43 interface,info ether2-S1 link down
+ 2026-09-14 11:52:44 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 11:54:30 system,info bridge port changed by tcp-msg(winbox):boza@192.168.225.43 (/interface bridge port set *1 disabled=yes)
+ 2026-09-14 11:56:09 system,info address added by tcp-msg(winbox):boza@192.168.225.43 (*2 = /ip address add address=192.168.1.1/29 disabled=no interface=ether2-S1 network=0.0.0.0)
+ 2026-09-14 11:56:50 system,info bridge port changed by tcp-msg(winbox):boza@192.168.225.43 (/interface bridge port set *1 disabled=no)
+ 2026-09-14 11:56:50 bridge,info hardware offloading activated on bridge "bridge1" ports: ether2-S1
+ 2026-09-14 12:00:27 system,info,account user boza logged out from 192.168.225.43 via winbox
+ 2026-09-14 12:00:28 interface,info ether2-S1 link down
+ 2026-09-14 12:00:30 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:00:43 interface,info ether2-S1 link down
+ 2026-09-14 12:00:44 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:39:35 interface,info ether2-S1 link down
+ 2026-09-14 12:39:36 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:39:42 interface,info ether2-S1 link down
+ 2026-09-14 12:39:43 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:41:39 system,info,account user boza logged in from 192.168.225.43 via winbox
+ 2026-09-14 12:41:43 system,info bridge port changed by tcp-msg(winbox):boza@192.168.225.43 (/interface bridge port set *1 disabled=yes)
+ 2026-09-14 12:42:36 system,info device changed by tcp-msg(winbox):boza@192.168.225.43 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes disabled=no l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=off poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off tx-flow-control=off)
+ 2026-09-14 12:42:37 interface,info ether2-S1 link down
+ 2026-09-14 12:42:38 poe-out,info ether2-S1 detected poe-out status: disabled
+ 2026-09-14 12:42:42 system,info device changed by tcp-msg(winbox):boza@192.168.225.43 (/interface set ether2-S1 disabled=no l2mtu=1584 mtu=1500 name=ether2-S1; /interface ethernet set [ find default-name=ether2 ] advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full arp=enabled arp-timeout=auto auto-negotiation=yes disabled=no l2mtu=1584 loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=CC:2D:E0:28:CD:BD mtu=1500 name=ether2-S1 poe-out=auto-on poe-priority=10 power-cycle-interval=none power-cycle-ping-enabled=no rx-flow-control=off tx-flow-control=off)
+ 2026-09-14 12:42:44 poe-out,info ether2-S1 detected poe-out status: wait_for_load
+ 2026-09-14 12:42:45 poe-out,info ether2-S1 detected poe-out status: on
+ 2026-09-14 12:42:47 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:42:47 system,info bridge port changed by tcp-msg(winbox):boza@192.168.225.43 (/interface bridge port set *1 disabled=no)
+ 2026-09-14 12:42:47 bridge,info hardware offloading activated on bridge "bridge1" ports: ether2-S1
+ 2026-09-14 12:42:51 interface,info ether2-S1 link down
+ 2026-09-14 12:42:52 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:43:12 interface,info ether2-S1 link down
+ 2026-09-14 12:43:13 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:46:20 interface,info ether2-S1 link down
+ 2026-09-14 12:46:21 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 12:46:23 system,info,account user boza logged out from 192.168.225.43 via winbox
+ 2026-09-14 12:46:34 interface,info ether2-S1 link down
+ 2026-09-14 12:46:36 interface,info ether2-S1 link up (speed 100M, full duplex)
+ 2026-09-14 13:39:44 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-14 13:39:45 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-14 13:39:46 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-14 13:39:47 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-14 13:39:49 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-14 13:39:49 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-14 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-14 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-14 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-15 08:37:40 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-15 08:37:43 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-15 08:37:46 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-15 08:37:50 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-15 10:56:52 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-15 10:56:57 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-15 13:37:24 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-15 13:37:25 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-15 13:37:27 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-15 13:37:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-15 13:37:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-15 13:37:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-15 18:00:01 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-15 18:00:01 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-15 18:00:01 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-16 07:38:55 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link down
+ 2026-09-16 07:38:57 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link up (speed 1G, full duplex)
+ 2026-09-16 07:40:07 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link down
+ 2026-09-16 07:40:10 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link up (speed 1G, full duplex)
+ 2026-09-16 07:40:41 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link down
+ 2026-09-16 07:40:42 interface,info ether16-UIKS_Park_Rajhla_ferenca_Primar link up (speed 1G, full duplex)
+ 2026-09-16 08:36:57 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-16 08:36:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-16 08:36:59 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-16 08:36:59 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-16 10:59:24 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-16 10:59:29 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-16 13:42:09 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-16 13:42:10 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-16 13:42:12 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-16 13:42:13 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-16 13:42:14 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-16 13:42:15 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-16 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-16 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-16 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-17 08:38:15 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-17 08:38:18 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-17 08:38:21 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-17 08:38:25 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-17 11:00:01 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-17 11:00:06 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-17 13:35:33 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-17 13:35:33 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-17 13:35:35 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-17 13:35:36 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-17 13:35:37 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-17 13:35:38 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-17 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-17 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-17 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-17 18:11:00 script,info Please wait...!!!
+ 2026-09-17 18:11:05 script,info Sending Backup Mikrotik to FTP Server.............
+ 2026-09-17 18:11:05 fetch,info Upload to 192.168.52.97 FINISHED
+ 2026-09-17 18:11:07 script,info Finished Backup Script...!!!!
+ 2026-09-17 18:11:12 script,info Please wait...!!!
+ 2026-09-17 18:11:17 script,info Sending RSC Mikrotik to FTP Server.............
+ 2026-09-17 18:11:17 fetch,info Upload to 192.168.52.97 FINISHED
+ 2026-09-17 18:11:19 script,info Finished RSC Script...!!!!
+ 2026-09-17 18:11:19 script,error executing script Ftp-Backup-Skripta from scheduler (schedule1) failed, please check it manually
+ 2026-09-17 18:11:19 script,error,debug no such item (/file/remove; line 20)
+ 2026-09-18 06:09:18 interface,info ether34-RB 433AH link down
+ 2026-09-18 06:09:22 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+ 2026-09-18 06:09:25 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+ 2026-09-18 06:09:49 interface,info ether34-RB 433AH link down
+ 2026-09-18 06:09:59 interface,info ether34-RB 433AH link up (speed 100M, full duplex)
+ 2026-09-18 06:10:25 interface,warning ether34-RB 433AH excessive broadcasts/multicasts, probably a loop
+ 2026-09-18 08:38:18 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-18 08:38:21 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-18 08:38:25 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-18 08:38:28 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-18 10:58:48 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-18 10:58:53 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-18 13:45:33 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-18 13:45:34 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-18 13:45:35 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-18 13:45:36 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-18 13:45:38 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-18 13:45:38 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-18 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-18 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-18 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-19 08:36:52 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-19 08:36:55 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-19 08:36:58 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-19 08:37:02 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-19 10:57:08 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-19 10:57:13 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-19 13:43:52 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-19 13:43:53 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-19 13:43:54 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-19 13:43:55 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-19 13:43:57 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-19 13:43:57 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-19 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-19 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-19 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-20 08:38:47 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-20 08:38:50 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-20 08:38:53 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-20 08:38:57 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-20 10:59:05 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-20 10:59:10 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-20 13:45:05 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-20 13:45:05 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-20 13:45:07 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-20 13:45:08 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-20 13:45:10 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-20 13:45:11 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-20 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-20 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-20 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-21 08:40:31 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 08:40:31 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 08:40:34 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-21 08:40:37 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-21 08:40:41 system,error,critical login failure for user vadim.volovik from 192.168.52.235 via ssh
+ 2026-09-21 10:59:27 system,info,account user admin logged in from 192.168.52.235 via ssh
+ 2026-09-21 10:59:33 system,info,account user admin logged out from 192.168.52.235 via ssh
+ 2026-09-21 13:43:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 13:43:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 13:43:34 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 13:43:35 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 13:43:36 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 13:43:37 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 18:00:00 system,info http proxy settings changed by scheduler:proxyoff/script:proxyoff (/ip proxy set enabled=no)
+ 2026-09-21 18:00:00 system,info bandwidth-server changed by scheduler:proxyoff/script:proxyoff (/tool bandwidth-server set authenticate=yes)
+ 2026-09-21 18:00:00 system,info dns changed by scheduler:proxyoff/script:proxyoff (/ip dns set allow-remote-requests=no)
+ 2026-09-21 23:59:18 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:19 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:22 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:22 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:24 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:25 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:26 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:27 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:29 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:30 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:32 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:32 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:34 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:35 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:37 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:37 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:39 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:40 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:41 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:42 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:53 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+ 2026-09-21 23:59:54 system,info,account user vadim.volovik logged out from 192.168.52.235 via ssh
+ 2026-09-21 23:59:56 system,info,account user vadim.volovik logged in from 192.168.52.235 via ssh
+
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

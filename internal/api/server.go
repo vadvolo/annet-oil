@@ -70,6 +70,7 @@ func (s *Server) Router() chi.Router {
 		r.Mount("/containers", handlers.NewContainersHandler(s.annetService))
 		r.Mount("/routing", handlers.NewRoutingHandler(s.router))
 		r.Mount("/execute", handlers.NewExecuteHandler(s.gnetcliClient))
+		r.Mount("/diag", handlers.NewDiagHandler(s.gnetcliClient, handlers.DiagConfig{}))
 		r.Mount("/inventory", handlers.NewInventoryHandler(s.config.Storage.InventoryFile))
 		r.Mount("/check", handlers.NewCheckHandler())
 		r.Mount("/featureset", handlers.NewFeatureSetHandler())

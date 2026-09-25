@@ -1,0 +1,4 @@
+### CMD: /system identity print
+  name: Access: SU_W002-SuboticaNovaOpstina SW
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

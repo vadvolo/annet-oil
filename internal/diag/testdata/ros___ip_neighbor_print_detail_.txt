@@ -1,0 +1,666 @@
+### CMD: /ip neighbor print detail
+ 0 interface=ether2-wifi mac-address=00:04:56:51:44:90 identity="zvezdan.vrb"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=24s
+   uptime=17w23h45m16s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 1 interface=ether2-wifi mac-address=00:04:56:51:5F:D8 identity="miki.milenk"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=15s
+   uptime=23h43m8s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 2 interface=ether2-wifi mac-address=00:04:56:51:6C:8F identity="samar.li.ot"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=26s
+   uptime=2d23h37m10s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 3 interface=ether2-wifi mac-address=00:04:56:51:72:C2 identity="jsoicel"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=40s
+   uptime=1w3d6h12s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 4 interface=ether2-wifi mac-address=00:04:56:51:7E:6B identity="nuredin.s"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=0s
+   uptime=2d23h29m8s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 5 interface=ether2-wifi mac-address=00:04:56:51:7E:98 identity="zvo.djor"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=24s
+   uptime=4w9h19m23s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 6 interface=ether2-wifi mac-address=00:04:56:51:80:ED identity="simeonovic.iz"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=23s
+   uptime=10w3d16h26m29s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 7 interface=ether2-wifi mac-address=00:04:56:52:B1:84 identity="minka.popo"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=21s
+   uptime=2d34m9s software-id="MAC-Telnet" board="mips" interface-name="ath0"
+   system-caps="" system-caps-enabled=""
+
+ 8 interface=ether2-wifi mac-address=00:04:56:53:13:EB identity="balanb"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=29s
+   uptime=8w3d22h49m6s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+ 9 interface=ether2-wifi mac-address=00:04:56:53:74:60 identity="denisali"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=59s
+   uptime=4w5d5h22m20s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+10 interface=ether2-wifi mac-address=00:04:56:53:75:23 identity="milos.stefff"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=42s
+   uptime=22h29m12s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+11 interface=ether2-wifi mac-address=00:04:56:53:93:FB identity="vano"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=58s
+   uptime=2d23h28m10s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+12 interface=ether2-wifi mac-address=00:04:56:53:AC:D3 identity="mi.fil"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=38s
+   uptime=22h22m9s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+13 interface=ether2-wifi mac-address=00:04:56:53:B1:32 identity="biljanasimic"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=9s
+   uptime=2w3d17h10m15s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+14 interface=ether2-wifi mac-address=00:04:56:53:B6:B1 identity="m.ljubis"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=25s
+   uptime=2w4d11h37m15s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+15 interface=ether2-wifi mac-address=00:04:56:53:D5:26 identity="ms.ruzicatasi"
+   platform="5 GHz Force 130 Radio" version="4.5.6" unpack=none age=44s
+   uptime=7w2d17h26m19s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+16 interface=ether2-wifi mac-address=00:04:56:65:C3:B9 identity="damir.rado"
+   platform="5 GHz Force 190 Radio (ROW/ETSI)" version="4.5.6" unpack=none
+   age=21s uptime=2w39m52s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+17 interface=ether2-wifi mac-address=00:04:56:C2:C0:E9 identity="josip.edvin"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=32s
+   uptime=7w1d2h30m18s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+18 interface=ether2-wifi mac-address=00:04:56:C3:B3:81 identity="samir.kalaba"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=18s
+   uptime=18m47s software-id="MAC-Telnet" board="mips" interface-name="ath0"
+   system-caps="" system-caps-enabled=""
+
+19 interface=ether2-wifi mac-address=00:04:56:C3:B8:06
+   identity="PTP_Cli: trgocentarsd" platform="5 GHz Integrated Radio"
+   version="4.5.6" unpack=none age=10s uptime=13w4h49m14s
+   software-id="MAC-Telnet" board="mips" interface-name="eth0" system-caps=""
+   system-caps-enabled=""
+
+20 interface=ether2-wifi mac-address=00:04:56:C3:CD:A6 identity="ramanim"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=25s
+   uptime=1w1d5h13m53s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+21 interface=ether2-wifi mac-address=00:04:56:C3:D3:D9 identity="darkovukovic"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=54s
+   uptime=2d4h32m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+22 interface=ether2-wifi mac-address=00:04:56:C3:DA:F3 identity="blag.gord"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=53s
+   uptime=2d22h26m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+23 interface=ether2-wifi mac-address=00:04:56:C3:DE:AD identity="miltraj.mt"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=19s
+   uptime=1d20h49m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+24 interface=ether2-wifi mac-address=00:04:56:C3:F6:DA identity="pall.mill"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=13s
+   uptime=19h9m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+25 interface=ether2-wifi mac-address=00:04:56:C3:F8:96 identity="jelana.savic"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=54s
+   uptime=22h28m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+26 interface=ether2-wifi mac-address=00:04:56:C3:F8:C9 identity="jasminkrueziu"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=22s
+   uptime=1w1d5h13m56s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+27 interface=ether2-wifi mac-address=00:04:56:C4:66:2B identity="nezir.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=31s
+   uptime=10w6d6h7m8s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+28 interface=ether2-wifi mac-address=00:04:56:C4:6C:25 identity="kurtesi.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=37s
+   uptime=2d4h30m49s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+29 interface=ether2-wifi mac-address=00:04:56:C4:6D:BD identity="marcelo.ot"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=44s
+   uptime=7w4d18h43m10s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+30 interface=ether2-wifi mac-address=00:04:56:C4:6D:C9 identity="salihi.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=18s
+   uptime=6d20h44m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+31 interface=ether2-wifi mac-address=00:04:56:C4:78:C7 identity="kurtesi.se"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=5s
+   uptime=3w4d22h49m52s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+32 interface=ether2-wifi mac-address=00:04:56:C4:7C:E1 identity="ermin.salija"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=51s
+   uptime=2d5h27m49s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+33 interface=ether2-wifi mac-address=00:04:56:C4:82:BD identity="milioner.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=51s
+   uptime=2d22h45m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+34 interface=ether2-wifi mac-address=00:04:56:C4:94:77 identity="jevtic.shop"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=16s
+   uptime=10w6d3h27m5s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+35 interface=ether2-wifi mac-address=00:04:56:C4:9F:24 identity="toni.lep"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=3s
+   uptime=3d13h24m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+36 interface=ether2-wifi mac-address=00:04:56:C4:A0:F2 identity="ibrahim.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=58s
+   uptime=1d18h16m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+37 interface=ether2-wifi mac-address=00:04:56:C7:39:98 identity="senid.ahmet"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=56s
+   uptime=4h22m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+38 interface=ether2-wifi mac-address=00:04:56:C7:43:D3 identity="mii.petar"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=37s
+   uptime=4w9h19m software-id="MAC-Telnet" board="mips" interface-name="ath0"
+   system-caps="" system-caps-enabled=""
+
+39 interface=ether2-wifi mac-address=00:04:56:C7:61:82 identity="metikos.dr"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=20s
+   uptime=2d22h30m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+40 interface=ether2-wifi mac-address=00:04:56:C7:62:66 identity="sd.darkop"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=28s
+   uptime=1w1d5h13m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+41 interface=ether2-wifi mac-address=00:04:56:C8:82:AD identity="v.vujasin"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=47s
+   uptime=22h28m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+42 interface=ether2-wifi mac-address=00:04:56:C8:86:79 identity="ta.pet"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=26s
+   uptime=1w1d5h13m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+43 interface=ether2-wifi mac-address=00:04:56:C8:87:B1 identity="kata.stfnvc"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=56s
+   uptime=17w23h44m35s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+44 interface=ether2-wifi mac-address=00:04:56:C8:88:26 identity="dehran.sabani"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=16s
+   uptime=1d20h4m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+45 interface=ether2-wifi mac-address=00:04:56:C8:88:9B identity="ms.camilaser"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=42s
+   uptime=10w6d6h6m57s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+46 interface=ether2-wifi mac-address=00:04:56:C8:8A:6F identity="zivorad.r"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=28s
+   uptime=2d22h49m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+47 interface=ether2-wifi mac-address=00:04:56:CD:35:6E identity="bkbilja"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=52s
+   uptime=22h21m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+48 interface=ether2-wifi mac-address=00:04:56:CD:3C:7C identity="omnia.ts"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=54s
+   uptime=9w4d16h29m3s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+49 interface=ether2-wifi mac-address=00:04:56:CD:B5:38 identity="emina.morina"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=5s
+   uptime=18h45m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+50 interface=ether2-wifi mac-address=00:04:56:CD:B9:94 identity="sulejmani.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=16s
+   uptime=23h20m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+51 interface=ether2-wifi mac-address=00:04:56:CD:B9:C1 identity="bbranko.mi"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=26s
+   uptime=3d1h11m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+52 interface=ether2-wifi mac-address=00:04:56:CD:BA:12 identity="ibra.erdogan"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=1m17s
+   uptime=6d14h16m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+53 interface=ether2-wifi mac-address=00:04:56:CD:BB:6E identity="serifovic.f"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=43s
+   uptime=5w3h58m58s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+54 interface=ether2-wifi mac-address=00:04:56:CD:BB:86 identity="tevdjan.d"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=36s
+   uptime=2d23h21m48s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+55 interface=ether2-wifi mac-address=00:04:56:CD:C6:A5 identity="alil.demi"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=0s
+   uptime=9w4d16h30m1s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+56 interface=ether2-wifi mac-address=00:04:56:CD:CC:4B identity="jomiloss"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=58s
+   uptime=22h28m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+57 interface=ether2-wifi mac-address=00:04:56:CD:D0:AA identity="deki.josi"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=54s
+   uptime=9w4d16h29m3s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+58 interface=ether2-wifi mac-address=00:04:56:E0:91:8D identity="drag.nova"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=41s
+   uptime=1w6d6h3m46s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+59 interface=ether2-wifi mac-address=00:04:56:E0:AB:2D identity="paki.sd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=11s
+   uptime=9w4d16h29m52s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+60 interface=ether2-wifi mac-address=00:04:56:E0:C6:2D identity="robert.racipi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=40s
+   uptime=2d21h24m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+61 interface=ether2-wifi mac-address=00:04:56:E0:CC:7F identity="boban.grujic"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=54s
+   uptime=4w9h18m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+62 interface=ether2-wifi mac-address=00:04:56:E2:B1:A3 identity="draga.sd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=1s
+   uptime=7w5d5h54m53s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+63 interface=ether2-wifi mac-address=00:04:56:E4:0C:11 identity="aleksamaric"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=23s
+   uptime=4w3d18h3m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+64 interface=ether2-wifi mac-address=00:04:56:E4:20:2D identity="ziivk.ale"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=6s
+   uptime=22h29m43s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+65 interface=ether2-wifi mac-address=00:04:56:E4:44:A7 identity="stojanka.ni"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=28s
+   uptime=1w1d5h13m54s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+66 interface=ether2-wifi mac-address=00:04:56:E4:45:AB identity="ms.sasapetrov"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=32s
+   uptime=1w1d5h13m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+67 interface=ether2-wifi mac-address=00:04:56:E6:34:4F identity="mih.dimitrije"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=53s
+   uptime=7w5d6h6m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+68 interface=ether2-wifi mac-address=00:04:56:E6:3A:41 identity="ms.hamdiamedo"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=7s
+   uptime=9w4d16h29m54s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+69 interface=ether2-wifi mac-address=00:04:56:E6:40:CD identity="ms.zeljkov"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=5s
+   uptime=22h29m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+70 interface=ether2-wifi mac-address=00:04:56:E6:50:C7 identity="bjedov.v"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=16s
+   uptime=15h44m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+71 interface=ether2-wifi mac-address=00:04:56:E7:40:63 identity="miro.dimitri"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=40s
+   uptime=2d22h35m43s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+72 interface=ether2-wifi mac-address=00:04:56:E7:62:4B identity="jmarticsd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=51s
+   uptime=4w4d3h57m54s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+73 interface=ether2-wifi mac-address=00:04:56:E9:36:B1 identity="elvis.nasufi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=29s
+   uptime=5d16h49m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+74 interface=ether2-wifi mac-address=00:04:56:E9:3A:E7 identity="robert.sim"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=25s
+   uptime=4w2d1h50m55s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+75 interface=ether2-wifi mac-address=00:04:56:E9:50:A7 identity="markivana"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=9s
+   uptime=2d21h4m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+76 interface=ether2-wifi mac-address=00:04:56:E9:51:07 identity="tajfur"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=1m53s
+   uptime=10w5d9h28m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+77 interface=ether2-wifi mac-address=00:04:56:E9:81:C3 identity="ms.jasminamla"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=59s
+   uptime=22h21m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+78 interface=ether2-wifi mac-address=00:04:56:E9:8D:3F identity="robertkrujezi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=34s
+   uptime=1w1d5h13m49s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+79 interface=ether2-wifi mac-address=00:04:56:E9:8E:7B identity="lji.stevano"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=30s
+   uptime=6w5d8h53m56s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+80 interface=ether2-wifi mac-address=00:04:56:E9:8E:7F identity="selmirkrujezi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=34s
+   uptime=2d22h52m47s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+81 interface=ether2-wifi mac-address=00:04:56:E9:90:69 identity="ivkovic.da"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=38s
+   uptime=1w1d5h13m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+82 interface=ether2-wifi mac-address=00:04:56:EA:52:AD identity="ja.ivica"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=54s
+   uptime=3d1h23m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+83 interface=ether2-wifi mac-address=00:04:56:EB:28:C5 identity="kostiic.miil"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=45s
+   uptime=10w3d16h26m1s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+84 interface=ether2-wifi mac-address=00:04:56:EE:FA:DB identity="simpros"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=8s
+   uptime=7w5d6h7m50s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+85 interface=ether2-wifi mac-address=00:04:56:EF:3D:45 identity="nedzat.duljaj"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=14s
+   uptime=3w3d18h41m49s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+86 interface=ether2-wifi mac-address=00:04:56:F0:52:C1 identity="zo.zi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=30s
+   uptime=6w8h40m software-id="MAC-Telnet" board="mips" interface-name="ath0"
+   system-caps="" system-caps-enabled=""
+
+87 interface=ether2-wifi mac-address=00:04:56:F0:87:45 identity="misic.m.a"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=9s
+   uptime=12h17m43s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+88 interface=ether2-wifi mac-address=00:04:56:F0:D2:D7 identity="ms.sunitasd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=45s
+   uptime=2d4h30m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+89 interface=ether2-wifi mac-address=00:04:56:F0:F8:EF identity="npekic"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=16s
+   uptime=2w1d22h5m51s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+90 interface=ether2-wifi mac-address=00:04:56:F3:E3:0D identity="pantic.r"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=41s
+   uptime=17w23h16m59s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+91 interface=ether2-wifi mac-address=00:04:56:F5:3E:35 identity="iv.laz"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=58s
+   uptime=9w4d16h29m1s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+92 interface=ether2-wifi mac-address=00:04:56:F7:78:99 identity="ms.radicavuji"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=14s
+   uptime=2d22h9m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+93 interface=ether2-wifi mac-address=00:04:56:F7:87:53 identity="kruezi.ih"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=28s
+   uptime=2d21h50m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+94 interface=ether2-wifi mac-address=00:04:56:F7:8D:1F identity="marsim"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=7s
+   uptime=2d6h14m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+95 interface=ether2-wifi mac-address=00:04:56:FB:EE:27 identity="eldin.drmaku"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=48s
+   uptime=1d5h8m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+96 interface=ether2-wifi mac-address=00:04:56:FB:FE:4D identity="morina.sd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=56s
+   uptime=9w4d16h29m6s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+97 interface=ether2-wifi mac-address=00:04:56:FB:FE:EF identity="samet.ramizi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=39s
+   uptime=2d7h1m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+98 interface=ether2-wifi mac-address=00:04:56:FB:FF:91 identity="morina.e"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=59s
+   uptime=1d19h57m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+99 interface=ether2-wifi mac-address=00:04:56:FE:29:2D identity="mikica.sd"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=13s
+   uptime=8w3d2h17m8s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+100 interface=ether2-wifi mac-address=00:04:56:FE:2F:0B identity="milica.kriezi"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=41s
+   uptime=3d44m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+101 interface=ether2-wifi mac-address=00:04:56:FE:51:9B identity="sabit.kriziv"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=59s
+   uptime=3d5h9m44s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+102 interface=ether2-wifi mac-address=00:04:56:FE:53:B9 identity="agusisever"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=37s
+   uptime=1w1d5h13m45s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+103 interface=ether2-wifi mac-address=00:04:56:FE:61:27 identity="mitroviclj"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=32s
+   uptime=8w2d6h6m3s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+104 interface=ether2-wifi mac-address=00:04:56:FF:36:89 identity="ms.ivicagogic"
+   platform="5G Force 200 (ROW)" version="4.5.6" unpack=none age=48s
+   uptime=4w9h18m53s software-id="MAC-Telnet" board="mips"
+   interface-name="ath0" system-caps="" system-caps-enabled=""
+
+105 interface=ether2-wifi address=10.144.41.5 address4=10.144.41.5
+   mac-address=08:55:31:92:A3:C8
+   identity="Access:SD_W013-SmederevoBrankaRadicevica" platform="MikroTik"
+   version="6.47.9 (long-term)" unpack=none age=41s uptime=31w6d22h22m29s
+   software-id="874Y-79JK" board="CCR1009-7G-1C-1S+" ipv6=no
+   interface-name="vlan101-sektori" system-caps="" system-caps-enabled=""
+
+106 interface=ether2-wifi address=10.144.41.11 address4=10.144.41.11
+   mac-address=58:C1:7A:47:53:E7 identity="RFZO Smederevo"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=39s
+   uptime=84w1d22h41m15s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+107 interface=ether2-wifi address=10.144.41.12 address4=10.144.41.12
+   mac-address=C4:AD:34:A0:D3:69 identity="Client: RFZO Smederevo"
+   platform="MikroTik" version="6.44.5 (long-term)" unpack=none age=16s
+   uptime=55w1d22h36m32s software-id="NXZ3-8JHQ" board="RB750r2" ipv6=no
+   interface-name="ether1-Uplink" system-caps="" system-caps-enabled=""
+
+108 interface=ether2-wifi address=10.144.41.66 address4=10.144.41.66
+   mac-address=00:04:56:C3:DC:13 identity="INTESA-SMEDEREVO"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=34s
+   uptime=2w5h35m47s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+109 interface=ether2-wifi address=10.144.41.67 address4=10.144.41.67
+   mac-address=E4:8D:8C:B0:5B:87
+   identity="Client: Intesa - Cviijiceva 3 - Smederevo" platform="MikroTik"
+   version="6.43.2 (stable)" unpack=none age=14s uptime=2w5h35m28s
+   software-id="A68Y-69QX" board="RB750r2" ipv6=no
+   interface-name="ether5-uplink" system-caps="" system-caps-enabled=""
+
+110 interface=ether2-wifi address=81.18.63.98 address4=81.18.63.98
+   mac-address=00:04:56:C3:C9:56 identity="mzriz.smed"
+   platform="5 GHz Integrated Radio" version="3.5.1" unpack=none age=53s
+   uptime=13w4d9h26m48s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+111 interface=ether2-wifi address=109.111.247.170 address4=109.111.247.170
+   mac-address=64:D1:54:62:2E:EE
+   identity="Client: Trans Cargo Logistic Smederevo" platform="MikroTik"
+   version="6.43.2 (stable)" unpack=none age=50s uptime=9w4d16h29m15s
+   software-id="X2TV-ZFFC" board="RB750r2" ipv6=no
+   interface-name="ether1-Uplink" system-caps="" system-caps-enabled=""
+
+112 interface=ether2-wifi address=172.28.29.34 address4=172.28.29.34
+   mac-address=00:04:56:F4:13:87 identity="Osnovno javno tuzilastvo"
+   platform="5 GHz Force 180 (ROW)" version="4.5.6" unpack=none age=25s
+   uptime=5w3d23h26m41s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+113 interface=ether2-wifi address=172.28.29.38 address4=172.28.29.38
+   mac-address=00:04:56:C3:DD:84 identity="Cargo trans"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=17s
+   uptime=9w4d16h28m50s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+114 interface=ether2-wifi address=172.28.29.42 address4=172.28.29.42
+   mac-address=00:04:56:D7:01:F6 identity="SD013-B1" platform="ePMP 2000"
+   version="4.5.6" unpack=none age=47s uptime=36w1d4h29m7s
+   software-id="MAC-Telnet" board="mips" interface-name="br-lan"
+   system-caps="" system-caps-enabled=""
+
+115 interface=ether2-wifi address=172.28.29.43 address4=172.28.29.43
+   mac-address=00:04:56:D8:C1:28 identity="SD013-C1" platform="ePMP 2000"
+   version="4.5.6" unpack=none age=53s uptime=5w2h39m19s
+   software-id="MAC-Telnet" board="mips" interface-name="br-lan"
+   system-caps="" system-caps-enabled=""
+
+116 interface=ether2-wifi address=172.28.30.114 address4=172.28.30.114
+   mac-address=00:04:56:D3:71:12 identity="SD013-A" platform="ePMP 2000"
+   version="4.5.6" unpack=none age=25s uptime=19w6d4h19m22s
+   software-id="MAC-Telnet" board="mips" interface-name="br-lan"
+   system-caps="" system-caps-enabled=""
+
+117 interface=ether2-wifi address=172.28.30.115 address4=172.28.30.115
+   mac-address=00:04:56:D3:70:CE identity="SD013-B" platform="ePMP 2000"
+   version="4.5.6" unpack=none age=22s uptime=8w4d1h35m47s
+   software-id="MAC-Telnet" board="mips" interface-name="br-lan"
+   system-caps="" system-caps-enabled=""
+
+118 interface=ether2-wifi address=172.28.30.116 address4=172.28.30.116
+   mac-address=00:04:56:CD:0D:A9 identity="SD013-C"
+   platform="5 GHz Connectorized Radio with Sync" version="4.5.6" unpack=none
+   age=25s uptime=10w5d5h24m3s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+119 interface=ether2-wifi address=172.28.30.117 address4=172.28.30.117
+   mac-address=00:04:56:CD:0B:E1 identity="SD013-D"
+   platform="5 GHz Connectorized Radio with Sync" version="4.5.6" unpack=none
+   age=10s uptime=62w1d6h57m47s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+120 interface=ether2-wifi address=172.28.30.118 address4=172.28.30.118
+   mac-address=00:04:56:D5:4C:0A identity="SD013-A1" platform="ePMP 2000"
+   version="4.5.6" unpack=none age=30s uptime=15w6d5h19m14s
+   software-id="MAC-Telnet" board="mips" interface-name="br-lan"
+   system-caps="" system-caps-enabled=""
+
+121 interface=ether2-wifi address=172.28.30.122 address4=172.28.30.122
+   mac-address=00:04:56:CD:BE:D3 identity="prek.sud.sd" platform=""
+   version="" unpack=none age=7s interface-name="eth0"
+   system-description="ePMP 5 GHz Integrated Radio, Version 4.5.6"
+   system-caps=bridge,wlan-ap,router,station-only
+   system-caps-enabled=bridge,wlan-ap
+
+122 interface=ether2-wifi address=172.28.30.122 address4=172.28.30.122
+   mac-address=00:04:56:CD:BE:D4 identity="prek.sud.sd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=4s
+   uptime=9w4d16h27m48s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+123 interface=ether2-wifi address=172.28.30.204 address4=172.28.30.204
+   mac-address=00:04:56:C3:B8:07 identity="PTP_Cli: trgocentarsd"
+   platform="5 GHz Integrated Radio" version="4.5.6" unpack=none age=10s
+   uptime=13w4h49m14s software-id="MAC-Telnet" board="mips"
+   interface-name="br-lan" system-caps="" system-caps-enabled=""
+
+124 interface=ether2-wifi address=192.168.1.5 address4=192.168.1.5
+   mac-address=08:55:31:5E:A1:DC
+   identity="Access:SD_W013-SmederevoBrankaRadicevica SW" platform="MikroTik"
+   version="6.47.8 (stable)" unpack=none age=41s uptime=21w4d19h23m22s
+   software-id="NYVW-CDLI" board="CRS326-24G-2S+" ipv6=no
+   interface-name="bridge1/ether8-Sektor D" system-caps=""
+   system-caps-enabled=""
+
+125 interface=ether2-wifi address=192.168.1.5 address4=192.168.1.5
+   mac-address=08:55:31:5E:A1:E3
+   identity="Access:SD_W013-SmederevoBrankaRadicevica SW" platform="MikroTik"
+   version="6.47.8 (stable)" unpack=none age=41s
+   interface-name="bridge1/ether8-Sektor D" system-caps=""
+   system-caps-enabled=""
+
+126 interface=ether5,most address=10.210.144.245 address4=10.210.144.245
+   mac-address=A4:00:4E:D4:75:D3 identity="SW-Smederevo-PK-1"
+   platform="Cisco C1300-24T-4X (PID:C1300-24T-4X)-VSD" version="4.1.0.72"
+   unpack=none age=25s interface-name="gi1/0/16" system-caps=bridge,router
+   system-caps-enabled=bridge,router 
+

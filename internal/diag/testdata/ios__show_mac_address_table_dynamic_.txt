@@ -1,0 +1,12 @@
+### CMD: show mac address-table dynamic
+### status: 0 errcode: None err: 
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    d4ca.6d42.9b41    DYNAMIC     Gi0/4
+ 366    8478.ac5f.96ca    DYNAMIC     Te0/1
+ 365    b869.f4be.25d4    DYNAMIC     Te0/2
+Total Mac Addresses for this criterion: 3
+

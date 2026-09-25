@@ -1,0 +1,41 @@
+### CMD: /interface bridge port print
+Flags: I - INACTIVE; H - HW-OFFLOAD
+Columns: INTERFACE, BRIDGE, HW, HORIZON
+ #    INTERFACE                                            BRIDGE   HW   HORI
+ 0  H ether1-uplink                                        bridge1  yes  none
+ 1  H ether2-S1                                            bridge1  yes  none
+ 2  H ether3-S3                                            bridge1  yes  none
+ 3  H ether6-PTP UG OIL PLAST                              bridge1  yes  none
+ 4  H ether7-ether5-PTP UIKS Ugarnica backup               bridge1  yes  none
+ 5  H ether8-PTP NLB BAnka                                 bridge1  yes  none
+ 6  H ether12-prekrsajni-sud-subotica                      bridge1  yes  none
+ 7 IH ether13-                                             bridge1  yes  none
+ 8  H ether14-ptp-aik subotica                             bridge1  yes  none
+ 9  H ether5-intesa                                        bridge1  yes  none
+10  H ether16-UIKS_Park_Rajhla_ferenca_Primar              bridge1  yes  none
+11  H ether17-UIKS-Park_Rajhla_ferenca_Backup              bridge1  yes  none
+12  H ether15-Milsped                                      bridge1  yes  none
+13  H ether19-PtP enp.ep.su                                bridge1  yes  none
+14  H ether20-PTP Trans Cargo Logistic  trans.su           bridge1  yes  none
+15  H ether24-CHINA RAILWAY INTERNATIONAL                  bridge1  yes  none
+16  H ether18-PtP AIK Nasa 17-Subotica                     bridge1  yes  none
+17  H ether23-PTP Rapidex Trade trade.su                   bridge1  yes  none
+18  H ether21-ptp za nis.342                               bridge1  yes  none
+19  H ether9-UPS                                           bridge1  yes  none
+20  H ether22-ptp Grip Sound Lab                           bridge1  yes  none
+21  H ether4-MOZZART PRESERNOVA 39 SUBOTICA mozzart.subpr  bridge1  yes  none
+22  H ether10-PtP NIS Kelebija                             bridge1  yes  none
+23  H ether11- OT.A1S.L2.CHEMOL.101                        bridge1  yes  none
+24 IH ether25                                              bridge1  yes  none
+25  H ether26-NLB komercijalna Subotica kombank.sub        bridge1  yes  none
+26  H ether27-PTP Kelebija                                 bridge1  yes  none
+27  H ether28-PTP NMW DOO BEOGRAD - nmw.sub                bridge1  yes  none
+28  H ether29-PtP Addiko Subotica                          bridge1  yes  none
+29  H ether31- ptp RFZO                                    bridge1  yes  none
+30  H ether32-PTP TOM TAILOR SEGEDINSKI PUT 88 tom.t.su    bridge1  yes  none
+31  H ether33-PTP NS Subotica                              bridge1  yes  none
+32  H ether34-RB 433AH                                     bridge1  yes  none
+33  H ether35-PTP Robna Kuca                               bridge1  yes  none
+34  H ether36-PTP Beltrog                                  bridge1  yes  none
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

@@ -1,0 +1,69 @@
+### CMD: show version
+### status: 0 errcode: None err: 
+Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 15.0(1)SE, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2011 by Cisco Systems, Inc.
+Compiled Wed 20-Jul-11 09:21 by prod_rel_team
+
+ROM: Bootstrap program is C3560E boot loader
+BOOTLDR: C3560E Boot Loader (C3560E-HBOOT-M) Version 12.2(44r)SE5, RELEASE SOFTWARE (fc3)
+
+Access:BG_W039-KaraburmaStudentskidomCisco uptime is 34 weeks, 3 days, 18 hours, 31 minutes
+System returned to ROM by bus error at PC 0x1EA723C, address 0x0
+System restarted at 20:00:40 UTC Mon Jan 26 2026
+System image file is "flash:/c3560e-universalk9-mz.150-1.SE.bin"
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+License Level: ipservices
+License Type: Permanent
+Next reload license Level: ipservices
+
+cisco WS-C3560E-24TD (PowerPC405) processor (revision F0) with 131072K bytes of memory.
+Processor board ID FDO1240R0WY
+Last reset from bus error
+7 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+2 Ten Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 00:23:5D:B2:1A:80
+Motherboard assembly number     : 73-10317-11
+Motherboard serial number       : FDO12400KJF
+Model revision number           : F0
+Motherboard revision number     : B0
+Model number                    : WS-C3560E-24TD-E
+Daughterboard assembly number   : 800-28590-01
+Daughterboard serial number     : FDO12391192
+System serial number            : FDO1240R0WY
+Top Assembly Part Number        : 800-27550-03
+Top Assembly Revision Number    : A0
+Version ID                      : V02
+CLEI Code Number                : COMSA00ARA
+Hardware Board Revision Number  : 0x01
+
+
+Switch Ports Model              SW Version            SW Image                
+------ ----- -----              ----------            ----------              
+*    1 30    WS-C3560E-24TD     15.0(1)SE             C3560E-UNIVERSALK9-M    
+
+
+Configuration register is 0xF
+
+

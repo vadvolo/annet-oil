@@ -1,0 +1,17 @@
+### CMD: show version
+### status: 0 errcode: None err: 
+System description      : FS Campus Switch (S5810-28FS) By FS.COM Inc
+System start time       : 2026-06-26 19:33:19
+System uptime           : 91:03:12:54
+System hardware version : 1.00
+System software version : S5810_FSOS 11.4(1)B74S8, Release(10200711)
+System patch number     : NA
+System serial number    : G1TH2HQ00104B
+System boot version     : 1.2.36
+Module information:
+  Slot 0 : S5810-28FS
+  Cpu 0:
+    Hardware version    : 1.00
+    Boot version        : 1.2
+    Software version    : S5810_FSOS 11.4(1)B74S8, Release(10200711)
+

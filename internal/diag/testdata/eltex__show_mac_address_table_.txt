@@ -1,0 +1,28 @@
+### CMD: show mac address-table
+### status: 0 errcode: None err: 
+
+    Vlan          Mac Address         Port       Type   
+------------ --------------------- ---------- ----------
+     1         e0:d9:e3:24:a0:00       0         self   
+     1         f0:7f:06:44:32:af    gi1/0/13   dynamic  
+    226        24:5e:be:4c:ac:45    te1/0/2    dynamic  
+    226        24:5e:be:4c:ac:4e    te1/0/1    dynamic  
+    254        00:09:0f:09:c8:1a    gi1/0/13   dynamic  
+    254        24:d7:9c:b8:06:70    gi1/0/13   dynamic  
+    254        64:12:25:ea:73:80    te1/0/4    dynamic  
+    300        64:12:25:ea:73:80    te1/0/4    dynamic  
+    301        64:12:25:ea:73:80    te1/0/4    dynamic  
+    302        64:12:25:ea:73:80    te1/0/4    dynamic  
+    302        f4:1e:57:12:bc:83    gi1/0/3    dynamic  
+    402        00:e0:ed:e2:5c:a6    gi1/0/2    dynamic  
+    402        64:12:25:ea:73:80    te1/0/4    dynamic  
+    403        00:13:c6:09:5f:ed    gi1/0/5    dynamic  
+    403        64:12:25:ea:73:80    te1/0/4    dynamic  
+    404        64:12:25:ea:73:80    te1/0/4    dynamic  
+    404        78:45:58:c8:49:36    gi1/0/6    dynamic  
+    501        64:12:25:ea:73:80    te1/0/4    dynamic  
+    501        78:9a:18:8b:4f:3f    gi1/0/20   dynamic  
+    502        64:12:25:ea:73:80    te1/0/4    dynamic  
+    502        dc:2c:6e:cf:72:48    gi1/0/8    dynamic  
+
+

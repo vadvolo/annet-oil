@@ -1,0 +1,32 @@
+### CMD: show interfaces status
+### status: 0 errcode: None err: 
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/1     NEISPRAVAN PORT!!! notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/2     RB_Struja_Karaburm connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/3                        notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/4     PTP-SCB            connected    1          a-full  a-100 10/100/1000BaseTX
+Gi0/5                        notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/6                        notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/7     GRADSKA UPRAVA - I connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/8     RTS ABARDAREVA BAC connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/9     GLOBAL MARKETING S notconnect   routed       auto   auto 10/100/1000BaseTX
+Gi0/10                       notconnect   routed       auto   auto 10/100/1000BaseTX
+Gi0/11    PROMONT            connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/12    BEOGRADVODE        connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/13    Osnovna skola Ivan connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/14                       disabled     routed       auto   auto 10/100/1000BaseTX
+Gi0/15    ESENSA - BACKUP_WI connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/16    Hotel Garni-karabu connected    routed     a-full  a-100 10/100/1000BaseTX
+Gi0/17                       notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/18                       notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/19    PTP BG_W003-OvcaPu notconnect   routed       auto   auto 10/100/1000BaseTX
+Gi0/20                       notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/21                       notconnect   routed       auto   auto 10/100/1000BaseTX
+Gi0/22                       notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/23                       notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/24                       notconnect   1            auto   auto 10/100/1000BaseTX
+Te0/1     UPLINK_Nexus_Eth1/ connected    trunk        full    10G 10GBase-LR
+Te0/2     BG_W039-KaraburmaS connected    trunk        full    10G 10GBase-SR
+Fa0                          notconnect   routed       auto   auto 10/100BaseTX
+

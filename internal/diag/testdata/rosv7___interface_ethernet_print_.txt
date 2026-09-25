@@ -1,0 +1,67 @@
+### CMD: /interface ethernet print
+Flags: R - RUNNING; S - SLAVE
+Columns: NAME, MTU
+ #    NAME                                                  MTU
+ 0 RS ether1-uplink                                        1500
+ 1 RS ether2-S1                                            1500
+ 2 RS ether3-S3                                            1500
+ 3 RS ether4-MOZZART PRESERNOVA 39 SUBOTICA mozzart.subpr  1500
+ 4 RS ether5-intesa                                        1500
+ 5 RS ether6-PTP UG OIL PLAST                              1500
+ 6 RS ether7-ether5-PTP UIKS Ugarnica backup               1500
+ 7 RS ether8-PTP NLB BAnka                                 1500
+ 8 RS ether9-UPS                                           1500
+ 9 RS ether10-PtP NIS Kelebija                             1500
+10 RS ether11- OT.A1S.L2.CHEMOL.101                        1500
+11 RS ether12-prekrsajni-sud-subotica                      1500
+12  S ether13-                                             1500
+13 RS ether14-ptp-aik subotica                             1500
+14 RS ether15-Milsped                                      1500
+15 RS ether16-UIKS_Park_Rajhla_ferenca_Primar              1500
+16 RS ether17-UIKS-Park_Rajhla_ferenca_Backup              1500
+17 RS ether18-PtP AIK Nasa 17-Subotica                     1500
+18 RS ether19-PtP enp.ep.su                                1500
+19 RS ether20-PTP Trans Cargo Logistic  trans.su           1500
+20 RS ether21-ptp za nis.342                               1500
+21 RS ether22-ptp Grip Sound Lab                           1500
+22 RS ether23-PTP Rapidex Trade trade.su                   1500
+23 RS ether24-CHINA RAILWAY INTERNATIONAL                  1500
+24  S ether25                                              1500
+25 RS ether26-NLB komercijalna Subotica kombank.sub        1500
+26 RS ether27-PTP Kelebija                                 1500
+27 RS ether28-PTP NMW DOO BEOGRAD - nmw.sub                1500
+28 RS ether29-PtP Addiko Subotica                          1500
+29    ether30                                              1500
+30 RS ether31- ptp RFZO                                    1500
+31 RS ether32-PTP TOM TAILOR SEGEDINSKI PUT 88 tom.t.su    1500
+32 RS ether33-PTP NS Subotica                              1500
+33 RS ether34-RB 433AH                                     1500
+34 RS ether35-PTP Robna Kuca                               1500
+35 RS ether36-PTP Beltrog                                  1500
+36 R  ether37-NETMETAL-Napajanje                           1500
+37    ether38                                              1500
+38    ether39                                              1500
+39    ether40                                              1500
+40    ether41                                              1500
+41    ether42                                              1500
+42    ether43                                              1500
+43    ether44                                              1500
+44    ether45                                              1500
+45    ether46                                              1500
+46    ether47                                              1500
+47    ether48                                              1500
+48    ether49                                              1500
+49    qsfpplus1-1                                          1500
+50    qsfpplus1-2                                          1500
+51    qsfpplus1-3                                          1500
+52    qsfpplus1-4                                          1500
+53    qsfpplus2-1                                          1500
+54    qsfpplus2-2                                          1500
+55    qsfpplus2-3                                          1500
+56    qsfpplus2-4                                          1500
+57    sfp-sfpplus1                                         1500
+58    sfp-sfpplus2                                         1500
+59    sfp-sfpplus3                                         1500
+60    sfp-sfpplus4                                         1500
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

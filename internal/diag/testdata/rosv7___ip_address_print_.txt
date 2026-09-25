@@ -1,0 +1,8 @@
+### CMD: /ip address print
+Flags: S - SLAVE
+Columns: ADDRESS, NETWORK, INTERFACE, VRF
+#   ADDRESS           NETWORK        INTERFACE     VRF
+0   172.21.12.242/30  172.21.12.240  vlan10-mngmt  main
+1 S 192.168.1.1/29    192.168.1.0    ether2-S1     main
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

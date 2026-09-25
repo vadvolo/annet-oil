@@ -1,0 +1,17 @@
+### CMD: show version
+### status: 0 errcode: None err: 
+Active-image: flash://system/images/rs
+  Version: 4.0.24.5
+  Commit: 7dffeace
+  Build: 1 (master)
+  MD5 Digest: 281ee7b6716d8d6bfeabe96ae1981148
+  Date: 21-Apr-2025
+  Time: 17:25:17
+Inactive-image: flash://system/images/mes3300-4019-R3.ros
+  Version: 4.0.19
+  Commit: 0f420ea2
+  Build: 3 (master)
+  MD5 Digest: 5497d11dbc1e5f25b42d5eb48dd66489
+  Date: 29-Dec-2022
+  Time: 12:21:24
+

@@ -1,0 +1,4 @@
+### CMD: show lldp neighbors detail
+### status: 0 errcode: None err: 
+% LLDP is not enabled
+

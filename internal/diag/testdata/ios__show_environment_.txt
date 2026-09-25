@@ -1,0 +1,7 @@
+### CMD: show environment
+### status: 1 errcode: None err: show environment
+        ^
+% Invalid input detected at '^' marker.
+
+
+

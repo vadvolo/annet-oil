@@ -1,0 +1,27 @@
+### CMD: show bgp summary
+### status: 0 errcode: None err: 
+BGP router identifier 178.253.194.255, local AS number 9125
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000000   RD version: 1494718824
+BGP main routing table version 1494718824
+BGP NSR Initial initsync version 207330 (Reached)
+BGP NSR/ISSU Sync-Group versions 1494718824/0
+BGP scan interval 60 secs
+
+BGP is operating in STANDALONE mode.
+
+
+Process       RcvTblVer   bRIB/RIB   LabelVer  ImportVer  SendTblVer  StandbyVer
+Speaker       1494718824  1494718824  1494718824  1494718824  1494718824  1494718824
+
+Neighbor        Spk    AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down  St/PfxRcd
+10.100.200.2      0 64512  409971  526388        0    0    0    41w4d Idle (Admin)
+10.132.128.122    0 65055  818998 1100972 1494718824    0    0     9w2d          5
+10.132.128.123    0 65055  345555  345285 1494718824    0    0     9w2d          5
+10.254.255.252    0  9125 241459304 1657172 1494718824    0    0    33w1d     140698
+10.254.255.253    0  9125 240548394 1657380 1494718824    0    0    31w0d     140698
+178.254.149.6     0 31161 1669628 1517039 1494718824    0    0     1w0d          2
+
+

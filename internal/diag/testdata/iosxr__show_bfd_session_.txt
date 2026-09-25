@@ -1,0 +1,12 @@
+### CMD: show bfd session
+### status: 0 errcode: None err: 
+Interface           Dest Addr           Local det time(int*mult)      State    
+                                    Echo             Async   H/W   NPU    
+------------------- --------------- ---------------- ---------------- ----------
+BE60.135            10.132.128.122  0s               2250ms           DOWN     
+                                                             No    n/a           
+BE60.135            10.132.128.123  0s               2250ms           DOWN     
+                                                             No    n/a           
+
+
+

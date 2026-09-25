@@ -1,0 +1,5 @@
+### CMD: show memory
+### status: 1 errcode: None err:                                 ^
+% Invalid input detected at '^' marker.
+
+

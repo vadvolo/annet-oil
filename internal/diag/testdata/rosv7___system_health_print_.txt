@@ -1,0 +1,18 @@
+### CMD: /system health print
+Columns: NAME, VALUE, TYPE
+ #  NAME                 VALUE  TYPE
+ 0  poe-out-consumption  96.2   W  
+ 1  switch-temperature   56     C  
+ 2  fan-state            ok        
+ 3  fan1-speed           3270   RPM
+ 4  fan2-speed           3285   RPM
+ 5  fan3-speed           3375   RPM
+ 6  fan4-speed           3255   RPM
+ 7  board-temperature1   46     C  
+ 8  psu1-voltage         27.1   V  
+ 9  psu2-voltage         54     V  
+10  psu1-current         3.2    A  
+11  psu2-current         0.1    A  
+12  psu1-state           ok         
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

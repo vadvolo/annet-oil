@@ -1,0 +1,197 @@
+### CMD: show cdp neighbors detail
+### status: 0 errcode: None err: 
+-------------------------
+Device ID: Client: Javno vodoprivredno preduzece BEOGRADVODE
+Entry address(es):
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/12,  Port ID (outgoing port): ether1-Uplink Wifi
+Holdtime : 88 sec
+
+Version :
+6.42.5 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: PTP RTS - Abardareva BACKUP WIFI
+Entry address(es):
+  IP address: 178.253.241.210
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/8,  Port ID (outgoing port): bridge1/ether1
+Holdtime : 81 sec
+
+Version :
+6.45.8 (long-term)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Access: BG_W039-KaraburmaStudentskidom
+Entry address(es):
+  IP address: 10.128.32.6
+Platform: MikroTik,  Capabilities: Router
+Interface: TenGigabitEthernet0/2,  Port ID (outgoing port): Uplink
+Holdtime : 85 sec
+
+Version :
+6.47.7 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Ptp-Promont
+Entry address(es):
+  IP address: 178.254.137.234
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/11,  Port ID (outgoing port): bridge1
+Holdtime : 74 sec
+
+Version :
+6.39.2 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: P2P-Karaburma-SCB
+Entry address(es):
+  IP address: 217.169.208.134
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/4,  Port ID (outgoing port): ether2
+Holdtime : 73 sec
+
+Version :
+5.20
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: PTP Beogradvode
+Entry address(es):
+  IP address: 77.105.34.226
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/12,  Port ID (outgoing port): bridge1
+Holdtime : 88 sec
+
+Version :
+6.41.3 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Client: Esensa_L1 i L4
+Entry address(es):
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/15,  Port ID (outgoing port): ether4-Bckup wifi
+Holdtime : 70 sec
+
+Version :
+6.43.2 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Client: BeogradVode
+Entry address(es):
+  IP address: 77.105.34.227
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/12,  Port ID (outgoing port): bridge1
+Holdtime : 62 sec
+
+Version :
+6.43.2 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: PTP-Esensa-Backup
+Entry address(es):
+  IP address: 93.186.66.210
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/15,  Port ID (outgoing port): most
+Holdtime : 84 sec
+
+Version :
+6.43.2 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Karaburma Struja
+Entry address(es):
+  IP address: 10.129.18.250
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/2,  Port ID (outgoing port): ether1
+Holdtime : 88 sec
+
+Version :
+5.21
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Client: Esensa d.o.o Viline Vode bb
+Entry address(es):
+  IP address: 93.186.66.211
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/15,  Port ID (outgoing port): most
+Holdtime : 76 sec
+
+Version :
+6.43.2 (stable)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Client: RTS - Abardareva BACKUP WIFI
+Entry address(es):
+  IP address: 178.253.241.211
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/8,  Port ID (outgoing port): bridge1/wlan1
+Holdtime : 73 sec
+
+Version :
+6.45.8 (long-term)
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: Gradska Uprava grada beograda ptp
+Entry address(es):
+  IP address: 178.253.196.154
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/7,  Port ID (outgoing port): bridge1
+Holdtime : 75 sec
+
+Version :
+6.30.2
+
+advertisement version: 1
+Management address(es):
+
+-------------------------
+Device ID: PTP-OS-IvanGoranKovacic
+Entry address(es):
+  IP address: 178.253.206.222
+Platform: MikroTik,  Capabilities: Router
+Interface: GigabitEthernet0/13,  Port ID (outgoing port): ether1
+Holdtime : 78 sec
+
+Version :
+5.15
+
+advertisement version: 1
+Management address(es):
+
+

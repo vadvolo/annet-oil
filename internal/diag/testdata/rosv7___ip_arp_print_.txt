@@ -1,0 +1,7 @@
+### CMD: /ip arp print
+Flags: D - DYNAMIC; C - COMPLETE
+Columns: ADDRESS, MAC-ADDRESS, INTERFACE, VRF, STATUS
+#    ADDRESS        MAC-ADDRESS        INTERFACE     VRF   STATUS  
+0 DC 172.21.12.241  B8:69:F4:10:D9:49  vlan10-mngmt  main  reachable
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

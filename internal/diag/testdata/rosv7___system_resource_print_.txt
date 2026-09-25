@@ -1,0 +1,20 @@
+### CMD: /system resource print
+                   uptime: 26w1d7h14m10s     
+                  version: 7.22.1 (stable)   
+               build-time: 2026-03-23 14:35:15
+         factory-software: 6.48.2            
+              free-memory: 21.0MiB           
+             total-memory: 64.0MiB           
+                      cpu: MIPS 24Kc V7.4    
+                cpu-count: 1                 
+            cpu-frequency: 650MHz            
+                 cpu-load: 18%               
+           free-hdd-space: 4136.0KiB         
+          total-hdd-space: 16.0MiB           
+  write-sect-since-reboot: 23713             
+         write-sect-total: 3424486           
+        architecture-name: mipsbe            
+               board-name: CRS354-48P-4S+2Q+ 
+                 platform: MikroTik           
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

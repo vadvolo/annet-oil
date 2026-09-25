@@ -1,0 +1,339 @@
+### CMD: /interface print detail
+Flags: D - DYNAMIC; X - DISABLED; I - INACTIVE, R - RUNNING; S - SLAVE;
+P - PASSTHROUGH
+ 0   RS  name="ether1-uplink" default-name="ether1" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:BC
+         last-link-down-time=2026-03-22 19:50:58
+         last-link-up-time=2026-03-22 19:51:04 link-downs=5
+
+ 1   RS  name="ether2-S1" default-name="ether2" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:BD
+         last-link-down-time=2026-09-14 12:46:34
+         last-link-up-time=2026-09-14 12:46:36 link-downs=22
+
+ 2   RS  name="ether3-S3" default-name="ether3" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:BE
+         last-link-down-time=2026-05-08 15:56:08
+         last-link-up-time=2026-05-08 15:56:09 link-downs=14
+
+ 3   RS  name="ether4-MOZZART PRESERNOVA 39 SUBOTICA mozzart.subpr"
+         default-name="ether4" type="ether" mtu=1500 actual-mtu=1500
+         l2mtu=1584 max-l2mtu=10218 vrf=main mac-address=CC:2D:E0:28:CD:BF
+         last-link-down-time=2026-03-22 18:40:26
+         last-link-up-time=2026-03-22 18:40:36 link-downs=3
+
+ 4   RS  name="ether5-intesa" default-name="ether5" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C0
+         last-link-down-time=2026-03-22 17:01:22
+         last-link-up-time=2026-03-22 17:01:33 link-downs=1
+
+ 5   RS  name="ether6-PTP UG OIL PLAST" default-name="ether6" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C1
+         last-link-down-time=2026-03-22 17:10:19
+         last-link-up-time=2026-03-22 17:10:28 link-downs=3
+
+ 6   RS  name="ether7-ether5-PTP UIKS Ugarnica backup" default-name="ether7"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:C2
+         last-link-down-time=2026-05-03 14:22:35
+         last-link-up-time=2026-05-03 14:22:37 link-downs=7
+
+ 7   RS  name="ether8-PTP NLB BAnka" default-name="ether8" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C3
+         last-link-down-time=2026-06-19 00:29:01
+         last-link-up-time=2026-06-19 00:29:02 link-downs=6
+
+ 8   RS  name="ether9-UPS" default-name="ether9" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C4
+         last-link-down-time=2026-09-11 16:22:47
+         last-link-up-time=2026-09-11 16:22:49 link-downs=1
+
+ 9   RS  name="ether10-PtP NIS Kelebija" default-name="ether10" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:6C
+         last-link-down-time=2026-03-22 19:45:59
+         last-link-up-time=2026-03-22 19:46:04 link-downs=5
+
+10   RS  name="ether11- OT.A1S.L2.CHEMOL.101" default-name="ether11"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=DC:2C:6E:09:76:6D
+         last-link-down-time=2026-05-08 07:52:26
+         last-link-up-time=2026-05-08 07:52:40 link-downs=32
+
+11   RS  name="ether12-prekrsajni-sud-subotica" default-name="ether12"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:C7
+         last-link-down-time=2026-09-05 12:43:08
+         last-link-up-time=2026-09-05 12:43:15 link-downs=20
+
+12    S  name="ether13-" default-name="ether13" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C8
+         last-link-down-time=2026-03-22 18:44:54
+         last-link-up-time=2026-03-22 18:12:01 link-downs=6
+
+13   RS  name="ether14-ptp-aik subotica" default-name="ether14" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:C9
+         last-link-down-time=2026-03-22 18:08:59
+         last-link-up-time=2026-03-22 18:09:06 link-downs=3
+
+14   RS  name="ether15-Milsped" default-name="ether15" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:CA
+         last-link-down-time=2026-03-22 17:13:34
+         last-link-up-time=2026-03-22 17:13:44 link-downs=1
+
+15   RS  name="ether16-UIKS_Park_Rajhla_ferenca_Primar" default-name="ether16"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:CB
+         last-link-down-time=2026-09-16 07:40:41
+         last-link-up-time=2026-09-16 07:40:42 link-downs=8
+
+16   RS  name="ether17-UIKS-Park_Rajhla_ferenca_Backup" default-name="ether17"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:CC
+         last-link-down-time=2026-03-22 17:19:14
+         last-link-up-time=2026-03-22 17:19:16 link-downs=3
+
+17   RS  name="ether18-PtP AIK Nasa 17-Subotica" default-name="ether18"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:CD
+         last-link-down-time=2026-08-30 21:15:50
+         last-link-up-time=2026-08-30 21:16:24 link-downs=3
+
+18   RS  name="ether19-PtP enp.ep.su" default-name="ether19" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:CE
+         last-link-down-time=2026-03-22 17:18:33
+         last-link-up-time=2026-03-22 17:18:34 link-downs=2
+
+19   RS  name="ether20-PTP Trans Cargo Logistic  trans.su"
+         default-name="ether20" type="ether" mtu=1500 actual-mtu=1500
+         l2mtu=1584 max-l2mtu=10218 vrf=main mac-address=CC:2D:E0:28:CD:CF
+         last-link-down-time=2026-06-21 16:47:45
+         last-link-up-time=2026-06-21 16:47:46 link-downs=68
+
+20   RS  name="ether21-ptp za nis.342" default-name="ether21" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:D0
+         last-link-down-time=2026-03-22 17:20:36
+         last-link-up-time=2026-03-22 17:20:47 link-downs=1
+
+21   RS  name="ether22-ptp Grip Sound Lab " default-name="ether22" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:D1
+         last-link-down-time=2026-03-22 17:21:35
+         last-link-up-time=2026-03-22 17:21:40 link-downs=1
+
+22   RS  name="ether23-PTP Rapidex Trade trade.su" default-name="ether23"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:D2
+         last-link-down-time=2026-03-22 17:23:19
+         last-link-up-time=2026-03-22 17:23:29 link-downs=1
+
+23   RS  name="ether24-CHINA RAILWAY INTERNATIONAL" default-name="ether24"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=CC:2D:E0:28:CD:D3
+         last-link-down-time=2026-05-07 21:27:13
+         last-link-up-time=2026-05-07 21:27:27 link-downs=13
+
+24    S  name="ether25" default-name="ether25" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:7B
+         last-link-down-time=2026-03-22 18:20:33
+         last-link-up-time=2026-03-22 18:20:30 link-downs=4
+
+25   RS  name="ether26-NLB komercijalna Subotica kombank.sub"
+         default-name="ether26" type="ether" mtu=1500 actual-mtu=1500
+         l2mtu=1584 max-l2mtu=10218 vrf=main mac-address=DC:2C:6E:09:76:7C
+         last-link-down-time=2026-03-22 17:25:30
+         last-link-up-time=2026-03-22 17:25:35 link-downs=1
+
+26   RS  name="ether27-PTP Kelebija" default-name="ether27" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:7D
+         last-link-down-time=2026-03-22 17:26:46
+         last-link-up-time=2026-03-22 17:26:48 link-downs=1
+
+27   RS  name="ether28-PTP NMW DOO BEOGRAD - nmw.sub" default-name="ether28"
+         type="ether" mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218
+         vrf=main mac-address=DC:2C:6E:09:76:7E
+         last-link-down-time=2026-03-22 17:28:02
+         last-link-up-time=2026-03-22 17:28:11 link-downs=1
+
+28   RS  name="ether29-PtP Addiko Subotica" default-name="ether29" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:7F
+         last-link-down-time=2026-05-30 17:10:34
+         last-link-up-time=2026-05-30 17:10:42 link-downs=3
+
+29       name="ether30" default-name="ether30" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:80
+         last-link-down-time=2026-05-17 14:39:10
+         last-link-up-time=2026-03-22 17:32:04 link-downs=2
+
+30   RS  name="ether31- ptp RFZO" default-name="ether31" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:81
+         last-link-down-time=2026-03-22 17:34:07
+         last-link-up-time=2026-03-22 17:34:08 link-downs=2
+
+31   RS  name="ether32-PTP TOM TAILOR SEGEDINSKI PUT 88 tom.t.su"
+         default-name="ether32" type="ether" mtu=1500 actual-mtu=1500
+         l2mtu=1584 max-l2mtu=10218 vrf=main mac-address=DC:2C:6E:09:76:82
+         last-link-down-time=2026-03-22 17:35:29
+         last-link-up-time=2026-03-22 17:35:39 link-downs=1
+
+32   RS  name="ether33-PTP NS Subotica" default-name="ether33" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:83
+         last-link-down-time=2026-03-22 17:37:15
+         last-link-up-time=2026-03-22 17:37:19 link-downs=1
+
+33   RS  name="ether34-RB 433AH" default-name="ether34" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:84
+         last-link-down-time=2026-09-18 06:09:49
+         last-link-up-time=2026-09-18 06:09:59 link-downs=56
+
+34   RS  name="ether35-PTP Robna Kuca" default-name="ether35" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:85
+         last-link-down-time=2026-03-22 18:44:17
+         last-link-up-time=2026-03-22 18:44:26 link-downs=1
+
+35   RS  name="ether36-PTP Beltrog" default-name="ether36" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:86
+         last-link-down-time=2026-03-22 18:42:32
+         last-link-up-time=2026-03-22 18:42:40 link-downs=1
+
+36   R   name="ether37-NETMETAL-Napajanje" default-name="ether37" type="ether"
+         mtu=1500 actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:87
+         last-link-down-time=2026-03-22 18:21:03
+         last-link-up-time=2026-03-22 18:21:12 link-downs=1
+
+37       name="ether38" default-name="ether38" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:88 link-downs=0
+
+38       name="ether39" default-name="ether39" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:89 link-downs=0
+
+39       name="ether40" default-name="ether40" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8A link-downs=0
+
+40       name="ether41" default-name="ether41" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8B link-downs=0
+
+41       name="ether42" default-name="ether42" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8C link-downs=0
+
+42       name="ether43" default-name="ether43" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8D
+         last-link-down-time=2026-03-22 18:14:24
+         last-link-up-time=2026-03-22 18:14:04 link-downs=1
+
+43       name="ether44" default-name="ether44" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8E link-downs=0
+
+44       name="ether45" default-name="ether45" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:8F link-downs=0
+
+45       name="ether46" default-name="ether46" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:90 link-downs=0
+
+46       name="ether47" default-name="ether47" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:91
+         last-link-down-time=2026-03-22 18:39:37
+         last-link-up-time=2026-03-22 18:24:50 link-downs=2
+
+47       name="ether48" default-name="ether48" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:92 link-downs=0
+
+48       name="ether49" default-name="ether49" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1598 max-l2mtu=2028 vrf=main
+         mac-address=DC:2C:6E:09:76:93 link-downs=0
+
+49       name="qsfpplus1-1" default-name="qsfpplus1-1" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:57 link-downs=0
+
+50       name="qsfpplus1-2" default-name="qsfpplus1-2" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:58 link-downs=0
+
+51       name="qsfpplus1-3" default-name="qsfpplus1-3" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:59 link-downs=0
+
+52       name="qsfpplus1-4" default-name="qsfpplus1-4" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:5A link-downs=0
+
+53       name="qsfpplus2-1" default-name="qsfpplus2-1" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:5B link-downs=0
+
+54       name="qsfpplus2-2" default-name="qsfpplus2-2" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:5C link-downs=0
+
+55       name="qsfpplus2-3" default-name="qsfpplus2-3" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:5D link-downs=0
+
+56       name="qsfpplus2-4" default-name="qsfpplus2-4" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:5E link-downs=0
+
+57       name="sfp-sfpplus1" default-name="sfp-sfpplus1" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:D4 link-downs=0
+
+58       name="sfp-sfpplus2" default-name="sfp-sfpplus2" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=CC:2D:E0:28:CD:D5 link-downs=0
+
+59       name="sfp-sfpplus3" default-name="sfp-sfpplus3" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:61 link-downs=0
+
+60       name="sfp-sfpplus4" default-name="sfp-sfpplus4" type="ether" mtu=1500
+         actual-mtu=1500 l2mtu=1584 max-l2mtu=10218 vrf=main
+         mac-address=DC:2C:6E:09:76:62 link-downs=0
+
+61   R   name="bridge1" type="bridge" mtu=auto actual-mtu=1500 l2mtu=1584
+         vrf=main mac-address=DC:2C:6E:09:76:6C
+         last-link-up-time=2026-03-22 16:45:32 link-downs=0
+
+62   R   name="lo" type="loopback" mtu=65536 actual-mtu=65536 vrf=main
+         mac-address=00:00:00:00:00:00 last-link-up-time=2026-03-22 16:45:31
+         link-downs=0
+
+63   R   name="vlan10-mngmt" type="vlan" mtu=1500 actual-mtu=1500 l2mtu=1580
+         vrf=main mac-address=CC:2D:E0:28:CD:BC
+         last-link-down-time=2026-03-22 19:50:58
+         last-link-up-time=2026-03-22 19:51:04 link-downs=5 
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

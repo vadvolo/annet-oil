@@ -1,0 +1,13 @@
+### CMD: show platform
+### status: 0 errcode: None err: 
+Node		Type			  State		   Config State
+-----------------------------------------------------------------------------
+0/RSP0/CPU0     A9K-RSP440-SE(Active)     IOS XR RUN       PWR,NSHUT,MON
+0/RSP1/CPU0     A9K-RSP440-SE(Standby)    IOS XR RUN       PWR,NSHUT,MON
+0/0/CPU0        A9K-24x10GE-TR            IOS XR RUN       PWR,NSHUT,MON
+0/2/CPU0        A9K-24x10GE-TR            IOS XR RUN       PWR,NSHUT,MON
+0/4/CPU0        A9K-MOD160-TR             IOS XR RUN       PWR,NSHUT,MON
+0/4/0           A9K-MPA-20X1GE            OK               PWR,NSHUT,MON
+0/4/1           A9K-MPA-2X40GE            OK               PWR,NSHUT,MON
+0/6/CPU0        A9K-24x10GE-TR            IOS XR RUN       PWR,NSHUT,MON
+

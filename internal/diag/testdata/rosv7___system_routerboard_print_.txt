@@ -1,0 +1,11 @@
+### CMD: /system routerboard print
+       routerboard: yes             
+             model: CRS354-48P-4S+2Q+
+          revision: r2              
+     serial-number: D5630F314088    
+     firmware-type: qca9531L        
+  factory-firmware: 6.48.3          
+  current-firmware: 7.22.1          
+  upgrade-firmware: 7.22.1           
+<cess: SU_W002-SuboticaNovaOpstina SW] >
+

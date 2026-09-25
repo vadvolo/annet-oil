@@ -1,0 +1,4 @@
+### CMD: show environment
+### status: 0 errcode: None err: 
+% missing mandatory parameter
+

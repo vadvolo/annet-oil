@@ -1,0 +1,557 @@
+### CMD: show lldp neighbors detail
+### status: 0 errcode: None err: 
+Capability codes:
+	(R) Router, (B) Bridge, (T) Telephone, (C) DOCSIS Cable Device
+	(W) WLAN Access Point, (P) Repeater, (S) Station, (O) Other
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/0
+Parent Interface: Bundle-Ether50
+Chassis id: 6c29.d28b.3f16
+Port id: TenGigE0/0/0/50
+Port Description: Core: HERKUL
+System Name: CORE-DROGON.mediaworksit.net
+
+System Description:
+ 24.2.2, NCS-5500
+
+Time remaining: 97 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 172.22.2.17
+  IPv6 address: 2a02:660:1::a
+
+Peer MAC Address: 6c:29:d2:8b:3e:ca
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/1
+Parent Interface: Bundle-Ether50
+Chassis id: 6c29.d28b.3f16
+Port id: TenGigE0/0/0/51
+Port Description: Core: HERKUL
+System Name: CORE-DROGON.mediaworksit.net
+
+System Description:
+ 24.2.2, NCS-5500
+
+Time remaining: 112 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 172.22.2.17
+  IPv6 address: 2a02:660:1::a
+
+Peer MAC Address: 6c:29:d2:8b:3e:cb
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/3
+Parent Interface: Bundle-Ether60
+Chassis id: 4cae.a34c.ad21
+Port id: Ten-GigabitEthernet1/0/40
+Port Description: Darth Vader_port2/3
+System Name: HPE-5700-Orion
+
+System Description:
+HPE Comware Platform Software, Software Version 7.1.045, Release 2432P05
+HPE FF 5700-40XG-2QSFP+ Switch
+Copyright (c) 2010-2017 Hewlett Packard Enterprise Development LP
+
+Time remaining: 113 seconds
+Hold Time: 121 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: 4c:ae:a3:4c:ad:71
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/4
+Parent Interface: Bundle-Ether60
+Chassis id: 4cae.a34c.ad21
+Port id: Ten-GigabitEthernet2/0/40
+Port Description: Darth Vader_port2/4
+System Name: HPE-5700-Orion
+
+System Description:
+HPE Comware Platform Software, Software Version 7.1.045, Release 2432P05
+HPE FF 5700-40XG-2QSFP+ Switch
+Copyright (c) 2010-2017 Hewlett Packard Enterprise Development LP
+
+Time remaining: 107 seconds
+Hold Time: 121 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: 4c:ae:a3:4c:ad:18
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/5
+Chassis id: 4cae.a34c.ad21
+Port id: Ten-GigabitEthernet2/0/38
+Port Description: Uplink_DDoS_net
+System Name: HPE-5700-Orion
+
+System Description:
+HPE Comware Platform Software, Software Version 7.1.045, Release 2432P05
+HPE FF 5700-40XG-2QSFP+ Switch
+Copyright (c) 2010-2017 Hewlett Packard Enterprise Development LP
+
+Time remaining: 93 seconds
+Hold Time: 121 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: 4c:ae:a3:4c:ad:16
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/7
+Chassis id: c4ad.34e0.39ee
+Port id: Uplink
+Port Description - not advertised
+System Name: Access:ZIHERNADLA_3
+
+System Description:
+MikroTik RouterOS 6.48.3 (stable) CCR1016-12S-1S+
+
+Time remaining: 69 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.134.0.26
+
+Peer MAC Address: c4:ad:34:e0:39:ee
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/9
+Chassis id: e0ac.f1cb.5b80
+Port id: Te1/1/4
+Port Description: UPLINK-L2VPN_HERKUL_Te0/0/0/9
+System Name: L2VPN_NP_W005-JezeroA.mediaworksit.net
+
+System Description:
+Cisco IOS Software [Gibraltar], Catalyst L3 Switch Software (CAT3K_CAA-UNIVERSALK9-M), Version 16.12.7, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2022 by Cisco Systems, Inc.
+Compiled Wed 02-Feb-22 07:28
+
+Time remaining: 106 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.254.255.2
+
+Peer MAC Address: e0:ac:f1:cb:5b:f4
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/11
+Parent Interface: Bundle-Ether25.1820
+Chassis id: 0855.31e9.0e1f
+Port id: sfp-sfpplus1-L2VPN - Telekom optika
+Port Description - not advertised
+System Name: Access:SO_W159-KulaTCStork
+
+System Description:
+MikroTik RouterOS 6.49.11 (stable) CCR1009-7G-1C-1S+
+
+Time remaining: 104 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 77.105.2.34
+  IPv4 address: 77.105.3.17
+
+Peer MAC Address: 08:55:31:e9:0e:1f
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/13
+Parent Interface: Bundle-Ether50
+Chassis id: 6c29.d28b.3f16
+Port id: TenGigE0/0/0/5
+Port Description: Core: HERKUL
+System Name: CORE-DROGON.mediaworksit.net
+
+System Description:
+ 24.2.2, NCS-5500
+
+Time remaining: 91 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 172.22.2.17
+  IPv6 address: 2a02:660:1::a
+
+Peer MAC Address: 6c:29:d2:8b:3e:85
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/14
+Parent Interface: Bundle-Ether50
+Chassis id: 6c29.d28b.3f16
+Port id: Bundle-Ether50
+Port Description: Core: HERKUL
+System Name: CORE-DROGON.mediaworksit.net
+
+System Description:
+ 24.2.2, NCS-5500
+
+Time remaining: 96 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 10.254.255.161
+  IPv6 address: 2a02:660:1:0:8000::3d
+
+Peer MAC Address: 6c:29:d2:8b:3f:13
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/14
+Parent Interface: Bundle-Ether50
+Chassis id: 6c29.d28b.3f16
+Port id: TenGigE0/0/0/4
+Port Description: Core: HERKUL
+System Name: CORE-DROGON.mediaworksit.net
+
+System Description:
+ 24.2.2, NCS-5500
+
+Time remaining: 99 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 172.22.2.17
+  IPv6 address: 2a02:660:1::a
+
+Peer MAC Address: 6c:29:d2:8b:3e:84
+
+
+------------------------------------------------
+Local Interface: TenGigE0/0/0/17
+Chassis id: 8013.be66.ecf8
+Port id: 564
+Port Description: fra-bos1 100ge1/0/21:2
+System Name: orn-b2.yngo.net
+
+System Description:
+Juniper Networks, Inc. JNP204 [MX204] internet router, kernel JUNOS 23.4R2-S7.4, Build date: 2026-01-08 19:24:57 UTC Copyright (c) 1996-2026 Juniper Networks, Inc.
+
+Time remaining: 99 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv6 address: 2a0e:fd87:8065:d03:0:1:1:b2
+
+Peer MAC Address: 80:13:be:66:e9:0f
+
+
+------------------------------------------------
+Local Interface: FortyGigE0/4/1/0
+Chassis id: 9433.d89e.b21b
+Port id: FortyGigE0/0/2/0
+Port Description: Core: HERKUL
+System Name: CORE-WHITE_WALKER.mediaworksit.net
+
+System Description:
+ 7.11.2, NCS-5500
+
+Time remaining: 102 seconds
+Hold Time: 120 seconds
+System Capabilities: R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 10.254.255.165
+  IPv6 address: 2a02:660:1:0:8000::39
+
+Peer MAC Address: 94:33:d8:9e:b1:e0
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2
+Chassis id: b869.f4be.6274
+Port id: Uplink
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/4
+Chassis id: f41e.5771.4dc0
+Port id: ether1 - Optika Uplink
+Port Description: ether1 - Optika Uplink
+System Name: SPAJZ DOO Mala Pruga 12 spajzdoo
+
+System Description:
+MikroTik RouterOS 7.15.3 (stable) 2024-07-24 10:39:01 E50UG
+
+Time remaining: 110 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 10.135.32.134
+  IPv6 address: fe80::f61e:57ff:fe71:4dc0
+
+Peer MAC Address: f4:1e:57:71:4d:c0
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.200
+Chassis id: b869.f4be.6274
+Port id: vlan200-MGMT
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.134.1.254
+
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.201
+Chassis id: b869.f4be.6274
+Port id: bridge-Primar-201/vlan201-Humanity-BGP-Primar
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.201
+Chassis id: 0203.0aed.f1a1
+Port id: eoip-tunnel-BGP-Primar
+Port Description - not advertised
+System Name: Client: Toloka ex Humanity_Doo_Starine_Novaka_23
+
+System Description:
+MikroTik RouterOS 6.46.1 (stable) RB3011UiAS
+
+Time remaining: 110 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.134.1.250
+
+Peer MAC Address: 02:03:0a:ed:f1:a1
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.202
+Chassis id: b869.f4be.6274
+Port id: bridge-Primar-202/vlan202-ENP-Putevi-Srbije-Primar
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.202
+Chassis id: 744d.288d.1ebd
+Port id: eoip-tunnel-ENP-Primar-OSPF
+Port Description - not advertised
+System Name: Client: Elektronska_Naplata_Vrcin_enp.vrcin_Koncetrator
+
+System Description:
+MikroTik RouterOS 6.48.6 (long-term) RB4011iGS+
+
+Time remaining: 74 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.134.1.246
+
+Peer MAC Address: 02:03:69:17:64:13
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.203
+Chassis id: b869.f4be.6274
+Port id: bridge-203-Aksa_Simanovci OSPF/vlan203-Aksa-Simanovci_OSPF
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.203
+Chassis id: 48a9.8a29.8a19
+Port id: eoip-tunnel-2033-OSPF Primar
+Port Description - not advertised
+System Name: Client: KepromCentrala3011
+
+System Description:
+MikroTik RouterOS 6.48.6 (long-term) RB3011UiAS
+
+Time remaining: 104 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.134.1.238
+
+Peer MAC Address: 02:b3:5c:82:10:be
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.205
+Chassis id: b869.f4be.6274
+Port id: bridge1650-DexyCo-Dobanovci_Magacin/vlan205-DexyCo-Dobanovci_Magacin
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.205
+Chassis id: dc2c.6eaf.6045
+Port id: eoip-tunnel1650-DexyCo
+Port Description - not advertised
+System Name: DPI: BG_F131-FTTB-DobanovciDPI
+
+System Description:
+MikroTik RouterOS 7.11.2 (stable) Aug/31/2023 13:55:47 CCR2004-1G-12S+2XS
+
+Time remaining: 63 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.135.128.14
+  IPv6 address: fe80::e7:57ff:fe83:8b49
+
+Peer MAC Address: 02:e7:57:83:8b:49
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.206
+Chassis id: b869.f4be.6274
+Port id: bridge206- ACO Gradjevinski elementi/vlan206-ACO Gradjevinski elementi
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses:
+  IPv4 address: 10.0.19.93
+
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.207
+Chassis id: b869.f4be.6274
+Port id: bridge207-MM Fruits Ruma/vlan207-MM Fruits Ruma
+Port Description - not advertised
+System Name: Access:CCR1016-Failover-za-klijente
+
+System Description:
+MikroTik RouterOS 6.46.2 (stable) CCR1016-12S-1S+
+
+Time remaining: 119 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: B,R
+Management Addresses - not advertised
+Peer MAC Address: b8:69:f4:be:62:74
+
+
+------------------------------------------------
+Local Interface: GigabitEthernet0/4/0/2.207
+Chassis id: 02e9.ce6a.a388
+Port id: eoip-tunnel-FAILOVER
+Port Description - not advertised
+System Name: Client: MM FRUITS INDUSTRIJSKA 1 mm.ruma
+
+System Description:
+MikroTik RouterOS 6.42.12 (long-term) RB941-2nD
+
+Time remaining: 97 seconds
+Hold Time: 120 seconds
+System Capabilities: B,R
+Enabled Capabilities: R
+Management Addresses:
+  IPv4 address: 10.134.0.158
+
+Peer MAC Address: 02:e9:ce:6a:a3:88
+
+
+Total entries displayed: 27
+
+

@@ -1,0 +1,42 @@
+### CMD: show lldp neighbors
+### status: 0 errcode: None err: 
+
+System capability legend:
+B - Bridge; R - Router; W - Wlan Access Point; T - telephone;
+D - DOCSIS Cable Device; H - Host; r - Repeater;
+TP - Two Ports MAC Relay; S - S-VLAN; C - C-VLAN; O - Other
+
+  Port        Device ID        Port ID       System Name    Capabilities  TTL 
+--------- ----------------- ------------- ----------------- ------------ -----
+gi1/0/2   00:e0:ed:e2:5c:a6 00:e0:ed:e2:5                        O        97  
+                                c:a6                                          
+gi1/0/8   dc:2c:6e:cf:72:48    Uplink        Client: KPZ         R        95  
+                                           Kragujevac Novi                    
+                                            zatvor optika                     
+gi1/0/13  f0:7f:06:44:32:af Ethernet1/40  kg-agrieu-cloud-l     B, R      101 
+                                               eaf-02                         
+gi1/0/20  78:9a:18:8b:4f:33 sfp-sfpplus12   rs-beo-rtr-1        B, R      102 
+te1/0/4   64:12:25:ea:73:80    Te5/14     CORE-C-3PO.oriont     B, R      94  
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.226   CORE-C-3PO.oriont     B, R      93  
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.301   CORE-C-3PO.oriont     B, R      112 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.404   CORE-C-3PO.oriont     B, R      109 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.300   CORE-C-3PO.oriont     B, R      118 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.502   CORE-C-3PO.oriont     B, R      111 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.254   CORE-C-3PO.oriont     B, R      107 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.403   CORE-C-3PO.oriont     B, R      97  
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.402   CORE-C-3PO.oriont     B, R      111 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.302   CORE-C-3PO.oriont     B, R      102 
+                                              elekom.rs                       
+te1/0/4   64:12:25:ea:73:80  Te5/14.501   CORE-C-3PO.oriont     B, R      95  
+                                              elekom.rs                       
+
+

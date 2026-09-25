@@ -1,0 +1,8 @@
+### CMD: show memory summary
+### status: 0 errcode: None err: 
+Physical Memory: 12288M total (7286M available)
+ Application Memory : 11878M (7286M available)
+ Image: 121M (bootram: 121M)
+ Reserved: 224M, IOMem: 0, flashfsys: 0
+ Total shared window: 104M
+

@@ -1,0 +1,138 @@
+### CMD: show inventory
+### status: 0 errcode: None err: 
+NAME: "module 0/RSP0/CPU0", DESCR: "ASR9K Route Switch Processor with 440G/slot Fabric and 12GB "
+PID: A9K-RSP440-SE, VID: V01, SN: FOC161780Q6
+
+NAME: "module 0/RSP1/CPU0", DESCR: "ASR9K Route Switch Processor with 440G/slot Fabric and 12GB "
+PID: A9K-RSP440-SE, VID: V04, SN: FOC1741N9HQ
+
+NAME: "module 0/0/CPU0", DESCR: "24-port 10GE, Packet Transport Optimized LC"
+PID: A9K-24X10GE-TR, VID: V07, SN: FOC1853NG2K
+
+NAME: "module mau TenGigE0/0/CPU0/0", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: FNS20050Z9J    
+
+NAME: "module mau TenGigE0/0/CPU0/1", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: FNS20050ZUG    
+
+NAME: "module mau TenGigE0/0/CPU0/2", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: FNS182501EB    
+
+NAME: "module mau TenGigE0/0/CPU0/3", DESCR: "10GBASE-BXDI SFP+ Module for SMF"
+PID: SFP-10G-BXD-I      , VID: V02 , SN: ALP210924005   
+
+NAME: "TenGigE0/0/0/4", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: SFP-10G-BXU-I, VID: 00, SN: STCO321B3800190
+
+NAME: "TenGigE0/0/0/5", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: SFP-10G-BXU-I, VID: 00, SN: STCO321B3800182
+
+NAME: "TenGigE0/0/0/6", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2201100589   
+
+NAME: "TenGigE0/0/0/7", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2201100590   
+
+NAME: "TenGigE0/0/0/8", DESCR: "Non-Cisco OPTOKON SFP+ 10G Pluggable Optics Module"
+PID: S10-D31-SP-LR-D, VID: 1., SN: OPXP96L5520    
+
+NAME: "TenGigE0/0/0/9", DESCR: "Non-Cisco OPTOKON SFP+ 10G Pluggable Optics Module"
+PID: S10-D31-SP-LR-D, VID: 1., SN: OPXP96L5521    
+
+NAME: "TenGigE0/0/0/10", DESCR: "Non-Cisco OPTOKON SFP+ 10G Pluggable Optics Module"
+PID: S10-D31-SP-LR-D, VID: 1., SN: OPXP96L5636    
+
+NAME: "TenGigE0/0/0/11", DESCR: "Non-Cisco OPTOKON SFP+ 10G Pluggable Optics Module"
+PID: S10-D31-SP-LR-D, VID: 1., SN: OPXP96L5635    
+
+NAME: "TenGigE0/0/0/12", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2201100749   
+
+NAME: "TenGigE0/0/0/13", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2201100575   
+
+NAME: "TenGigE0/0/0/14", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2201100576   
+
+NAME: "TenGigE0/0/0/15", DESCR: "Non-Cisco WTD SFP+ 10G Pluggable Optics Module"
+PID: RTXM228-401, VID: 1., SN: HC213100781133 
+
+NAME: "TenGigE0/0/0/16", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: SFP-10G-SR-3RD, VID: 1., SN: STCO85S63800618
+
+NAME: "TenGigE0/0/0/17", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-31192-LRC, VID: A, SN: GS2404180108   
+
+NAME: "TenGigE0/0/0/22", DESCR: "Non-Cisco UPNET SFP+ 10G Pluggable Optics Module"
+PID: SFP+-10G-20LR, VID: A, SN: 2025120280     
+
+NAME: "TenGigE0/0/0/23", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: APSP85B33CDL03, VID: 1., SN: APCO24250004701
+
+NAME: "module 0/2/CPU0", DESCR: "24-port 10GE, Packet Transport Optimized LC"
+PID: A9K-24X10GE-TR, VID: V08, SN: FOC2041NCR0
+
+NAME: "TenGigE0/2/0/1", DESCR: "Non-Cisco OPTOKON SFP+ 10G Pluggable Optics Module"
+PID: M10-V85-SP-SR-D, VID: 1., SN: OPXP96S5497    
+
+NAME: "TenGigE0/2/0/5", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2110090146   
+
+NAME: "TenGigE0/2/0/7", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2110090156   
+
+NAME: "TenGigE0/2/0/9", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: SFP-10GSR-85, VID: N/A, SN: C2108319322    
+
+NAME: "module mau TenGigE0/2/CPU0/13", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: JUR185103E2    
+
+NAME: "module mau TenGigE0/2/CPU0/14", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: FNS20050FB0    
+
+NAME: "module 0/4/CPU0", DESCR: "160G Modular Linecard, Packet Transport Optimized"
+PID: A9K-MOD160-TR, VID: V01, SN: FOC16178158
+
+NAME: "module 0/4/0", DESCR: "ASR 9000 20-port 1GE Modular Port Adapter"
+PID: A9K-MPA-20X1GE, VID: V01, SN: FOC1652N267
+
+NAME: "GigabitEthernet0/4/0/0", DESCR: "Non-Cisco IRITEL SFP 1G Pluggable Optics Module"
+PID: EI.GbE-RJ45X, VID: A, SN: EB1911190571   
+
+NAME: "GigabitEthernet0/4/0/1", DESCR: "Non-Cisco OEM SFP 1G Pluggable Optics Module"
+PID: KYE-GB-P1RC-ETB, VID: 11.0, SN: EB2009185025   
+
+NAME: "GigabitEthernet0/4/0/2", DESCR: "Non-Cisco FINISAR CORP. SFP 1G Pluggable Optics Module"
+PID: FTLF8519P2BNL-HW, VID: A, SN: PJE0KDP        
+
+NAME: "GigabitEthernet0/4/0/3", DESCR: "Non-Cisco NEOPHOTONICS SFP 1G Pluggable Optics Module"
+PID: PT7320-51-1W-KHW, VID: 1.0, SN: A0110019145    
+
+NAME: "GigabitEthernet0/4/0/4", DESCR: "Non-Cisco OPTOKON SFP 1G Pluggable Optics Module"
+PID: S125-W31/55-LP-L, VID: 1.0, SN: OPGU5817       
+
+NAME: "GigabitEthernet0/4/0/7", DESCR: "Non-Cisco OPTOKON SFP 1G Pluggable Optics Module"
+PID: S125-W31/55-LP-L, VID: 1.0, SN: OPGU6872       
+
+NAME: "module 0/4/1", DESCR: "ASR 9000 2-port 40GE Modular Port Adapter"
+PID: A9K-MPA-2X40GE, VID: V04, SN: FOC2222N6MM
+
+NAME: "module mau 0/4/1/0", DESCR: "40G-SRBD QSFP+ Module for SMF"
+PID: QSFP-40G-SR-BD      , VID: V02 , SN: AVM1848U1V2    
+
+NAME: "module 0/6/CPU0", DESCR: "24-port 10GE, Packet Transport Optimized LC"
+PID: A9K-24X10GE-TR, VID: V06, SN: FOC1840N3VS
+
+NAME: "TenGigE0/6/0/0", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: APSP85B33CDL03, VID: 1., SN: APCO25470001856
+
+NAME: "TenGigE0/6/0/4", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2110090160   
+
+NAME: "TenGigE0/6/0/6", DESCR: "Non-Cisco OEM SFP+ 10G Pluggable Optics Module"
+PID: KYPP-85192-SRC, VID: 1., SN: GM2110090149   
+
+NAME: "module mau TenGigE0/6/CPU0/8", DESCR: "10GBASE-SR SFP+ Module for MMF"
+PID: SFP-10G-SR         , VID: V03 , SN: FNS15430C7W    
+
+

@@ -1,0 +1,124 @@
+### CMD: show spanning-tree detail
+### status: 0 errcode: None err: 
+
+ MST0 is executing the mstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 0, address 0023.5db2.1a80
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 6 last change occurred 23w0d ago
+          from TenGigabitEthernet0/2
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0
+
+ Port 4 (GigabitEthernet0/4) of MST0 is designated forwarding
+   Port path cost 200000, Port priority 128, Port Identifier 128.4.
+   Designated root has priority 32768, address 0023.5db2.1a80
+   Designated bridge has priority 32768, address 0023.5db2.1a80
+   Designated port id is 128.4, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Internal
+   Bpdu guard is enabled
+   BPDU: sent 10226956, received 0
+
+ Port 29 (TenGigabitEthernet0/1) of MST0 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.29.
+   Designated root has priority 32768, address 0023.5db2.1a80
+   Designated bridge has priority 32768, address 0023.5db2.1a80
+   Designated port id is 128.29, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   Link type is point-to-point by default, Internal
+   BPDU: sent 10226949, received 0
+
+ Port 30 (TenGigabitEthernet0/2) of MST0 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.30.
+   Designated root has priority 32768, address 0023.5db2.1a80
+   Designated bridge has priority 32768, address 0023.5db2.1a80
+   Designated port id is 128.30, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   Link type is point-to-point by default, Internal
+   Bpdu filter is enabled
+   BPDU: sent 0, received 0
+
+
+ MST1 is executing the mstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 1, address 0023.5db2.1a80
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 6 last change occurred 23w0d ago
+          from TenGigabitEthernet0/2
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0
+
+ Port 4 (GigabitEthernet0/4) of MST1 is designated forwarding
+   Port path cost 200000, Port priority 128, Port Identifier 128.4.
+   Designated root has priority 32769, address 0023.5db2.1a80
+   Designated bridge has priority 32769, address 0023.5db2.1a80
+   Designated port id is 128.4, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Internal
+   Bpdu guard is enabled
+   BPDU: sent 10226956, received 0
+
+ Port 29 (TenGigabitEthernet0/1) of MST1 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.29.
+   Designated root has priority 32769, address 0023.5db2.1a80
+   Designated bridge has priority 32769, address 0023.5db2.1a80
+   Designated port id is 128.29, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   Link type is point-to-point by default, Internal
+   BPDU: sent 10226949, received 0
+
+ Port 30 (TenGigabitEthernet0/2) of MST1 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.30.
+   Designated root has priority 32769, address 0023.5db2.1a80
+   Designated bridge has priority 32769, address 0023.5db2.1a80
+   Designated port id is 128.30, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Internal
+   Bpdu filter is enabled
+   BPDU: sent 0, received 0
+
+
+ MST2 is executing the mstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 2, address 0023.5db2.1a80
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 5 last change occurred 23w0d ago
+          from TenGigabitEthernet0/2
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0
+
+ Port 29 (TenGigabitEthernet0/1) of MST2 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.29.
+   Designated root has priority 32770, address 0023.5db2.1a80
+   Designated bridge has priority 32770, address 0023.5db2.1a80
+   Designated port id is 128.29, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Internal
+   BPDU: sent 10226949, received 0
+
+ Port 30 (TenGigabitEthernet0/2) of MST2 is designated forwarding
+   Port path cost 2000, Port priority 128, Port Identifier 128.30.
+   Designated root has priority 32770, address 0023.5db2.1a80
+   Designated bridge has priority 32770, address 0023.5db2.1a80
+   Designated port id is 128.30, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   Link type is point-to-point by default, Internal
+   Bpdu filter is enabled
+   BPDU: sent 0, received 0
+
+

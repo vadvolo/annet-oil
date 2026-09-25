@@ -1,0 +1,16 @@
+### CMD: show inventory
+### status: 0 errcode: None err: 
+NAME: "1", DESCR: "WS-C3560E-24TD"
+PID: WS-C3560E-24TD-E  , VID: V02  , SN: FDO1240R0WY
+
+NAME: "Power Supply 0", DESCR: "FRU Power Supply"
+PID: C3K-PWR-265WAC    , VID: V01D , SN: DTN1231C0Q4
+
+NAME: "TenGigabitEthernet0/1", DESCR: "10GBase-LR"
+PID: X2-ADAPTER-SFP+   , VID: V01  , SN: N131118LK020   
+
+NAME: "TenGigabitEthernet0/2", DESCR: "10GBase-SR"
+PID: X2-10GB-SR        , VID: V04  , SN: ONT140900B8    
+
+
+

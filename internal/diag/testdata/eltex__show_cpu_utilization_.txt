@@ -1,0 +1,12 @@
+### CMD: show cpu utilization
+### status: 0 errcode: None err: 
+Memory usage
+---------------
+Total/Free: 536870912 B/21951356 B (4%)
+
+CPU utilization service is on.
+
+CPU utilization
+---------------
+five seconds: 72%; one minute: 5%; five minutes: 7%
+

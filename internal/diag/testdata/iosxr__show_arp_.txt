@@ -1,0 +1,222 @@
+### CMD: show arp
+### status: 0 errcode: None err: 
+
+-------------------------------------------------------------------------------
+0/6/CPU0
+-------------------------------------------------------------------------------
+Address         Age        Hardware Addr   State      Type  Interface
+93.93.198.205   -          6c9c.ed06.c7db  Interface  ARPA  Bundle-Ether4
+93.93.198.206   02:04:40   001b.21ba.cff4  Dynamic    ARPA  Bundle-Ether4
+93.93.198.213   -          6c9c.ed06.c7da  Interface  ARPA  Bundle-Ether6
+93.93.198.214   02:07:28   90e2.ba86.5861  Dynamic    ARPA  Bundle-Ether6
+93.93.198.217   -          6c9c.ed06.c7d9  Interface  ARPA  Bundle-Ether7
+93.93.198.218   02:04:35   001b.21bd.179e  Dynamic    ARPA  Bundle-Ether7
+93.93.198.221   -          6c9c.ed06.c7d8  Interface  ARPA  Bundle-Ether8
+93.93.198.222   00:39:47   90e2.ba98.7d1d  Dynamic    ARPA  Bundle-Ether8
+
+-------------------------------------------------------------------------------
+0/4/CPU0
+-------------------------------------------------------------------------------
+Address         Age        Hardware Addr   State      Type  Interface
+10.134.0.17     -          8478.ac54.604f  Interface  ARPA  GigabitEthernet0/4/0/3
+10.134.0.18     00:22:02   8c36.7acb.5412  Dynamic    ARPA  GigabitEthernet0/4/0/3
+10.134.0.157    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.207
+10.134.0.158    00:10:28   02e9.ce6a.a388  Dynamic    ARPA  GigabitEthernet0/4/0/2.207
+10.134.1.237    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.203
+10.134.1.238    01:48:51   02b3.5c82.10be  Dynamic    ARPA  GigabitEthernet0/4/0/2.203
+10.134.1.245    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.202
+10.134.1.246    00:00:25   0203.6917.6413  Dynamic    ARPA  GigabitEthernet0/4/0/2.202
+10.134.1.249    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.201
+10.134.1.250    02:01:05   0203.0aed.f1a1  Dynamic    ARPA  GigabitEthernet0/4/0/2.201
+10.134.1.253    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.200
+10.134.1.254    00:00:09   b869.f4be.6274  Dynamic    ARPA  GigabitEthernet0/4/0/2.200
+10.135.1.233    -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.204
+10.135.1.234    00:00:01   0000.0000.0000  Incomplete ARPA  GigabitEthernet0/4/0/2.204
+10.135.32.133   -          8478.ac54.6050  Interface  ARPA  GigabitEthernet0/4/0/4
+10.135.32.134   00:00:03   f41e.5771.4dc0  Dynamic    ARPA  GigabitEthernet0/4/0/4
+10.135.128.13   -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.205
+10.135.128.25   -          8478.ac54.604e  Interface  ARPA  GigabitEthernet0/4/0/2.206
+10.135.128.26   00:00:25   02e7.59a4.b4b2  Dynamic    ARPA  GigabitEthernet0/4/0/2.206
+10.254.255.165  02:15:10   9433.d89e.b1e0  Dynamic    ARPA  FortyGigE0/4/1/0
+10.254.255.166  -          6c6c.d303.2ce6  Interface  ARPA  FortyGigE0/4/1/0
+
+-------------------------------------------------------------------------------
+0/2/CPU0
+-------------------------------------------------------------------------------
+Address         Age        Hardware Addr   State      Type  Interface
+93.93.198.197   -          6c9c.ed06.c7dc  Interface  ARPA  Bundle-Ether3
+93.93.198.198   01:04:10   90e2.ba86.54ec  Dynamic    ARPA  Bundle-Ether3
+93.93.198.205   -          6c9c.ed06.c7db  Interface  ARPA  Bundle-Ether4
+93.93.198.206   02:04:41   001b.21ba.cff4  Dynamic    ARPA  Bundle-Ether4
+93.93.198.213   -          6c9c.ed06.c7da  Interface  ARPA  Bundle-Ether6
+93.93.198.214   02:07:29   90e2.ba86.5861  Dynamic    ARPA  Bundle-Ether6
+93.93.198.217   -          6c9c.ed06.c7d9  Interface  ARPA  Bundle-Ether7
+93.93.198.218   02:04:36   001b.21bd.179e  Dynamic    ARPA  Bundle-Ether7
+93.93.198.221   -          6c9c.ed06.c7d8  Interface  ARPA  Bundle-Ether8
+93.93.198.222   00:39:48   90e2.ba98.7d1d  Dynamic    ARPA  Bundle-Ether8
+93.93.198.225   -          0896.ad34.ef16  Interface  ARPA  TenGigE0/2/0/14
+93.93.198.226   00:00:43   90e2.ba38.aa7c  Dynamic    ARPA  TenGigE0/2/0/14
+
+-------------------------------------------------------------------------------
+0/0/CPU0
+-------------------------------------------------------------------------------
+Address         Age        Hardware Addr   State      Type  Interface
+10.100.254.1    -          0000.0c07.ac0c  Standby    ARPA  TenGigE0/0/0/6.12
+10.100.254.2    01:08:38   5254.0046.8e17  Dynamic    ARPA  TenGigE0/0/0/6.12
+10.100.254.3    01:57:58   5254.00a8.f609  Dynamic    ARPA  TenGigE0/0/0/6.12
+10.100.254.4    -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.12
+10.100.254.5    00:00:04   e0ac.f144.dd58  Dynamic    ARPA  TenGigE0/0/0/6.12
+10.100.254.6    00:07:03   b869.f4ae.15f4  Dynamic    ARPA  TenGigE0/0/0/6.12
+10.132.0.137    -          0000.0c9f.f002  Interface  ARPA  TenGigE0/0/0/5
+10.132.0.138    00:50:12   e0ac.f144.dd5f  Dynamic    ARPA  TenGigE0/0/0/5
+10.132.0.139    -          d46d.5014.93b5  Interface  ARPA  TenGigE0/0/0/5
+10.132.0.140    00:00:39   0050.569b.31a6  Dynamic    ARPA  TenGigE0/0/0/5
+10.132.128.121  -          6c9c.ed06.c7d3  Interface  ARPA  Bundle-Ether60.135
+10.132.128.122  00:00:35   0050.569b.3a93  Dynamic    ARPA  Bundle-Ether60.135
+10.132.128.123  00:00:59   0050.569b.7a30  Dynamic    ARPA  Bundle-Ether60.135
+10.132.128.124  00:01:23   08ec.f554.07a2  Dynamic    ARPA  Bundle-Ether60.135
+10.134.0.13     -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.102
+10.134.0.14     00:00:29   000c.42f0.b494  Dynamic    ARPA  TenGigE0/0/0/6.102
+10.134.0.25     -          d46d.5014.93b7  Interface  ARPA  TenGigE0/0/0/7
+10.134.0.26     00:41:46   c4ad.34e0.39ee  Dynamic    ARPA  TenGigE0/0/0/7
+10.134.0.33     -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.109
+10.134.1.241    -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.3000
+10.134.1.242    00:00:27   001b.1700.0214  Dynamic    ARPA  TenGigE0/0/0/6.3000
+10.134.64.9     -          6c9c.ed06.c7d1  Interface  ARPA  Bundle-Ether30
+10.134.64.10    00:23:54   e05f.b9d1.257f  Dynamic    ARPA  Bundle-Ether30
+10.134.64.77    -          6c9c.ed06.c7d1  Interface  ARPA  Bundle-Ether30
+10.135.128.1    -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.100
+10.135.128.2    02:54:50   001b.0c0c.54ff  Dynamic    ARPA  TenGigE0/0/0/6.100
+10.135.128.57   -          6c9c.ed06.c7d3  Interface  ARPA  Bundle-Ether60.204
+10.135.128.58   00:00:13   0050.5601.0b9b  Dynamic    ARPA  Bundle-Ether60.204
+10.254.255.1    -          d46d.5014.93b9  Interface  ARPA  TenGigE0/0/0/9
+10.254.255.2    03:33:43   e0ac.f1cb.5bf4  Dynamic    ARPA  TenGigE0/0/0/9
+10.254.255.161  01:27:55   6c29.d28b.3f13  Dynamic    ARPA  Bundle-Ether50
+10.254.255.162  -          6c9c.ed06.c7d4  Interface  ARPA  Bundle-Ether50
+77.105.2.33     -          6c9c.ed06.c7d2  Interface  ARPA  Bundle-Ether25.1820
+77.105.2.34     01:00:05   0855.31e9.0e1f  Dynamic    ARPA  Bundle-Ether25.1820
+77.105.3.17     00:00:01   0855.31e9.0e1f  Dynamic    ARPA  Bundle-Ether25.1820
+80.74.164.141   -          6c9c.ed06.c7d2  Interface  ARPA  Bundle-Ether25.1819
+80.74.164.142   00:00:03   0000.0000.0000  Incomplete ARPA  Bundle-Ether25.1819
+92.42.252.117   -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.103
+92.42.252.118   00:00:15   c4ad.346d.b244  Dynamic    ARPA  TenGigE0/0/0/6.103
+93.93.192.33    -          0000.0c07.ac01  Interface  ARPA  TenGigE0/0/0/6.108
+93.93.192.34    00:05:59   3a7c.32ca.7c16  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.35    00:05:53   6a18.b689.305c  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.36    00:00:09   6a47.c55e.134b  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.37    01:33:54   6a47.c55e.134b  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.38    00:23:56   92bc.2228.5efa  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.39    00:07:33   86bb.1d02.40a7  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.41    00:00:17   46c9.0768.79bc  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.42    00:00:30   02ef.e8f1.99ec  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.43    00:00:21   c6f7.bc58.9492  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.44    00:00:07   aec6.82c0.f406  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.45    00:00:30   5219.3511.795d  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.46    00:00:06   2a8a.8e66.2223  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.47    00:00:16   220b.c478.1e0e  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.48    00:00:01   ea3a.7edf.8d4f  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.56    00:12:53   0abd.d39d.5a57  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.60    -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.108
+93.93.192.61    00:00:01   08d0.9fda.284b  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.62    00:00:41   cc2d.e0dd.2054  Dynamic    ARPA  TenGigE0/0/0/6.108
+93.93.192.100   -          d46d.5014.93b8  Interface  ARPA  TenGigE0/0/0/8
+93.93.192.101   02:16:05   0c68.0344.dcc6  Dynamic    ARPA  TenGigE0/0/0/8
+93.93.192.161   -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.107
+93.93.192.162   00:00:48   b869.f4ae.11b5  Dynamic    ARPA  TenGigE0/0/0/6.107
+93.93.194.217   -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.1200
+93.93.194.218   00:00:40   744d.286a.79b0  Dynamic    ARPA  TenGigE0/0/0/6.1200
+93.93.194.219   -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.1200
+93.93.194.222   01:08:41   744d.286a.79b0  Dynamic    ARPA  TenGigE0/0/0/6.1200
+93.186.79.1     -          d46d.5014.93c0  Interface  ARPA  TenGigE0/0/0/16
+93.186.79.2     00:02:34   44a8.4209.fd60  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.3     00:01:32   c81f.66eb.3c14  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.4     01:35:42   1418.7745.d662  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.5     01:54:21   1418.7744.7f66  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.6     01:26:16   44a8.4238.4c40  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.7     03:31:24   44a8.4236.6322  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.8     02:09:25   1418.7746.098a  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.9     01:15:52   246e.96dc.45d6  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.10    00:12:09   246e.96dc.4708  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.11    01:42:01   246e.96d9.de62  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.12    00:52:34   246e.9649.d4ce  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.13    01:13:13   246e.96db.cc88  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.14    00:38:45   e443.4bd3.76ec  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.15    00:19:33   e443.4bd3.67b8  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.16    01:07:21   246e.96d9.d5c0  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.17    00:38:49   246e.96dc.7de2  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.18    02:24:11   246e.9649.c2be  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.19    00:00:01   246e.96dc.4d46  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.20    02:08:30   246e.96d9.e45c  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.21    01:09:33   e443.4b22.36ca  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.22    03:03:54   e443.4b22.4422  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.23    00:13:28   e443.4bd4.0444  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.24    00:18:00   e443.4b22.3f0e  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.25    00:21:14   246e.967d.8340  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.26    03:38:51   e443.4bd3.8598  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.27    02:15:07   246e.9662.c818  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.28    00:20:10   1866.dab1.40e6  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.29    01:08:45   1866.dab1.4f91  Dynamic    ARPA  TenGigE0/0/0/16
+93.186.79.30    03:30:40   b083.fedf.f253  Dynamic    ARPA  TenGigE0/0/0/16
+95.140.114.225  -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.301
+95.140.114.226  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.227  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.229  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.230  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.231  00:00:01   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.301
+95.140.114.232  00:00:04   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.301
+95.140.114.233  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.234  00:00:02   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.301
+95.140.114.235  00:00:01   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.301
+95.140.114.236  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.237  -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.301
+95.140.114.238  00:00:04   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.301
+95.140.117.49   -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.3576
+95.140.117.50   00:47:16   18fd.747c.a265  Dynamic    ARPA  TenGigE0/0/0/6.3576
+109.111.231.189 -          d46d.5014.93c0  Interface  ARPA  TenGigE0/0/0/16
+109.111.231.190 01:49:33   44a8.423e.7897  Dynamic    ARPA  TenGigE0/0/0/16
+109.111.243.169 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.104
+109.111.243.170 00:00:01   2c3f.0bd5.10dd  Dynamic    ARPA  TenGigE0/0/0/6.104
+109.111.243.171 00:00:01   f89e.28de.c6e5  Dynamic    ARPA  TenGigE0/0/0/6.104
+109.111.243.172 -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/6.104
+109.111.243.173 00:00:09   e0cb.bcbc.f76d  Dynamic    ARPA  TenGigE0/0/0/6.104
+109.111.243.174 00:00:02   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.104
+178.253.194.153 -          0000.0c07.ac0a  Interface  ARPA  Bundle-Ether60.128
+178.253.194.154 -          6c9c.ed06.c7d3  Interface  ARPA  Bundle-Ether60.128
+178.253.194.155 00:00:01   08ec.f554.07a2  Dynamic    ARPA  Bundle-Ether60.128
+178.253.194.156 00:00:34   0050.569b.353f  Dynamic    ARPA  Bundle-Ether60.128
+178.253.194.237 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.110
+178.253.194.238 01:55:33   00a2.eec2.ccb0  Dynamic    ARPA  TenGigE0/0/0/6.110
+178.253.203.161 -          d46d.5014.93c6  Interface  ARPA  TenGigE0/0/0/22
+178.253.203.162 02:17:28   3056.0f91.96ec  Dynamic    ARPA  TenGigE0/0/0/22
+178.253.203.163 00:00:04   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/22
+178.253.203.164 -          0000.0000.0000  Deleted    ARPA  TenGigE0/0/0/22
+178.253.203.165 00:07:37   507c.6f8a.54cd  Dynamic    ARPA  TenGigE0/0/0/22
+178.253.203.166 01:06:45   507c.6f8a.42d3  Dynamic    ARPA  TenGigE0/0/0/22
+178.253.204.69  -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.4000
+178.253.204.70  03:05:35   8c36.7a00.da8d  Dynamic    ARPA  TenGigE0/0/0/6.4000
+178.254.138.65  -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.105
+178.254.138.66  00:00:02   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.105
+178.254.149.5   -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.1230
+178.254.149.6   02:07:37   c464.139c.0502  Dynamic    ARPA  TenGigE0/0/0/6.1230
+188.255.223.28  00:01:21   0050.5601.07de  Dynamic    ARPA  Bundle-Ether60.135
+217.169.215.197 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.3666
+217.169.215.198 00:00:03   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.3666
+217.169.218.129 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.602
+217.169.218.130 00:00:05   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.131 01:10:20   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.132 02:26:06   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.133 01:47:57   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.134 00:33:33   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.135 00:47:09   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.136 01:41:53   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.137 01:24:16   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.138 02:45:37   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.139 01:10:25   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.140 03:43:10   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.141 00:45:46   6c31.0e8f.7681  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.218.142 00:38:53   309c.236d.5ce6  Dynamic    ARPA  TenGigE0/0/0/6.602
+217.169.222.141 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.999
+217.169.222.142 00:00:42   744d.28ae.3590  Dynamic    ARPA  TenGigE0/0/0/6.999
+217.169.223.145 -          d46d.5014.93b6  Interface  ARPA  TenGigE0/0/0/6.111
+217.169.223.146 00:00:05   0000.0000.0000  Incomplete ARPA  TenGigE0/0/0/6.111
+
